@@ -1,23 +1,23 @@
 //
-//  ContentView.swift
-//  DateSpark
-//
-//  Created by Shannon Russell on 3/19/24.
-//
-
 import SwiftUI
 
+class AppVariables: ObservableObject {
+    @Published var selectedTab: Int = 0
+}
 struct ContentView: View {
+    
     var body: some View {
-        VStack {
-            Image(systemName: "person.circle")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Initial Commit Testing")
-        }
-        .padding()
+        BottomBar (
+            AnyView(HomeView()),
+            AnyView(SparkGPTView()),
+            AnyView(MapView()),
+            AnyView(FriendsView()),
+            AnyView(ProfileView())
+        )
+        .environmentObject(AppVariables())
     }
 }
+
 
 #Preview {
     ContentView()
