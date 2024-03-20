@@ -47,7 +47,8 @@ struct HomeView: View {
                         .frame(width: 40, height: 40)
                         .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                     
-                    Spacer()
+                        .padding(.bottom, 40)
+
                 }
                 
                 HStack {
@@ -114,7 +115,7 @@ struct HomeView: View {
                 }
             }
             .padding()
-            .padding(.bottom, 70)
+            .padding(.bottom, 30)
         }
     }
     
