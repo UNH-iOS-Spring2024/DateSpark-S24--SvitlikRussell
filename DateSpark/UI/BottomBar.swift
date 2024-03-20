@@ -9,24 +9,25 @@ import SwiftUI
 struct BottomBar: View {
     @EnvironmentObject private var app: AppVariables
     let HomeView: AnyView
-    let Account: AnyView
     let SparkGPT: AnyView
     let Map: AnyView
     let Friends: AnyView
+    let Account: AnyView
+
     
     
     init(
         _ HomeView : AnyView,
-        _ Account : AnyView,
         _ SparkGPT : AnyView,
         _ Map : AnyView,
-        _ Friends : AnyView
+        _ Friends : AnyView,
+        _ Account : AnyView
     ){
         self.HomeView = HomeView
-        self.Account = Account
         self.SparkGPT = SparkGPT // (ChatGPT view)
         self.Map = Map
         self.Friends = Friends
+        self.Account = Account
     }
     
     var body: some View {
@@ -36,35 +37,35 @@ struct BottomBar: View {
                     Image(systemName: "house")
                     Text("Home")
                 }
-                .tag(0)
+                .tag(1)
             
              SparkGPT
                 .tabItem {
                     Image(systemName: "safari")
                     Text("SparkGPT")
                 }
-                .tag(1)
+                .tag(2)
              
              Map
                 .tabItem {
                     Image(systemName: "map")
                     Text("Map")
                 }
-                .tag(2)
+                .tag(3)
              
              Friends
                 .tabItem {
                     Image(systemName: "person.3")
                     Text("Friends")
                 }
-                .tag(3)
+                .tag(4)
              
             Account
                 .tabItem {
                     Image(systemName: "person.circle")
                     Text("Profile")
                 }
-                .tag(4) 
+                .tag(5)
         }
     }
 }
@@ -72,10 +73,10 @@ struct BottomBar: View {
 #Preview {
     BottomBar(
         AnyView(HomeView()),
-        AnyView(ProfileView()),
         AnyView(SparkGPTView()),
         AnyView(MapView()),
-        AnyView(FriendsView())
+        AnyView(FriendsView()),
+        AnyView(ProfileView())
     )
         .environmentObject(AppVariables())
 }
