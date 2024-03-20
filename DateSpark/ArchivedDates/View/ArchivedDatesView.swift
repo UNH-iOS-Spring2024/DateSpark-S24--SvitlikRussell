@@ -11,9 +11,9 @@ import FirebaseFirestore
 
 
 struct ArchivedDatesView: View {
-    @EnvironmentObject var archiveViewModel: ArchivedDatesModel
-
-    private let dateFormatter: DateFormatter = {
+    @EnvironmentObject var archiveViewModel: ArchiveViewModel
+    
+    private let itemFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         formatter.timeStyle = .short
@@ -21,32 +21,44 @@ struct ArchivedDatesView: View {
     }()
     
     var body: some View {
-        VStack {
+        VStack{
             Text("Archived Dates")
                 .font(.title)
                 .underline()
                 .padding()
             
-            HStack {
-               // Text("Title: ")
-              //  Text("Date: ")
+            HStack{
+                Text("Title: ")
+                Text("Date: ")
                 Text("Rating: ")
             }
+            HStack{
+                Text("Title: ")
+                Text("Date: ")
+                Text("Rating: ")
+            }
+            List(archiveViewModel.archivedItems) { item in
+                Text("\(item.date, formatter: itemFormatter)")
+            }
+            /*var body: some View {
+             VStack{
+             Text("Archived Dates")
+             .font(.title)
+             .underline()
+             .padding()
+             
+             HStack{
+             Text("Title: ")
+             Text("Date: ")
+             Text("Rating: ")
+             }
+             HStack{
+             Text("Title: ")
+             Text("Date: ")
+             Text("Rating: ")
+             }
+             } */
             
-           /* ForEach(archiveViewModel.archivedItems) { item in
-                HStack {
-                   // Text(item.title),
-                    //Text(dateFormatter.string(from: item.date)) // Format the date
-                    Spacer()
-                    Text("\(item.rating)")
-                }
-            } */
-            .padding() // Move the padding inside the VStack
         }
     }
-}
-                            
-
-#Preview {
-    ArchivedDatesView()
 }
