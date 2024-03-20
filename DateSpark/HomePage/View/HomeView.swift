@@ -68,7 +68,6 @@ struct HomeView: View {
                 
                 HStack {
                     Spacer()
-                    
                     Button(action: {
                         self.isShowingPopover = true
                         print("Add date button pressed.")
@@ -88,6 +87,7 @@ struct HomeView: View {
                                         
                                         Button(action: {
                                             print("Add Buton pressed")
+                                            self.isShowingPopover = false
                                         }) {
                                             Text ("Add Date")
                                                 .frame(maxWidth: 100)
@@ -153,10 +153,7 @@ struct HomeView: View {
             }
         }
     }
-
-
-    
-    
+ 
     
     struct HomeView_Previews: PreviewProvider {
         static var previews: some View {
