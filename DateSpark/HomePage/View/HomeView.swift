@@ -12,7 +12,7 @@ import FirebaseFirestore
 struct HomeView: View {
     @State private var isShowingPopover = false
     @State var txtchoice: String = ""
-    
+    @State private var wheelAngle: Double = 0
     @State var dates: [DateClass] = []
     @State private var isSpinning = false
     private var db = Firestore.firestore()
@@ -41,14 +41,22 @@ struct HomeView: View {
                 
                 VStack {
                     PieChartView(dataPoints: $dates)
+                        .rotationEffect(.degrees(wheelAngle))
                 }
-                    .rotationEffect(.degrees(isSpinning ? 360 : 0)) //this is to get the wheel to spin
-                    .animation(.easeInOut(duration: 1.0)) // Add animation
+ 
 
                 VStack{
-                    Button (action: {
+                    Button(action: {
                         print("Button to start the wheel has been pressed")
-                        self.isSpinning.toggle() //Get this to cause the wheel to spin
+                        let randomAngle = Double.random(in: 0...360) //create random angle for the wheel
+                        let rotations = Int.random(in: 2...5) //random number of wheel rotations
+                        let totalRotation = 360.0 * Double(rotations) + randomAngle  
+                        withAnimation(.easeInOut(duration: 3.0)) {
+                            self.wheelAngle += totalRotation
+                        }
+                        withAnimation(.easeInOut(duration: 1.5)) {
+                            self.isSpinning.toggle() // Toggle spinning state
+                        }
                     }) {
                         Image(systemName: "triangle")
                             .resizable()
