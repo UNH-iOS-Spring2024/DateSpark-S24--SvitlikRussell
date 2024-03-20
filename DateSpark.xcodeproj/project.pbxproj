@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50CC4E712BAA5FFF00782828 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50CC4E702BAA5FFF00782828 /* GoogleService-Info.plist */; };
+		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
 		FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */; };
 		FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04F02BAA4FFB0076F915 /* ContentView.swift */; };
 		FBDB04F32BAA4FFE0076F915 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBDB04F22BAA4FFE0076F915 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		50CC4E702BAA5FFF00782828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
 		FBDB04EB2BAA4FFB0076F915 /* DateSpark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateSpark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSparkApp.swift; sourceTree = "<group>"; };
 		FBDB04F02BAA4FFB0076F915 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -117,6 +119,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50CC4E722BAA642C00782828 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				50CC4E732BAA643800782828 /* DateClass.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		FBDB04E22BAA4FFB0076F915 = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +245,7 @@
 		FBDB05142BAA53F20076F915 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				50CC4E722BAA642C00782828 /* Model */,
 				FBDB05132BAA53F20076F915 /* View */,
 			);
 			path = HomePage;
@@ -463,6 +474,7 @@
 				FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */,
 				FBDB052E2BAA53F50076F915 /* Card.swift in Sources */,
 				FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */,
+				50CC4E742BAA643800782828 /* DateClass.swift in Sources */,
 				FBDB05082BAA53D20076F915 /* SignUp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
