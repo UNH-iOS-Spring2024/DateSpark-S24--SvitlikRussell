@@ -14,7 +14,7 @@ struct HomeView: View {
     @State var txtchoice: String = ""
     
     @State var dates: [DateClass] = []
-    
+    @State private var isSpinning = false
     private var db = Firestore.firestore()
     
     var body: some View {
@@ -39,12 +39,16 @@ struct HomeView: View {
                 }
                 .padding(.top, 100)
                 
-                PieChartView(dataPoints: $dates)
-                
+                VStack {
+                    PieChartView(dataPoints: $dates)
+                }
+                    .rotationEffect(.degrees(isSpinning ? 360 : 0)) //this is to get the wheel to spin
+                    .animation(.easeInOut(duration: 1.0)) // Add animation
+
                 VStack{
                     Button (action: {
                         print("Button to start the wheel has been pressed")
-                        // Get this to cause the wheel to spin
+                        self.isSpinning.toggle() //Get this to cause the wheel to spin
                     }) {
                         Image(systemName: "triangle")
                             .resizable()
@@ -115,8 +119,10 @@ struct HomeView: View {
                                angularInset: 3.5)
                         .cornerRadius(35)
                         .foregroundStyle(Color.pink)
+                    
                 }
             }
+            
             .padding()
             .padding(.bottom, 30)
         }
