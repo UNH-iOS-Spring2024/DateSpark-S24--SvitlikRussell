@@ -42,13 +42,16 @@ struct HomeView: View {
                 PieChartView(dataPoints: $dates)
                 
                 VStack{
-                    Image(systemName: "triangle")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                    
-                        .padding(.bottom, 40)
-
+                    Button (action: {
+                        print("Button to start the wheel has been pressed")
+                        // Get this to cause the wheel to spin
+                    }) {
+                        Image(systemName: "triangle")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.purple)
+                            .padding(.bottom, 40)
+                    }
                 }
                 
                 HStack {
