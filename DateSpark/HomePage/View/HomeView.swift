@@ -137,19 +137,21 @@ struct HomeView: View {
     }
     
     func getDatesFromFirebase() {
-        db.collection("Date")
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        print("\(document.documentID)")
-                        if let dateitem = DateClass(id: document.documentID, data: document.data()) { // Corrected the class name to DateModel
-                            self.dates.append(dateitem)
-                        }
+        db.collection("Date").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                // Clear the dates array before appending new items
+                self.dates.removeAll()
+                
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID)")
+                    if let dateitem = DateClass(id: document.documentID, data: document.data()) {
+                        self.dates.append(dateitem)
                     }
                 }
             }
+        }
     }
 
 
