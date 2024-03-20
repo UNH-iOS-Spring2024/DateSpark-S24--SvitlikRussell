@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		50CC4E712BAA5FFF00782828 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50CC4E702BAA5FFF00782828 /* GoogleService-Info.plist */; };
+		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
 		FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */; };
 		FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04F02BAA4FFB0076F915 /* ContentView.swift */; };
@@ -24,7 +24,6 @@
 		FBDB05302BAA53F50076F915 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05152BAA53F30076F915 /* Movie.swift */; };
 		FBDB05312BAA53F50076F915 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05182BAA53F30076F915 /* MapView.swift */; };
 		FBDB05342BAA53F50076F915 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB051D2BAA53F40076F915 /* FriendsView.swift */; };
-		FBDB05352BAA53F50076F915 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBDB05202BAA53F40076F915 /* Preview Assets.xcassets */; };
 		FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05242BAA53F50076F915 /* SelectedPage.swift */; };
 		FBDB05372BAA53F50076F915 /* SparkGPTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05272BAA53F50076F915 /* SparkGPTView.swift */; };
 		FBDB053A2BAA54C20076F915 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05392BAA54C20076F915 /* FirebaseAnalytics */; };
@@ -57,7 +56,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		50CC4E702BAA5FFF00782828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		507378462BAA774D009ED169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
 		FBDB04EB2BAA4FFB0076F915 /* DateSpark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateSpark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSparkApp.swift; sourceTree = "<group>"; };
@@ -76,7 +75,6 @@
 		FBDB05152BAA53F30076F915 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		FBDB05182BAA53F30076F915 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FBDB051D2BAA53F40076F915 /* FriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
-		FBDB05202BAA53F40076F915 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FBDB05242BAA53F50076F915 /* SelectedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPage.swift; sourceTree = "<group>"; };
 		FBDB05272BAA53F50076F915 /* SparkGPTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkGPTView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,7 +144,7 @@
 		FBDB04ED2BAA4FFB0076F915 /* DateSpark */ = {
 			isa = PBXGroup;
 			children = (
-				50CC4E702BAA5FFF00782828 /* GoogleService-Info.plist */,
+				507378462BAA774D009ED169 /* GoogleService-Info.plist */,
 				FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */,
 				FBDB04F02BAA4FFB0076F915 /* ContentView.swift */,
 				FBDB04F22BAA4FFE0076F915 /* Assets.xcassets */,
@@ -157,7 +155,6 @@
 				FBDB05142BAA53F20076F915 /* HomePage */,
 				FBDB051A2BAA53F30076F915 /* MapView */,
 				FBDB05172BAA53F30076F915 /* Movies */,
-				FBDB05212BAA53F40076F915 /* Preview Content */,
 				FBDB05262BAA53F50076F915 /* SelectedDates */,
 				FBDB05292BAA53F50076F915 /* SparkGPT */,
 				FBDB05112BAA53F20076F915 /* UI */,
@@ -299,15 +296,6 @@
 			path = Friends;
 			sourceTree = "<group>";
 		};
-		FBDB05212BAA53F40076F915 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				FBDB05202BAA53F40076F915 /* Preview Assets.xcassets */,
-			);
-			name = "Preview Content";
-			path = "../../DateSpark-S24-Svitlik-Russell-Dev-Sarah/DateSpark-S24-Svitlik-Russell/Preview Content";
-			sourceTree = "<group>";
-		};
 		FBDB05222BAA53F50076F915 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,9 +434,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBDB05352BAA53F50076F915 /* Preview Assets.xcassets in Resources */,
 				FBDB04F32BAA4FFE0076F915 /* Assets.xcassets in Resources */,
-				50CC4E712BAA5FFF00782828 /* GoogleService-Info.plist in Resources */,
+				507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
