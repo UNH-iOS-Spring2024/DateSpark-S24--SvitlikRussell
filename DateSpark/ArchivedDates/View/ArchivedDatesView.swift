@@ -62,3 +62,6 @@ struct ArchivedDatesView: View {
         }
     }
 }
+#Preview {
+    ArchivedDatesView()
+}
