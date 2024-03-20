@@ -33,14 +33,14 @@ struct ArchivedDatesView: View {
                 Text("Rating: ")
             }
             
-            ForEach(archiveViewModel.archivedItems) { item in
+           /* ForEach(archiveViewModel.archivedItems) { item in
                 HStack {
                    // Text(item.title),
                     //Text(dateFormatter.string(from: item.date)) // Format the date
                     Spacer()
                     Text("\(item.rating)")
                 }
-            }
+            } */
             .padding() // Move the padding inside the VStack
         }
     }

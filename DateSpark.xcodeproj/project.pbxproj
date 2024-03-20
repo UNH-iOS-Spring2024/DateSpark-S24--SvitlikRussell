@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50CC4E712BAA5FFF00782828 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50CC4E702BAA5FFF00782828 /* GoogleService-Info.plist */; };
 		FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */; };
 		FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04F02BAA4FFB0076F915 /* ContentView.swift */; };
 		FBDB04F32BAA4FFE0076F915 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBDB04F22BAA4FFE0076F915 /* Assets.xcassets */; };
@@ -52,10 +53,10 @@
 		FBDB056A2BAA54C20076F915 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05692BAA54C20076F915 /* FirebaseRemoteConfigSwift */; };
 		FBDB056C2BAA54C20076F915 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB056B2BAA54C20076F915 /* FirebaseStorage */; };
 		FBDB056E2BAA54C20076F915 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB056D2BAA54C20076F915 /* FirebaseStorageCombine-Community */; };
-		FBDB05702BAA54E80076F915 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBDB056F2BAA54E80076F915 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50CC4E702BAA5FFF00782828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBDB04EB2BAA4FFB0076F915 /* DateSpark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateSpark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSparkApp.swift; sourceTree = "<group>"; };
 		FBDB04F02BAA4FFB0076F915 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,7 +77,6 @@
 		FBDB05202BAA53F40076F915 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FBDB05242BAA53F50076F915 /* SelectedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPage.swift; sourceTree = "<group>"; };
 		FBDB05272BAA53F50076F915 /* SparkGPTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkGPTView.swift; sourceTree = "<group>"; };
-		FBDB056F2BAA54E80076F915 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,7 +136,7 @@
 		FBDB04ED2BAA4FFB0076F915 /* DateSpark */ = {
 			isa = PBXGroup;
 			children = (
-				FBDB056F2BAA54E80076F915 /* GoogleService-Info.plist */,
+				50CC4E702BAA5FFF00782828 /* GoogleService-Info.plist */,
 				FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */,
 				FBDB04F02BAA4FFB0076F915 /* ContentView.swift */,
 				FBDB04F22BAA4FFE0076F915 /* Assets.xcassets */,
@@ -435,9 +435,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBDB05702BAA54E80076F915 /* GoogleService-Info.plist in Resources */,
 				FBDB05352BAA53F50076F915 /* Preview Assets.xcassets in Resources */,
 				FBDB04F32BAA4FFE0076F915 /* Assets.xcassets in Resources */,
+				50CC4E712BAA5FFF00782828 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,6 @@
 import Foundation
 
 class ArchivedDatesModel: ObservableObject {
-    @Published var archivedItems: [DateData] = []
+//    @Published var archivedItems: [DateData] = []
     
 }

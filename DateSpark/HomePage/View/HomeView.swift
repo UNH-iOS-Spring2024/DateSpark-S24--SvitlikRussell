@@ -1,27 +1,55 @@
-
+//
+//  ContentView.swift
+//  DateSpark-S24-Svitlik-Russell
+//
+//  Created by Sarah Svitlik & Shannon Russel on 3/01/24
+//
 
 import SwiftUI
 import Charts
 import FirebaseFirestore
 
-struct DateData: Identifiable {
-    var id = UUID()
-    var title: String
-    var description: String
-    var outfit: String
-    var time: String
-    var weather: String
-    var portion: Double
-    var rating: Double
+class DateClass: ObservableObject{
+    
+    var id: String
+    
+    @Published var title: String
+    @Published var description: String
+    @Published var outfit: String
+    @Published var time: String
+    @Published var weather: String
+    @Published var portion: Double
+    @Published var rating: String
+
+    required init?(id: String, data: [String: Any]) {
+              let title = data["title"] as? String != nil ? data["title"] as! String : ""
+              let description = data["description"] as? String != nil ? data["description"] as! String : ""
+              let outfit = data["outfit"] as? String != nil ? data["outfit"] as! String : ""
+              let time = data["time"] as? String != nil ? data["time"] as! String : ""
+              let weather = data["weather"] as? String != nil ? data["weather"] as! String : ""
+              let portion = data["portion"] as? Double != nil ? data["portion"] as! Double : 50
+              let rating = data["rating"] as? String != nil ? data["rating"] as! String : ""
+
+
+        self.id = id
+        self.title = title
+        self.description = description
+        self.outfit = outfit
+        self.time = time
+        self.weather = weather
+        self.portion = portion
+        self.rating = rating
+    }
 }
 
 struct HomeView: View {
     @State private var isShowingPopover = false
     @State var txtchoice: String = ""
-    @State var dates = [DateData]()
+    
+    @State var dates: [DateClass] = []
     
     private var db = Firestore.firestore()
-
+    
     var body: some View {
         NavigationView{
             VStack {
@@ -44,7 +72,7 @@ struct HomeView: View {
                 }
                 .padding(.top, 100)
                 
-                PieChartView(dataPoints: dates)
+                PieChartView(dataPoints: $dates)
                 
                 HStack {
                     Spacer()
@@ -90,20 +118,19 @@ struct HomeView: View {
                 .padding(.trailing, 20)
             }
         }
-            
-            .onAppear {
-                fetchData()
-            }
+        
+        .onAppear {
+            getDatesFromFirebase()
         }
-
+    }
+    
     struct PieChartView: View {
-        let dataPoints: [DateData]
+        @Binding var dataPoints: [DateClass]
 
         var body: some View {
-
             Chart {
-                ForEach (dataPoints) { d in
-                    SectorMark(angle: .value("Portion", d.portion),
+                ForEach(dataPoints.indices, id: \.self) { index in
+                    SectorMark(angle: .value("portion", self.dataPoints[index].portion),
                                innerRadius: .ratio(0.618),
                                angularInset: 3.5)
                         .cornerRadius(35)
@@ -114,33 +141,31 @@ struct HomeView: View {
             .padding(.bottom, 70)
         }
     }
-
-    func fetchData() {
-        db.collection("Date").addSnapshotListener { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("No documents or error: \(error?.localizedDescription ?? "Unknown error")")
-                return
+    
+    func getDatesFromFirebase() {
+        db.collection("Date")
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        print("\(document.documentID)")
+                        if let dateitem = DateClass(id: document.documentID, data: document.data()) { // Corrected the class name to DateModel
+                            self.dates.append(dateitem)
+                        }
+                    }
+                }
             }
-            
-            self.dates = documents.compactMap { queryDocumentSnapshot in
-                let data = queryDocumentSnapshot.data()
-                let title = data["title"] as? String ?? ""
-                let description = data["description"] as? String ?? ""
-                let outfit = data["outfit"] as? String ?? ""
-                let time = data["time"] as? String ?? ""
-                let weather = data["weather"] as? String ?? ""
-                let portion = data["portion"] as? Double ?? 0
-                let rating = data["rating"] as? Double ?? 0
+    }
 
-                return DateData(title: title, description: description, outfit: outfit, time: time, weather: weather, portion: portion, rating: rating)
-            }
+
+    
+    
+    
+    struct HomeView_Previews: PreviewProvider {
+        static var previews: some View {
+            HomeView()
         }
     }
 }
- 
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
-}
