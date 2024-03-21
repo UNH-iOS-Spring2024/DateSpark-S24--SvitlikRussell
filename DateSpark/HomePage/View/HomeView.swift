@@ -23,7 +23,7 @@ struct HomeView: View {
                 HStack {
                     Spacer()
                     
-                    NavigationLink(destination: ArchivedDatesView()){
+                    NavigationLink(destination: ArchivedDatesView().environmentObject(ArchivedViewModel())){
                         Image(systemName: "archivebox")
                             .resizable()
                             .frame(width: 28, height: 28)
