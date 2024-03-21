@@ -1,16 +1,16 @@
 //DateSpark-S24-Svitlik-Russell
 
 import Foundation
+import FirebaseFirestore
 
-struct DateItem: Identifiable {
-    let id = UUID()
+struct DateItem: /*Identifiable,*/ Codable {
+//    let id = UUID()
+    var title: String
     var date: Date
-}
-
-class ArchiveViewModel: ObservableObject {
-    @Published var archivedItems: [DateItem] = []
+    var rating: String
+    var outfit: String
+    var weather: String
+    var time: Timestamp
     
-    func add(item: DateItem) {
-        archivedItems.append(item)
-    }
+    var timeDate: Date{ return time.dateValue() }
 }

@@ -10,7 +10,7 @@ struct DateSparkApp: App {
         
         FirebaseApp.configure()
         }
-    @StateObject private var archiveViewModel = ArchiveViewModel() // Initialize the shared data model
+    @StateObject private var archiveViewModel = ArchivedViewModel() // Initialize the shared data model
 
     var body: some Scene {
         WindowGroup {

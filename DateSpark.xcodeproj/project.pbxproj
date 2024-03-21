@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
+		FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */; };
 		FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */; };
 		FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04F02BAA4FFB0076F915 /* ContentView.swift */; };
 		FBDB04F32BAA4FFE0076F915 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBDB04F22BAA4FFE0076F915 /* Assets.xcassets */; };
 		FBDB05062BAA53D20076F915 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05012BAA53D20076F915 /* Login.swift */; };
 		FBDB05072BAA53D20076F915 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05022BAA53D20076F915 /* ProfileView.swift */; };
 		FBDB05082BAA53D20076F915 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05032BAA53D20076F915 /* SignUp.swift */; };
-		FBDB052A2BAA53F50076F915 /* ArchivedDatesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05092BAA53F20076F915 /* ArchivedDatesModel.swift */; };
+		FBDB052A2BAA53F50076F915 /* ArchivedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05092BAA53F20076F915 /* ArchivedViewModel.swift */; };
 		FBDB052B2BAA53F50076F915 /* DateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB050A2BAA53F20076F915 /* DateItem.swift */; };
 		FBDB052C2BAA53F50076F915 /* ArchivedDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB050C2BAA53F20076F915 /* ArchivedDatesView.swift */; };
 		FBDB052D2BAA53F50076F915 /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB050F2BAA53F20076F915 /* BottomBar.swift */; };
@@ -58,6 +59,7 @@
 /* Begin PBXFileReference section */
 		507378462BAA774D009ED169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
+		FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedItem.swift; sourceTree = "<group>"; };
 		FBDB04EB2BAA4FFB0076F915 /* DateSpark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateSpark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSparkApp.swift; sourceTree = "<group>"; };
 		FBDB04F02BAA4FFB0076F915 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -66,7 +68,7 @@
 		FBDB05012BAA53D20076F915 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		FBDB05022BAA53D20076F915 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		FBDB05032BAA53D20076F915 /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
-		FBDB05092BAA53F20076F915 /* ArchivedDatesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchivedDatesModel.swift; sourceTree = "<group>"; };
+		FBDB05092BAA53F20076F915 /* ArchivedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchivedViewModel.swift; sourceTree = "<group>"; };
 		FBDB050A2BAA53F20076F915 /* DateItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateItem.swift; sourceTree = "<group>"; };
 		FBDB050C2BAA53F20076F915 /* ArchivedDatesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchivedDatesView.swift; sourceTree = "<group>"; };
 		FBDB050F2BAA53F20076F915 /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
@@ -199,7 +201,8 @@
 		FBDB050B2BAA53F20076F915 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FBDB05092BAA53F20076F915 /* ArchivedDatesModel.swift */,
+				FBDB05092BAA53F20076F915 /* ArchivedViewModel.swift */,
+				FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */,
 				FBDB050A2BAA53F20076F915 /* DateItem.swift */,
 			);
 			path = Model;
@@ -450,10 +453,11 @@
 				FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */,
 				FBDB05072BAA53D20076F915 /* ProfileView.swift in Sources */,
 				FBDB05342BAA53F50076F915 /* FriendsView.swift in Sources */,
+				FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */,
 				FBDB05302BAA53F50076F915 /* Movie.swift in Sources */,
 				FBDB052D2BAA53F50076F915 /* BottomBar.swift in Sources */,
 				FBDB05312BAA53F50076F915 /* MapView.swift in Sources */,
-				FBDB052A2BAA53F50076F915 /* ArchivedDatesModel.swift in Sources */,
+				FBDB052A2BAA53F50076F915 /* ArchivedViewModel.swift in Sources */,
 				FBDB05062BAA53D20076F915 /* Login.swift in Sources */,
 				FBDB05372BAA53F50076F915 /* SparkGPTView.swift in Sources */,
 				FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */,

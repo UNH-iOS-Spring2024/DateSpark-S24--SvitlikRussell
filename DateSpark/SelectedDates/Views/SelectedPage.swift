@@ -9,7 +9,7 @@ struct SelectedPage: View {
     @State private var selectedOutfit: String = "Outfit"
     
     @State private var selectedItem: DateItem?
-    @EnvironmentObject var archiveViewModel: ArchiveViewModel
+    @EnvironmentObject var archiveViewModel: ArchivedViewModel
     
     @State private var showingTime = false
     @State private var selectedTime: Date = Date()
@@ -116,13 +116,13 @@ struct SelectedPage: View {
                         }
                     }
                 Text("Selected time: \(timeFormatter.string(from: selectedTime))")
-                Button("Save") {
-                    userToFirebase()
-                    if let itemToSave = selectedItem {
-                    archiveViewModel.add(item: itemToSave) }
-            
+//                Button("Save") {
+//                    userToFirebase()
+//                    if let itemToSave = selectedItem {
+//                    archiveViewModel.add(item: itemToSave) }
+//            
                 }.padding(30)
-            }
+//            }
             
             
         }
@@ -147,6 +147,8 @@ struct SelectedPage: View {
     }
 }
 
-#Preview {
-    SelectedPage()
+struct SelectedPage_Previews: PreviewProvider {
+    static var previews: some View {
+        SelectedPage().environmentObject(ArchivedViewModel()) // Make sure to replace `ArchiveViewModel()` with an actual instance if necessary
+    }
 }
