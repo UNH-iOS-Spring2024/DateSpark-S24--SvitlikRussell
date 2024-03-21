@@ -82,7 +82,8 @@ struct HomeView: View {
                                     VStack {
                                         TextField("Enter a date to the wheel", text: $txtchoice)
                                             .padding()
-                                        
+                                       
+
                                         Spacer()
                                         
                                         Button(action: {
@@ -95,6 +96,7 @@ struct HomeView: View {
                                                 .background(Color.blue)
                                                 .foregroundColor(.white)
                                                 .cornerRadius(10)
+                                            //add the date to Firebase here
                                         }
                                     }
                                     .navigationBarTitle("Add Date", displayMode: .inline) // Set navigation bar title
@@ -155,8 +157,25 @@ struct HomeView: View {
     }
  }
 
+func addDate(userId: String, data: [String : Any]) {
+        let db = Firestore.firestore()
+        var ref: DocumentReference? = nil
+        ref = db.collection("Date").addDocument(data: data) {err in
+            if let err = err {
+                print ("Error adding document: \(err)")
+                } else {
+                        print ("Document added with ID: \(ref!.documentID)")
+                    }
+                }
+            }
+
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }
+}
+
+
+#Preview {
+    ContentView()
 }
