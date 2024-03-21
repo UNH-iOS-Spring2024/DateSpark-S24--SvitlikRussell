@@ -35,39 +35,16 @@ class ArchivedViewModel: ObservableObject {
             
     }
 
-    func updateRating(forItemId itemId: String?, newRating: String) {
-        guard let itemId = itemId else { return }
-        let document = db.collection("Archive").document(itemId)
-        document.updateData(["rating": newRating]) { error in
-            if let error = error {
-                print("Error updating document: \(error)")
-            } else {
-                print("Document successfully updated")
+    func updateRating(forItemId itemId: String, newRating: Int) {
+            let document = db.collection("Archive").document(itemId)
+            document.updateData(["rating": newRating]) { error in
+                if let error = error {
+                    print("Error updating document: \(error)")
+                } else {
+                    print("Document successfully updated with rating \(newRating)")
+                    self.loadData() // Optionally reload data to reflect changes
+                }
             }
         }
-    }
-
-//class ArchiveViewModel: ObservableObject {
-//    @Published var archivedItems = [DateItem]()
-//    
-//    private var db = Firestore.firestore()
-//    
-//    init() {
-//        loadData()
-//    }
-//    
-//    func loadData() {
-//        db.collection("Archive").addSnapshotListener { (querySnapshot, error) in
-//            guard let documents = querySnapshot?.documents else {
-//                print("No documents")
-//                return
-//            }
-//            
-//            self.archivedItems = documents.compactMap { queryDocumentSnapshot -> DateItem? in
-//                try? queryDocumentSnapshot.data(as: DateItem.self)
-//            }
-//        }
-//    }
-
 }
 

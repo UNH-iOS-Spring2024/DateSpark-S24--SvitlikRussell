@@ -8,9 +8,9 @@ struct ArchivedItem: Identifiable, Codable {
     var outfit: String
     var weather: String
     var time: Date
-//    var rating: String?
+    var rating: Int?
     
     enum CodingKeys: String, CodingKey {
-        case outfit, weather, time /*, rating*/
+        case outfit, weather, time, rating
     }
 }
