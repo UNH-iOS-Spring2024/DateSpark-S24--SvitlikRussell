@@ -20,17 +20,27 @@ struct ArchivedDatesView: View {
             VStack(alignment: .leading) {
                 //When Generated Dates work, the Archive List will mention the Date with the rest
                 /*Text(item.date)
-                    .font(.headline)*/
+                 .font(.headline)*/
                 Text(item.outfit)
                     .font(.subheadline)
                 Text(item.weather)
                     .font(.subheadline)
                 Text(itemFormatter.string(from: item.time))
                     .font(.caption)
+                
+                HStack { //Rating
+                    ForEach(1...5, id: \.self) { star in
+                        Image(systemName: star <= (item.rating ?? 0) ? "star.fill" : "star")
+                            .foregroundColor(star <= (item.rating ?? 0) ? .yellow : .gray)
+                            .onTapGesture {
+                                viewModel.updateRating(forItemId: item.id, newRating: star)
+                            }
+                    }
+                }
             }
         }
         .onAppear {
-            viewModel.loadData() // Ensure data is loaded when the view appears
+            viewModel.loadData()
         }
         .navigationTitle("Archived Dates")
     }
