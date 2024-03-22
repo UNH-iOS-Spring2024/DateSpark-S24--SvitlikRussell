@@ -87,7 +87,12 @@ struct HomeView: View {
                                         Spacer()
                                         
                                         Button(action: {
-                                            print("Add Buton pressed")
+                                            // Declare dataToAdd here so that it's accessible throughout the closure
+                                            let dataToAdd: [String: Any] = ["title": self.txtchoice, "date": Date()]
+                                            print("Add Button pressed")
+                                            addDate(userId: "userID", data: dataToAdd)
+                                            getDatesFromFirebase()
+                                            self.txtchoice = ""
                                             self.isShowingPopover = false
                                         }) {
                                             Text ("Add Date")
@@ -96,7 +101,6 @@ struct HomeView: View {
                                                 .background(Color.blue)
                                                 .foregroundColor(.white)
                                                 .cornerRadius(10)
-                                            //add the date to Firebase here
                                         }
                                     }
                                     .navigationBarTitle("Add Date", displayMode: .inline) // Set navigation bar title
