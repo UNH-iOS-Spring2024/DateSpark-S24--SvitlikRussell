@@ -19,8 +19,9 @@ class DateClass: ObservableObject{
     @Published var weather: String
     @Published var portion: Double
     @Published var rating: String
+    @Published var index: Int
 
-    required init?(id: String, data: [String: Any]) {
+    required init?(id: String, data: [String: Any], index: Int) {
               let title = data["title"] as? String != nil ? data["title"] as! String : ""
               let description = data["description"] as? String != nil ? data["description"] as! String : ""
               let outfit = data["outfit"] as? String != nil ? data["outfit"] as! String : ""
@@ -38,5 +39,6 @@ class DateClass: ObservableObject{
         self.weather = weather
         self.portion = portion
         self.rating = rating
+        self.index = index  
     }
 }

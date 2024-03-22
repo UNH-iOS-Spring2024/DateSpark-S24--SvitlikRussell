@@ -48,15 +48,7 @@ struct HomeView: View {
                 VStack{
                     Button(action: {
                         print("Button to start the wheel has been pressed")
-                        let randomAngle = Double.random(in: 0...360) //create random angle for the wheel
-                        let rotations = Int.random(in: 2...5) //random number of wheel rotations
-                        let totalRotation = 360.0 * Double(rotations) + randomAngle  
-                        withAnimation(.easeInOut(duration: 3.0)) {
-                            self.wheelAngle += totalRotation
-                        }
-                        withAnimation(.easeInOut(duration: 1.5)) {
-                            self.isSpinning.toggle() // Toggle spinning state
-                        }
+                        spinWheel()
                     }) {
                         Image(systemName: "triangle")
                             .resizable()
@@ -71,6 +63,7 @@ struct HomeView: View {
                     Button(action: {
                         self.isShowingPopover = true
                         print("Add date button pressed.")
+                
                         
                     }) {
                         Image(systemName: "plus.circle")
@@ -142,18 +135,41 @@ struct HomeView: View {
         }
     }
     
+    func spinWheel(){
+        let randomAngle = Double.random(in: 0...360) //create random angle for the wheel
+        let rotations = Int.random(in: 2...5) //random number of wheel rotations
+        let totalRotation = 360.0 * Double(rotations) + randomAngle
+        withAnimation(.easeInOut(duration: 3.0)) {
+            self.wheelAngle += totalRotation
+        }
+        withAnimation(.easeInOut(duration: 1.5)) {
+            self.isSpinning.toggle() // Toggle spinning state
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            let index = calculateIndexFromAngle(self.wheelAngle)
+            print("Index: \(index)")
+        }
+        
+    }
+    
+    func calculateIndexFromAngle(_ angle: Double) -> Int {
+           return Int.random(in: 0..<dates.count)
+       }
+    
     func getDatesFromFirebase() {
         db.collection("Date").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                // Clear the dates array before appending new items
                 self.dates.removeAll()
-                
+                var index = -1
                 for document in querySnapshot!.documents {
                     print("\(document.documentID)")
-                    if let dateitem = DateClass(id: document.documentID, data: document.data()) {
+                    if let dateitem = DateClass(id: document.documentID, data: document.data(), index: index) {
                         self.dates.append(dateitem)
+                        index += 1
+                        print("Document with index of \(index)")
                     }
                 }
             }
