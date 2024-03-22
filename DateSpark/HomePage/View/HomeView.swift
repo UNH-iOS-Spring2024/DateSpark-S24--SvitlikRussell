@@ -126,7 +126,7 @@ struct HomeView: View {
                                angularInset: 3.5)
                         .cornerRadius(35)
                         .foregroundStyle(Color.pink)
-                    
+        
                 }
             }
             
@@ -166,7 +166,7 @@ struct HomeView: View {
                 var index = -1
                 for document in querySnapshot!.documents {
                     print("\(document.documentID)")
-                    if let dateitem = DateClass(id: document.documentID, data: document.data(), index: index) {
+                    if let dateitem = DateClass(id: document.documentID, data: document.data(), title: document.get("title") as? String ?? "", index: index) {
                         self.dates.append(dateitem)
                         index += 1
                         print("Document with index of \(index)")
