@@ -17,6 +17,7 @@ struct HomeView: View {
     @State private var isSpinning = false
     @State private var selectedDate: DateClass? // Track selected date
     @State var index = 0
+    @State var selectedIndex = -1 //index for firebase selected date
     private var db = Firestore.firestore()
     
     var body: some View {
@@ -62,7 +63,7 @@ struct HomeView: View {
                 }
                 
                 VStack {
-                    NavigationLink(destination: SelectedPage()) {
+                    NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex, index: index)) {
                         Text("Show selected date")
                             .frame(maxWidth: 200)
                             .padding()
@@ -179,12 +180,11 @@ struct HomeView: View {
                 print("Error getting documents: \(err)")
             } else {
                 self.dates.removeAll()
-                var index = -1
                 for document in querySnapshot!.documents {
                     print("\(document.documentID)")
                     if let dateitem = DateClass(id: document.documentID, data: document.data(), title: document.get("title") as? String ?? "", index: index) {
                         self.dates.append(dateitem)
-                        index += 1
+                        selectedIndex += 1
                         print("Document with index of \(index)")
                     }
                 }

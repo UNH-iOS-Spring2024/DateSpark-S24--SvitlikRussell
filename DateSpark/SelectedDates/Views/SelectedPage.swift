@@ -5,9 +5,12 @@ import FirebaseFirestore
 
 
 struct SelectedPage: View {
+    @State var selectedIndex: Int
+    @State var index: Int
+    @State var selectedTitle: String = "Title"
+    @State var selectedDescription: String = "Description"
     @State private var selectedWeather: String = "Weather"
     @State private var selectedOutfit: String = "Outfit"
-    
     @State private var selectedItem: DateItem?
     @EnvironmentObject var archiveViewModel: ArchivedViewModel
     
@@ -18,23 +21,23 @@ struct SelectedPage: View {
             formatter.timeStyle = .short
             return formatter
        }
+    
     let db = Firestore.firestore()
     
     var body: some View {
         VStack{
-            Spacer()
+            
             Text("Selected Choice...")
                 .font(.title)
-            
-            Text ("Sight Seeing") //Pull from wheel
+ 
+            Text (selectedTitle)
                 .font(.system(size: 24))
                 .underline()
                 .padding(10)
-            Spacer()
             
-            Text("Description") //Generate from choice
+            Text(selectedDescription)
             
-            
+        
             //Menu for Weather choice
             Menu(selectedWeather) {
                 Button(action: { selectedWeather = "Sunny" }) {
@@ -97,7 +100,7 @@ struct SelectedPage: View {
             //Ideal Time
             
             VStack {
-                Button("Ideal Time") { showingTime = true }
+                Button("Best Time") { showingTime = true }
                     .padding()
                     .sheet(isPresented: $showingTime) {
                         VStack {
@@ -145,10 +148,44 @@ struct SelectedPage: View {
             }
         }
     }
+    
+    func selectDateFromFirebase(forIndex index: Int) {
+        let db = Firestore.firestore()
+        let query = db.collection("Date")
+            .whereField("index", isEqualTo: index)
+            .limit(to: 1)
+        
+        query.getDocuments() { (querySnapshot, error) in
+            if let error = error {
+                print("Error in getting documents: \(error)")
+            } else {
+                guard let document = querySnapshot?.documents.first else {
+                    print("Document not found")
+                    return
+                }
+                let title = document["title"] as? String ?? ""
+                          let description = document["description"] as? String ?? ""
+                          let weather = document["weather"] as? String ?? ""
+                          let outfit = document["outfit"] as? String ?? ""
+                          let time = (document["time"] as? Timestamp)?.dateValue() ?? Date()
+                
+                self.selectedTitle = title
+                self.selectedDescription = description
+                self.selectedWeather = weather
+                self.selectedOutfit = outfit
+                self.selectedTime = time
+             }
+        }
+    }
+
+    
 }
+
+
 
 struct SelectedPage_Previews: PreviewProvider {
     static var previews: some View {
-        SelectedPage().environmentObject(ArchivedViewModel()) // Make sure to replace `ArchiveViewModel()` with an actual instance if necessary
+        SelectedPage(selectedIndex: 0, index: 1)
+            .environmentObject(ArchivedViewModel())
     }
 }
