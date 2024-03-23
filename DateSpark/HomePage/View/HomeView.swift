@@ -15,6 +15,8 @@ struct HomeView: View {
     @State private var wheelAngle: Double = 0
     @State var dates: [DateClass] = []
     @State private var isSpinning = false
+    @State private var selectedDate: DateClass? // Track selected date
+    @State var index = 0
     private var db = Firestore.firestore()
     
     var body: some View {
@@ -43,9 +45,9 @@ struct HomeView: View {
                     PieChartView(dataPoints: $dates)
                         .rotationEffect(.degrees(wheelAngle))
                 }
- 
-
-                VStack{
+                
+                
+                VStack {
                     Button(action: {
                         print("Button to start the wheel has been pressed")
                         spinWheel()
@@ -55,8 +57,22 @@ struct HomeView: View {
                             .frame(width: 50, height: 50)
                             .foregroundColor(.purple)
                             .padding(.bottom, 40)
+                        
                     }
                 }
+                
+                VStack {
+                    NavigationLink(destination: SelectedPage()) {
+                        Text("Show selected date")
+                            .frame(maxWidth: 200)
+                            .padding()
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding(.bottom, 30)
+                }
+
                 
                 HStack {
                     Spacer()
@@ -197,5 +213,5 @@ struct HomeView_Previews: PreviewProvider {
 
 
 #Preview {
-    ContentView()
+    HomeView()
 }
