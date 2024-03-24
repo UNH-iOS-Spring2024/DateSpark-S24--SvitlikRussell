@@ -7,15 +7,17 @@ import FirebaseFirestore
 struct SelectedPage: View {
     @State var selectedIndex: Int
     @State var index: Int
-    @State var selectedTitle: String = "Title"
-    @State var selectedDescription: String = "Description"
+    @State var selectedTitle: String
+    @State var selectedDescription: String
     @State private var selectedWeather: String = "Weather"
     @State private var selectedOutfit: String = "Outfit"
-    @State private var selectedItem: DateItem?
-    @EnvironmentObject var archiveViewModel: ArchivedViewModel
+    @State private var selectedTime: Date = Date()
+    
+//    @State private var selectedItem: DateItem?
+//    @EnvironmentObject var archiveViewModel: ArchivedViewModel
     
     @State private var showingTime = false
-    @State private var selectedTime: Date = Date()
+    
         private var timeFormatter: DateFormatter {
             let formatter = DateFormatter()
             formatter.timeStyle = .short
@@ -27,11 +29,11 @@ struct SelectedPage: View {
     var body: some View {
         VStack{
             
-            Text("Selected Choice...")
-                .font(.title)
- 
-            Text (selectedTitle)
+            Text("Selected Choice:")
                 .font(.system(size: 24))
+            
+            Text(selectedTitle)
+                .font(.title)
                 .underline()
                 .padding(10)
             
@@ -119,14 +121,10 @@ struct SelectedPage: View {
                         }
                     }
                 Text("Selected time: \(timeFormatter.string(from: selectedTime))")
-//                Button("Save") {
-//                    userToFirebase()
-//                    if let itemToSave = selectedItem {
-//                    archiveViewModel.add(item: itemToSave) }
-//            
-                }.padding(30)
-//            }
             
+                }/*.padding(30)*/
+//            }
+                .onAppear { selectDateFromFirebase(forIndex: index) }
             
         }
         .font(.system(size: 25))
@@ -158,16 +156,13 @@ struct SelectedPage: View {
         query.getDocuments() { (querySnapshot, error) in
             if let error = error {
                 print("Error in getting documents: \(error)")
-            } else {
-                guard let document = querySnapshot?.documents.first else {
-                    print("Document not found")
-                    return
-                }
-                let title = document["title"] as? String ?? ""
-                          let description = document["description"] as? String ?? ""
-                          let weather = document["weather"] as? String ?? ""
-                          let outfit = document["outfit"] as? String ?? ""
-                          let time = (document["time"] as? Timestamp)?.dateValue() ?? Date()
+            } else if let document = querySnapshot?.documents.first{
+                
+                let title = document.get("title") as? String ?? "N/A"
+                let description = document.get("description") as? String ?? "N/A"
+                let weather = document["weather"] as? String ?? ""
+                let outfit = document["outfit"] as? String ?? ""
+                let time = (document["time"] as? Timestamp)?.dateValue() ?? Date()
                 
                 self.selectedTitle = title
                 self.selectedDescription = description
@@ -177,15 +172,13 @@ struct SelectedPage: View {
              }
         }
     }
-
-    
 }
 
 
 
 struct SelectedPage_Previews: PreviewProvider {
     static var previews: some View {
-        SelectedPage(selectedIndex: 0, index: 1)
+        SelectedPage(selectedIndex: 0, index: 1, selectedTitle: "Test Title", selectedDescription: "This is a description for previews.")
             .environmentObject(ArchivedViewModel())
     }
 }

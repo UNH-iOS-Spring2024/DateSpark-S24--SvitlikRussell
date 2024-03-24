@@ -14,6 +14,7 @@ struct HomeView: View {
     @State private var selectedDate: DateClass? // Track selected date
     @State var index = 0
     @State var selectedIndex = -1 //index for firebase selected date
+    @State private var showSelectedDateButton = false
     private var db = Firestore.firestore()
     
     var body: some View {
@@ -57,19 +58,22 @@ struct HomeView: View {
                         
                     }
                 }
-                
-                VStack {
-                    NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex, index: index)) {
-                        Text("Show selected date")
-                            .frame(maxWidth: 200)
-                            .padding()
-                            .background(Color.black)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                if showSelectedDateButton{
+                    VStack {
+                        NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
+                                                                 index: index,
+                                                                 selectedTitle: selectedDate?.title ?? "Title",
+                                                                 selectedDescription: selectedDate?.description ?? "Description")) {
+                            Text("Show selected date")
+                                .frame(maxWidth: 200)
+                                .padding()
+                                .background(Color.black)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }
+                                                                 .padding(.bottom, 30)
                     }
-                    .padding(.bottom, 30)
                 }
-
                 
                 HStack {
                     Spacer()
@@ -149,6 +153,7 @@ struct HomeView: View {
     }
     
     func spinWheel(){
+        showSelectedDateButton = false
         let randomAngle = Double.random(in: 0...360) //create random angle for the wheel
         let rotations = Int.random(in: 2...5) //random number of wheel rotations
         let totalRotation = 360.0 * Double(rotations) + randomAngle
@@ -161,6 +166,10 @@ struct HomeView: View {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             let index = calculateIndexFromAngle(self.wheelAngle)
+            self.index = selectedIndex
+            self.selectedIndex = index
+            selectedDate = dates[selectedIndex]
+            self.showSelectedDateButton = true
             print("Index: \(index)")
         }
         
