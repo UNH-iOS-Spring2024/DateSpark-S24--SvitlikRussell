@@ -1,9 +1,5 @@
-//
-//  ContentView.swift
+//  HomeView.swift
 //  DateSpark-S24-Svitlik-Russell
-//
-//  Created by Sarah Svitlik & Shannon Russel on 3/01/24
-//
 
 import SwiftUI
 import Charts
@@ -113,7 +109,7 @@ struct HomeView: View {
                                                 .cornerRadius(10)
                                         }
                                     }
-                                    .navigationBarTitle("Add Date", displayMode: .inline) // Set navigation bar title
+                                    .navigationBarTitle("Add Date", displayMode: .inline)
                                     .navigationBarItems(trailing: Button("Done") {
                                         self.isShowingPopover = false
                                     })
@@ -209,9 +205,4 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }
-}
-
-
-#Preview {
-    HomeView()
 }
