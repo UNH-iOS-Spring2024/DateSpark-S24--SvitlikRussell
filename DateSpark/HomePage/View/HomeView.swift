@@ -136,21 +136,31 @@ struct HomeView: View {
         @Binding var dataPoints: [DateClass]
 
         var body: some View {
-            Chart {
-                ForEach(dataPoints.indices, id: \.self) { index in
-                    SectorMark(angle: .value("portion", self.dataPoints[index].portion),
-                               innerRadius: .ratio(0.618),
-                               angularInset: 3.5)
-                        .cornerRadius(35)
-                        .foregroundStyle(Color.pink)
-        
+            VStack {
+                Chart {
+                    ForEach(dataPoints.prefix(6), id: \.id) { date in  
+                        SectorMark(angle: .value("portion", date.portion),
+                                   innerRadius: .ratio(0.618),
+                                   angularInset: 3.5)
+                            .cornerRadius(35)
+                            .foregroundStyle(Color.pink)
+                    }
+                }
+                .padding()
+                .padding(.bottom, 30)
+                
+                HStack {
+                    ForEach(dataPoints.prefix(5), id: \.id) { date in //
+                        Text(date.title)
+                            .foregroundColor(.white)
+                            .font(.caption)
+                            .padding(4)
+                    }
                 }
             }
-            
-            .padding()
-            .padding(.bottom, 30)
         }
     }
+
     
     func spinWheel(){
         showSelectedDateButton = false
