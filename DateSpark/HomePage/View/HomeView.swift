@@ -154,7 +154,7 @@ struct HomeView: View {
                             .foregroundStyle(Color.pink)
                     }
                 }
-                .frame(width: 300, height: 300)
+                .frame(width: 250, height: 300)
             }
             .padding(.bottom, 50)
         }
@@ -171,7 +171,7 @@ struct HomeView: View {
             self.wheelAngle += totalRotation
         }
         withAnimation(.easeInOut(duration: 1.5)) {
-            self.isSpinning.toggle() // Toggle spinning state
+            self.isSpinning.toggle()
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
