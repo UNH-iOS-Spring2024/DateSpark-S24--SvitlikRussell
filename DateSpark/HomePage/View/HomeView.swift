@@ -11,7 +11,7 @@ struct HomeView: View {
     @State private var wheelAngle: Double = 0
     @State var dates: [DateClass] = []
     @State private var isSpinning = false
-    @State private var selectedDate: DateClass? // Track selected date
+    @State private var selectedDate: DateClass?
     @State var index = 0
     @State var selectedIndex = -1 //index for firebase selected date
     @State private var showSelectedDateButton = false
@@ -33,11 +33,16 @@ struct HomeView: View {
                     .padding(.trailing, 20)
                 }
                 
+                Spacer()
+                
                 HStack {
                     Text("Random Date")
                         .font(.system(size: 40))
                 }
-                .padding(.top, 100)
+                .padding(.bottom,50)
+                .padding(.top,50)
+
+                Spacer()
                 
                 VStack {
                     PieChartView(dataPoints: $dates)
@@ -54,24 +59,26 @@ struct HomeView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundColor(.purple)
-                            .padding(.bottom, 40)
+                           // .padding(.bottom, 100)
                         
                     }
+                    Spacer()
                 }
                 if showSelectedDateButton{
                     VStack {
                         NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
-                                                                 index: index,
-                                                                 selectedTitle: selectedDate?.title ?? "Title",
-                                                                 selectedDescription: selectedDate?.description ?? "Description")) {
+                                index: index,
+                                selectedTitle: selectedDate?.title ?? "Title",
+                                selectedDescription: selectedDate?.description ?? "Description")) {
                             Text("Show selected date")
-                                .frame(maxWidth: 200)
+                                .frame(maxWidth: 300)
+                                //.frame(maxHeight: 100)
                                 .padding()
                                 .background(Color.black)
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                         }
-                                                                 .padding(.bottom, 30)
+                                                                 
                     }
                 }
                 
@@ -122,10 +129,11 @@ struct HomeView: View {
                     }
                 }
                 
-                .padding(.bottom, 20)
+                .padding(.bottom, 100)
                 .padding(.trailing, 20)
             }
-        }
+            
+         }
         
         .onAppear {
             getDatesFromFirebase()
@@ -138,7 +146,7 @@ struct HomeView: View {
         var body: some View {
             VStack {
                 Chart {
-                    ForEach(dataPoints.prefix(6), id: \.id) { date in  
+                    ForEach(dataPoints.prefix(6), id: \.id) { date in
                         SectorMark(angle: .value("portion", date.portion),
                                    innerRadius: .ratio(0.618),
                                    angularInset: 3.5)
@@ -146,20 +154,12 @@ struct HomeView: View {
                             .foregroundStyle(Color.pink)
                     }
                 }
-                .padding()
-                .padding(.bottom, 30)
-                
-                HStack {
-                    ForEach(dataPoints.prefix(5), id: \.id) { date in //
-                        Text(date.title)
-                            .foregroundColor(.white)
-                            .font(.caption)
-                            .padding(4)
-                    }
-                }
+                .frame(width: 300, height: 300)
             }
+            .padding(.bottom, 50)
         }
     }
+
 
     
     func spinWheel(){
