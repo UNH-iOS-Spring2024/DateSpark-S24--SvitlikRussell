@@ -29,7 +29,7 @@ struct HomeView: View {
                             .frame(width: 28, height: 28)
                             .foregroundColor(.pink)
                     }
-                    .padding(.top, 20)
+                    .padding(.top, 40)
                     .padding(.trailing, 20)
                 }
                 
