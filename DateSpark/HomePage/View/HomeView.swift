@@ -1,5 +1,6 @@
 //  HomeView.swift
 //  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russel
 
 import SwiftUI
 import Charts
@@ -64,6 +65,8 @@ struct HomeView: View {
                     }
                     Spacer()
                 }
+    
+                //after hitting the show selected date button:
                 if showSelectedDateButton{
                     VStack {
                         NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
@@ -104,7 +107,6 @@ struct HomeView: View {
                                         Spacer()
                                         
                                         Button(action: {
-                                            // Declare dataToAdd here so that it's accessible throughout the closure
                                             let dataToAdd: [String: Any] = ["title": self.txtchoice, "date": Date()]
                                             print("Add Button pressed")
                                             addDate(userId: "userID", data: dataToAdd)
@@ -140,6 +142,7 @@ struct HomeView: View {
         }
     }
     
+    //Create the pie chart using Swift UI
     struct PieChartView: View {
         @Binding var dataPoints: [DateClass]
 
@@ -160,12 +163,11 @@ struct HomeView: View {
         }
     }
 
-
-    
+    //Spins the wheel after hitting the triangle
     func spinWheel(){
         showSelectedDateButton = false
-        let randomAngle = Double.random(in: 0...360) //create random angle for the wheel
-        let rotations = Int.random(in: 2...5) //random number of wheel rotations
+        let randomAngle = Double.random(in: 0...360)
+        let rotations = Int.random(in: 2...5) //random number of wheel spins from 2-5
         let totalRotation = 360.0 * Double(rotations) + randomAngle
         withAnimation(.easeInOut(duration: 3.0)) {
             self.wheelAngle += totalRotation
@@ -173,7 +175,7 @@ struct HomeView: View {
         withAnimation(.easeInOut(duration: 1.5)) {
             self.isSpinning.toggle()
         }
-        
+        //Below is to match up the index given in the app to the index given in the firebase pulls for the dates
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             let index = calculateIndexFromAngle(self.wheelAngle)
             self.index = selectedIndex
@@ -208,6 +210,7 @@ struct HomeView: View {
     }
  }
 
+//Add date after hitting the plus button
 func addDate(userId: String, data: [String : Any]) {
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
