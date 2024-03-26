@@ -12,8 +12,8 @@ struct HomeView: View {
     @State var dates: [DateClass] = []
     @State private var isSpinning = false
     @State private var selectedDate: DateClass?
-    @State var index = 0
-    @State var selectedIndex = -1 //index for firebase selected date
+    @State var index = 0 // index for the wheel in the app
+    @State var selectedIndex = -1 //index for the wheel for firebase
     @State private var showSelectedDateButton = false
     private var db = Firestore.firestore()
     
@@ -104,7 +104,6 @@ struct HomeView: View {
                                         Spacer()
                                         
                                         Button(action: {
-                                            // Declare dataToAdd here so that it's accessible throughout the closure
                                             let dataToAdd: [String: Any] = ["title": self.txtchoice, "date": Date()]
                                             print("Add Button pressed")
                                             addDate(userId: "userID", data: dataToAdd)
@@ -170,8 +169,8 @@ struct HomeView: View {
     }
     func spinWheel(){
         showSelectedDateButton = false
-        let randomAngle = Double.random(in: 0...360) //create random angle for the wheel
-        let rotations = Int.random(in: 2...5) //random number of wheel rotations
+        let randomAngle = Double.random(in: 0...360)
+        let rotations = Int.random(in: 2...5)//random number of spins from 2-5
         let totalRotation = 360.0 * Double(rotations) + randomAngle
         withAnimation(.easeInOut(duration: 3.0)) {
             self.wheelAngle += totalRotation
