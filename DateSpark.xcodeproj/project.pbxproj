@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
+		FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84B6192BB3899D00E765EF /* SplashScreenView.swift */; };
 		FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */; };
 		FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */; };
 		FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04F02BAA4FFB0076F915 /* ContentView.swift */; };
@@ -59,6 +60,7 @@
 /* Begin PBXFileReference section */
 		507378462BAA774D009ED169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
+		FB84B6192BB3899D00E765EF /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedItem.swift; sourceTree = "<group>"; };
 		FBDB04EB2BAA4FFB0076F915 /* DateSpark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateSpark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSparkApp.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				FBDB05012BAA53D20076F915 /* Login.swift */,
+				FB84B6192BB3899D00E765EF /* SplashScreenView.swift */,
 				FBDB05022BAA53D20076F915 /* ProfileView.swift */,
 				FBDB05032BAA53D20076F915 /* SignUp.swift */,
 			);
@@ -460,6 +463,7 @@
 				FBDB052A2BAA53F50076F915 /* ArchivedViewModel.swift in Sources */,
 				FBDB05062BAA53D20076F915 /* Login.swift in Sources */,
 				FBDB05372BAA53F50076F915 /* SparkGPTView.swift in Sources */,
+				FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */,
 				FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */,
 				FBDB052C2BAA53F50076F915 /* ArchivedDatesView.swift in Sources */,
 				FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */,
