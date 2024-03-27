@@ -1,12 +1,56 @@
-//DateSpark-S24-Svitlik-Russell
+//  ProfileView.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 
 import SwiftUI
+import UIKit
+import FirebaseFirestore
+import FirebaseAuth
 
 struct ProfileView: View {
+    let db = Firestore.firestore()
+    @State private var isSignedOut = false
+    @State private var userProfile = UserProfile(
+        firstName: "",
+        lastName: "",
+        prefName: "",
+        email:"",
+        userID: "" ,
+        joinedDate: "" )
+    
+    
+    private func formatDate(_ date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
+            return formatter.string(from: date)
+        }
+    private func signOut() {
+        do {
+            try Auth.auth().signOut()
+            isSignedOut = true // This triggers the redirection to the Login view
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+  
+    
+    
+    
     var body: some View {
         VStack{
-            Text("Profile")
-                .padding(25)
+            HStack{
+                Image("Logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100)
+                Spacer()
+            }
+            .padding(.leading)
+            
+            Text(userProfile.prefName)
+                .font(.largeTitle)
+                .padding(.top, 20)
             
             Image("PlaceholderImage")
                 .resizable()
@@ -17,43 +61,83 @@ struct ProfileView: View {
                 .shadow(radius: 10)
             
             Spacer()
-            
-            HStack{
-                Text("First Name: ") //Pull from firebase Current placeholder
-                Text("Last Name") //Pull from firebase Current placeholder
+            Group{
+                HStack{
+                    Text("First Name: ")
+                    Text (userProfile.firstName)
+                }
+                HStack{
+                    Text("Last Name: ")
+                    Text (userProfile.lastName)
+                }
+                HStack{
+                    Text("Email: ")
+                    Text (userProfile.email)
+                }
+                HStack {
+                    Text("User ID: ")
+                    Text(userProfile.userID)
+                        .onTapGesture {
+                            UIPasteboard.general.string = userProfile.userID
+                        }
+                    if !userProfile.userID.isEmpty {
+                        Image(systemName: "doc.on.doc")
+                            .onTapGesture {
+                                UIPasteboard.general.string = userProfile.userID
+                            }
+                    }
+                }
+                HStack{
+                    Spacer()
+                    Text("Joined: ")
+                    Text (userProfile.joinedDate)
+                        .underline()
+                    Spacer()
+                }
             }
-            HStack{
-                Text("Email: ")
-                Text ("XYZ") //Pull from firebase Current placeholder
-            }
-            HStack{
-                Text("User ID: ")
-                Text ("XYZ") //Pull from firebase Current placeholder
-            }
-//            Text("Themes")
-            
             Spacer()
             
-            HStack{
-                Spacer()
-                Text("Joined: ")
-                Text ("XYZ")
-                    .underline() //Pull from firebase Current placeholder
+            Button(action: signOut){
+                Text("Sign Out")
+                    .padding()
+                    .border(Color.blue, width: 2)
+            }
+            .padding(.horizontal)
+            
+        }
+        .onAppear{
+            fetchUserProfile()
+        }
+    }
+    
+    func fetchUserProfile(){
+        guard let userEmail = Auth.auth().currentUser?.email else { return }
+        
+        db.collection("User").whereField("email", isEqualTo: userEmail).getDocuments {(querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                let data = document.data()
+                let joinedTimestamp = data["joinedDate"] as? Timestamp ?? Timestamp()
+                let joinedDate = formatDate(joinedTimestamp.dateValue())
                 
-                Spacer()
-                Button(action: {
-                    Login()
-                }) {
-                    Text("Sign Out")
-                        .padding()
-                        .border(Color.blue, width: 2)
+                self.userProfile = UserProfile(
+                    firstName: data["firstName"] as? String ?? "",
+                    lastName: data["lastName"] as? String ?? "",
+                    prefName: data["prefName"] as? String ?? "",
+                    email: data["email"] as? String ?? "",
+                    userID: document.documentID,
+                    joinedDate: joinedDate
+                    )
                 }
-                .padding(.horizontal)
             }
         }
     }
 }
 
-#Preview {
-    ProfileView()
+struct ProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProfileView()
+    }
 }

@@ -13,7 +13,7 @@ struct Login: View {
         NavigationView {
             VStack {
                 HStack{
-                    Image("PlaceholderImage") // Change when I upload logo with no background
+                    Image("Logo") // Change when I upload logo with no background
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 100, height: 50)
@@ -24,7 +24,7 @@ struct Login: View {
                 Text("Sign In")
                     .font(.system(size: 30))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 20) 
+                    .padding(.horizontal, 20)
                     .padding(.top, 10)
                     .padding(.bottom, 20)
                     
