@@ -1,6 +1,6 @@
 //  HomeView.swift
 //  DateSpark-S24-Svitlik-Russell
-//  Sarah Svitlik & Shannon Russel
+//  Sarah Svitlik & Shannon Russell
 
 import SwiftUI
 import Charts

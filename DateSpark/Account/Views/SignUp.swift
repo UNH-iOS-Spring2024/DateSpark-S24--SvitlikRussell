@@ -1,5 +1,7 @@
 //Sarah Svitlik & Shannon Russell
 import SwiftUI
+import Firebase
+import FirebaseAuth
 import FirebaseFirestore
 
 struct SignUp: View {
@@ -12,13 +14,15 @@ struct SignUp: View {
     @State var txtEmail: String = ""
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome = false
+    @State private var errorMessage : String? = nil
 
     var body: some View {
         NavigationView {
             VStack {
                 Text("Welcome to Date Spark")
-                    .font(.system(size: 40))
+                    .font(.system(size: 30))
                     .bold()
+                
                 Text("Create An Account")
                     .font(.system(size: 30))
                     .bold()
@@ -30,14 +34,21 @@ struct SignUp: View {
                     .autocapitalization(.none)
                 SecureField("Password", text: $txtPassword)
 
+                if let errorMessage = errorMessage{
+                    Text (errorMessage)
+                        .foregroundColor(.red)
+                }
+                
                 Button(action: {
                     if txtPassword != "" {
                         userToFirebase()
                     }
                 }) {
                     Text("Sign Up!")
-                        .font(.system(size: 28))
+                        .font(.system(size: 25))
                 }
+                .disabled(txtEmail.isEmpty || txtPassword.isEmpty)
+                
                 NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
                 
                 NavigationLink(destination: Login()) {
@@ -62,20 +73,26 @@ struct SignUp: View {
     }
     
     func userToFirebase(){
-        let data = ["firstName" : txtFirstName,
-                    "lastName" : txtLastName,
-                    "prefName" : txtPrefName,
-                    "email" : txtEmail,
-                    "password" : txtPassword ] as [String : Any]
-        
-        var ref: DocumentReference? = nil
-        ref = db.collection("User").addDocument(data: data) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                print("Document added with ID: \(ref!.documentID)")
-                DispatchQueue.main.async {
-                    self.shouldNavigateToHome = true // Trigger navigation to HomeView
+        Auth.auth().createUser(withEmail: txtEmail, password: txtPassword ) { authResult, error in
+            if let error = error{
+                self.errorMessage = "Error creating user: \(error.localizedDescription)"
+                return
+            }
+            let userData = ["firstName" : txtFirstName,
+                            "lastName" : txtLastName,
+                            "prefName" : txtPrefName,
+                            "email" : txtEmail]
+            if let userId = authResult?.user.uid{
+                self.db.collection("User").document(userId).setData(userData){err in
+                    if let err = err{
+                    self.errorMessage = "Error adding user details: \(err.localizedDescription)"
+                } else {
+                    print("User details added with ID: \(userId)")
+                    DispatchQueue.main.async{
+                        self.resetTextFields()
+                        self.shouldNavigateToHome = true
+                        }
+                    }
                 }
             }
         }
