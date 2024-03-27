@@ -12,24 +12,40 @@ struct Login: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Welcome Back to")
-                Text("Date Spark")
+                HStack{
+                    Image("PlaceholderImage") // Change when I upload logo with no background
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 100, height: 50)
+                    Spacer()
+                }
+                .padding()
+                
+                Text("Sign In")
+                    .font(.system(size: 30))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 20) 
+                    .padding(.top, 10)
+                    .padding(.bottom, 20)
+                    
+                Text("Welcome Back")
                     .font(.system(size: 30))
                     .bold()
                     .padding(.bottom,10)
-                Text("Sign In to Your Account")
-                    .font(.system(size: 20))
-                    .padding(.bottom, 20)
+                
                 
                 TextField("Email", text: $txtEmail)
+                    .font(.system(size:30))
                     .autocapitalization(.none)
-                
-                SecureField("Password", text: $txtPassword) //SecureField hides the text
-                    .padding()
+                    .keyboardType(.emailAddress)
+                SecureField("Password", text: $txtPassword)
+                    .font(.system(size:30))
+                    .padding(.bottom, 20)
                 
                 if loginFailed {
                     Text("Failed to login. Please check your credentials.")
                         .foregroundColor(.red)
+                        .padding()
                 }
                 
                 Button(action: loginUser) {
@@ -52,24 +68,22 @@ struct Login: View {
         }
     }
     
-    func loginUser() {//NOT REALLY FUNCTIONAL RN
+    func loginUser() {
         Auth.auth().signIn(withEmail: txtEmail, password: txtPassword) { authResult, error in
             if let error = error {
                 print("Error signing in: \(error.localizedDescription)")
                 self.loginFailed = true
             } else {
-                // Navigate into Homepage
                 print("User logged in successfully")
                 self.loginFailed = false
                 self.shouldNavigateToHome = true
-                
             }
         }
     }
 }
 
-
-
-#Preview {
-    Login()
+struct Login_Previews: PreviewProvider {
+    static var previews: some View {
+        Login()
+    }
 }
