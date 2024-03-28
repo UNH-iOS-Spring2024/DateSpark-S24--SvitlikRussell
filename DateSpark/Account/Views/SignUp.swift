@@ -51,7 +51,7 @@ struct SignUp: View {
                 
                 NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
                 
-                NavigationLink(destination: Login()) {
+                NavigationLink(destination: Login(isLoggedIn: .constant(false))) {
                     Text("Already have an account? Login")
                         .font(.system(size: 20))
                 }

@@ -115,7 +115,7 @@ struct ProfileView: View {
                         print("Sign Out Button Cancelled")
                     }
                 })
-        NavigationLink(destination: Login(), isActive: $isSignedOut){
+        NavigationLink(destination: Login(isLoggedIn: .constant(false)), isActive: $isSignedOut){
             EmptyView() } // Redirect to Login Page, currently not working
         
             

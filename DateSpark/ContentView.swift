@@ -1,3 +1,6 @@
+// ContentView.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 import SwiftUI
 
 class AppVariables: ObservableObject {
@@ -23,25 +26,24 @@ struct ContentView: View {
                 .environmentObject(AppVariables())
                 .transition(.opacity)
             } else if showLoginPage {
-                // Show login page after splash screen
-                AnyView(Login(isLoggedIn: isLoggedIn))
+                AnyView(Login(isLoggedIn: $isLoggedIn))
                     .transition(.opacity)
             } else if !isActive {
-                // Show splash screen initially
-               AnyView(SplashScreenView(isActive: $isActive))
+                AnyView(SplashScreenView(isActive: $isActive))
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
-//                            self.isActive = true
+                            // After SplashScreen, proceed to show the LoginPage.
                             self.showLoginPage = true
                         }
                     }
-                    .animation(.easeInOut, value: isActive)
-                    .onChange(of: isLoggedIn) { loggedIn in
-                        if loggedIn {
-                            shouldNavigateToHome = true
-                            showLoginPage = false
-                    }
-                }
+                    .transition(.opacity)
+            }
+        }
+        .animation(.easeInOut, value: isActive)
+        .onChange(of: isLoggedIn) { loggedIn in
+            if loggedIn {
+                shouldNavigateToHome = true
+                showLoginPage = false
             }
         }
     }
