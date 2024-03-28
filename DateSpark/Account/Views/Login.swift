@@ -8,6 +8,7 @@ struct Login: View {
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome: Bool = false
     @State private var loginFailed: Bool = false
+    @State var isLoggedIn: Bool = false
     
     var body: some View {
         NavigationView {

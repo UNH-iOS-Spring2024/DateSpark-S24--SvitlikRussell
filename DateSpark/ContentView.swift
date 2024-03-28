@@ -1,15 +1,18 @@
-//
 import SwiftUI
 
 class AppVariables: ObservableObject {
     @Published var selectedTab: Int = 0
 }
+
 struct ContentView: View {
-    @State private var isActive = false
+    @State private var isActive: Bool = false
+    @State private var shouldNavigateToHome: Bool = false
+    @State private var isLoggedIn: Bool = false
+    @State private var showLoginPage: Bool = false
     
     var body: some View {
         ZStack {
-            if isActive {
+            if shouldNavigateToHome {
                 BottomBar(
                     AnyView(HomeView()),
                     AnyView(SparkGPTView()),
@@ -19,12 +22,28 @@ struct ContentView: View {
                 )
                 .environmentObject(AppVariables())
                 .transition(.opacity)
-            }
-            if !isActive {
-                SplashScreenView(isActive: $isActive)
+            } else if showLoginPage {
+                // Show login page after splash screen
+                AnyView(Login(isLoggedIn: isLoggedIn))
+                    .transition(.opacity)
+            } else if !isActive {
+                // Show splash screen initially
+               AnyView(SplashScreenView(isActive: $isActive))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+//                            self.isActive = true
+                            self.showLoginPage = true
+                        }
+                    }
+                    .animation(.easeInOut, value: isActive)
+                    .onChange(of: isLoggedIn) { loggedIn in
+                        if loggedIn {
+                            shouldNavigateToHome = true
+                            showLoginPage = false
+                    }
+                }
             }
         }
-        .animation(.easeInOut, value: isActive) // Animate the transition
     }
 }
 
