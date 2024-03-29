@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		504114D32BB71191001E8805 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 504114D22BB71191001E8805 /* OpenAISwift */; };
 		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
 		FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84B6192BB3899D00E765EF /* SplashScreenView.swift */; };
@@ -110,6 +111,7 @@
 				FBDB05682BAA54C20076F915 /* FirebaseRemoteConfig in Frameworks */,
 				FBDB05442BAA54C20076F915 /* FirebaseAppDistribution-Beta in Frameworks */,
 				FBDB05482BAA54C20076F915 /* FirebaseAuthCombine-Community in Frameworks */,
+				504114D32BB71191001E8805 /* OpenAISwift in Frameworks */,
 				FBDB05662BAA54C20076F915 /* FirebasePerformance in Frameworks */,
 				FBDB055E2BAA54C20076F915 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				FBDB056C2BAA54C20076F915 /* FirebaseStorage in Frameworks */,
@@ -397,6 +399,7 @@
 				FBDB05692BAA54C20076F915 /* FirebaseRemoteConfigSwift */,
 				FBDB056B2BAA54C20076F915 /* FirebaseStorage */,
 				FBDB056D2BAA54C20076F915 /* FirebaseStorageCombine-Community */,
+				504114D22BB71191001E8805 /* OpenAISwift */,
 			);
 			productName = DateSpark;
 			productReference = FBDB04EB2BAA4FFB0076F915 /* DateSpark.app */;
@@ -428,6 +431,7 @@
 			mainGroup = FBDB04E22BAA4FFB0076F915;
 			packageReferences = (
 				FBDB05382BAA54C20076F915 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				504114D12BB71191001E8805 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
 			);
 			productRefGroup = FBDB04EC2BAA4FFB0076F915 /* Products */;
 			projectDirPath = "";
@@ -683,6 +687,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		504114D12BB71191001E8805 /* XCRemoteSwiftPackageReference "OpenAISwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamrushy/OpenAISwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
 		FBDB05382BAA54C20076F915 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -694,6 +706,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		504114D22BB71191001E8805 /* OpenAISwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 504114D12BB71191001E8805 /* XCRemoteSwiftPackageReference "OpenAISwift" */;
+			productName = OpenAISwift;
+		};
 		FBDB05392BAA54C20076F915 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FBDB05382BAA54C20076F915 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
