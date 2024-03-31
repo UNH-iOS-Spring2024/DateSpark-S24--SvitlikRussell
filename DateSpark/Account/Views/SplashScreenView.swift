@@ -42,7 +42,7 @@ struct SplashScreenView: View {
                                 withAnimation(.easeOut(duration: 0.5)) {
                                     self.flashingOpacity = 0
                                 }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                     self.isActive = true
                                         }
                             }

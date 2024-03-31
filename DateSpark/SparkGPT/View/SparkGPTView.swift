@@ -3,62 +3,86 @@
 //  DateSpark-S24-Svitlik-Russell
 //
 //  Created by Sarah Svitlik on 3/13/24.
-//
-
+ 
 //Used SwiftUI with ChatGPT Tutorial: https://www.youtube.com/watch?v=bUDCW2NeO8Y
 
 import SwiftUI
 import OpenAISwift
 
-struct SparkGPTView: View {
-    private var client: OpenAISwift?
-    @State private var text = ""
-    @State private var models = [String]()
+final class ViewModel: ObservableObject {
     
-    init() {
-        let apiConfig = OpenAISwift.Config.makeDefaultOpenAI(apiKey: "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")
-        self.client = OpenAISwift(config: apiConfig)
+    init (){}
+    
+    private var client: OpenAISwift?
+    
+    func setup(){
+        client = OpenAISwift(config: OpenAISwift.Config.makeDefaultOpenAI(apiKey: "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"))
+            print("API Configured")
     }
     
+    func send(text: String,
+              completion: @escaping (String) -> Void) {
+        client?.sendCompletion(with: text,
+                               maxTokens: 500,
+                               completionHandler:  { result in
+            switch result {
+            case.success(let model):
+                let output = model.choices?.first?.text ?? ""
+                completion(output)
+            case .failure(_):
+                break
+            }
+        })
+        }
+        
+    }
+ 
+struct SparkGPTView: View {
+    @ObservedObject var viewModel = ViewModel()
+    @State var text = ""
+    @State var models = [String]()
+    
     var body: some View {
-        VStack (alignment: .leading) {
+        VStack (alignment: .leading){
             ForEach(models, id: \.self) { string in
                 Text(string)
             }
-        }
-        Spacer()
-        
-        HStack {
-            TextField("Type Here...", text: $text)
-            Button("Send") {
-                self.sendMessage()
+            
+            Spacer()
+            
+            HStack {
+                TextField("Need date ideas?", text: $text)
+                Button("Send") {
+                    self.send()
+                    print("Button pressed")
+                }
             }
+        }
+        .onAppear {
+            viewModel.setup()
         }
         .padding()
     }
     
-    private func sendMessage() {
+    func send() {
         guard !text.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
         }
-        models.append("Me: \(text)")
-        client?.sendCompletion(with: text, maxTokens: 500) { result in
-            switch result {
-            case .success(let model):
-                let output = model.choices?.first?.text ?? ""
-                DispatchQueue.main.async {
-                    self.models.append("ChatGPT: " + output)
-                    self.text = ""
-                }
-            case .failure(let error):
-                print("Error: \(error)")
+        
+        models.append("Me:  \(text)")
+        viewModel.send(text: text) { response in
+            DispatchQueue.main.async {
+                self.models.append("SparkGPT: "+response)
+                self.text = ""
+            }
+            if response.isEmpty {
+                print("Error: Empty response from ChatGPT.")
             }
         }
     }
 }
 
-
-
 #Preview {
     SparkGPTView()
 }
+
