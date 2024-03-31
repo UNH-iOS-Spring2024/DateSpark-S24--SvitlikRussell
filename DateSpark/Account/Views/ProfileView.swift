@@ -10,7 +10,6 @@ import FirebaseAuth
 struct ProfileView: View {
     let db = Firestore.firestore()
     @State private var isSignedOut = false
-    @State private var showingSignOutConfirmation = false
     @State private var userProfile = UserProfile(
         firstName: "",
         lastName: "",
@@ -26,19 +25,17 @@ struct ProfileView: View {
             formatter.timeStyle = .none
             return formatter.string(from: date)
         }
-
-    private func attemptSignOut() {
-        showingSignOutConfirmation = true
-        print("Attempting to sign out...")
-        }
     private func signOut() {
         do {
             try Auth.auth().signOut()
-            isSignedOut = true
+            isSignedOut = true // This triggers the redirection to the Login view
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
     }
+  
+    
+    
     
     var body: some View {
         VStack{
@@ -100,32 +97,14 @@ struct ProfileView: View {
             }
             Spacer()
             
-            Button("Sign Out"){
-                attemptSignOut()
+            Button(action: signOut){
+                Text("Sign Out")
+                    .padding()
+                    .border(Color.blue, width: 2)
             }
-                .padding()
-                .border(Color.blue, width: 2)
-                .confirmationDialog("Are you sure you want to sign out?", isPresented: $showingSignOutConfirmation, actions:{
-                    Button("Sign Out", role: .destructive){
-                        signOut()
-                        print("Sign Out Button")
-                
-                    }
-                    Button("Cancel", role: .cancel){
-                        print("Sign Out Button Cancelled")
-                    }
-                })
-        NavigationLink(destination: Login(isLoggedIn: .constant(false)), isActive: $isSignedOut){
-            EmptyView() } // Redirect to Login Page, currently not working
-        
-            
-            
-
-                    
-            
+            .padding(.horizontal)
             
         }
-        
         .onAppear{
             fetchUserProfile()
         }

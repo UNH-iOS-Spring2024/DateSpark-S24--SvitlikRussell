@@ -6,8 +6,6 @@ import FirebaseFirestore
 
 struct SignUp: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var appVariables: AppVariables
-
     let db = Firestore.firestore()
     
     @State var txtFirstName: String = ""
@@ -53,7 +51,7 @@ struct SignUp: View {
                 
                 NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
                 
-                NavigationLink(destination: Login(isLoggedIn: .constant(false))) {
+                NavigationLink(destination: Login()) {
                     Text("Already have an account? Login")
                         .font(.system(size: 20))
                 }
@@ -92,8 +90,7 @@ struct SignUp: View {
                     print("User details added with ID: \(userId)")
                     DispatchQueue.main.async{
                         self.resetTextFields()
-                        //self.shouldNavigateToHome = true
-                        self.appVariables.isLoggedIn = true
+                        self.shouldNavigateToHome = true
                         }
                     }
                 }
@@ -105,6 +102,5 @@ struct SignUp: View {
 struct SignUp_Previews: PreviewProvider {
     static var previews: some View {
         SignUp()
-            .environmentObject(AppVariables())
     }
 }
