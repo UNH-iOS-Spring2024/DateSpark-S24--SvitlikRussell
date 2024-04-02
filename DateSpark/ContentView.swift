@@ -33,3 +33,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+/* TODO: Have to add the search bar. Have to get the Users location and load there each time the view is created. */

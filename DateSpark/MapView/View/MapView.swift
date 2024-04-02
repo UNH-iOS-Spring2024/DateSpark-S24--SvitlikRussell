@@ -9,8 +9,20 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+@State var location = ""
+    
     var body: some View {
-        Map(initialPosition: .region(region))
+        VStack {
+            Form {
+                Section (header: Text("Nearby Date locations")) {
+                    ZStack (alignment: .trailing) {
+                        TextField("Search", text: $location)
+                    }
+                }
+            }
+            .frame(height: 100)
+            Map(initialPosition: .region(region))
+        }
     }
     
     private var region: MKCoordinateRegion {
