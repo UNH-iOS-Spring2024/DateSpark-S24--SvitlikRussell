@@ -8,6 +8,7 @@ struct Login: View {
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome: Bool = false
     @State private var loginFailed: Bool = false
+    @Binding var isLoggedIn: Bool
     
     var body: some View {
         NavigationView {
@@ -76,6 +77,7 @@ struct Login: View {
             } else {
                 print("User logged in successfully")
                 self.loginFailed = false
+                self.isLoggedIn = true
                 self.shouldNavigateToHome = true
             }
         }
@@ -84,6 +86,6 @@ struct Login: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login()
+        Login(isLoggedIn: .constant(false))
     }
 }
