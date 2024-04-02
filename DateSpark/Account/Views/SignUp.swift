@@ -17,7 +17,7 @@ struct SignUp: View {
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome = false
     @State private var errorMessage : String? = nil
-
+ 
     var body: some View {
         NavigationView {
             VStack {
@@ -64,6 +64,7 @@ struct SignUp: View {
             .autocorrectionDisabled(true)
             .padding()
         }
+ 
     }
     
     func resetTextFields(){

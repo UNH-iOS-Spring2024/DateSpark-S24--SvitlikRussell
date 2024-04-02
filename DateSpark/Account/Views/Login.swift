@@ -4,6 +4,9 @@ import SwiftUI
 import FirebaseAuth
 
 struct Login: View {
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var appVariables: AppVariables
+
     @State var txtEmail: String = ""
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome: Bool = false
@@ -11,6 +14,7 @@ struct Login: View {
     @Binding var isLoggedIn: Bool
     
     var body: some View {
+    
         NavigationView {
             VStack {
                 HStack{
@@ -77,7 +81,7 @@ struct Login: View {
             } else {
                 print("User logged in successfully")
                 self.loginFailed = false
-                self.isLoggedIn = true
+                self.appVariables.isLoggedIn = true
                 self.shouldNavigateToHome = true
             }
         }
