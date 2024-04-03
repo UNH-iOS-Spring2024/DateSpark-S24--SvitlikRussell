@@ -8,7 +8,11 @@ class AppVariables: ObservableObject {
     @Published var isLoggedIn: Bool = false
 }
 
+
 struct ContentView: View {
+    init () {
+        UITabBar.appearance().backgroundColor = UIColor.white
+    }
     @State private var isActive: Bool = false
     @State private var shouldNavigateToHome: Bool = false
     @State private var isLoggedIn: Bool = false
@@ -27,6 +31,7 @@ struct ContentView: View {
                 )
                 .environmentObject(AppVariables())
                 .transition(.opacity)
+
             } else if showLoginPage {
                 AnyView(Login(isLoggedIn: $isLoggedIn))
                     .transition(.opacity)

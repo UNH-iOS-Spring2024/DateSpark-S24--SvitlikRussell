@@ -25,10 +25,10 @@ struct HomeView: View {
                     Spacer()
                     
                     NavigationLink(destination: ArchivedDatesView().environmentObject(ArchivedViewModel())){
-                        Image(systemName: "archivebox")
+                        Image(systemName: "archivebox.fill")
                             .resizable()
                             .frame(width: 28, height: 28)
-                            .foregroundColor(.pink)
+                            .foregroundColor(.blue)
                     }
                     .padding(.top, 40)
                     .padding(.trailing, 20)
@@ -56,7 +56,7 @@ struct HomeView: View {
                         print("Button to start the wheel has been pressed")
                         spinWheel()
                     }) {
-                        Image(systemName: "triangle")
+                        Image(systemName: "triangle.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundColor(.purple)

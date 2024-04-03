@@ -11,7 +11,7 @@ import OpenAISwift
 
 final class ViewModel: ObservableObject {
     
-    init (){}
+   // init (){}
     
     private var client: OpenAISwift?
     
