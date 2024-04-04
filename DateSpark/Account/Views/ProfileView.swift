@@ -9,6 +9,7 @@ import FirebaseAuth
 
 struct ProfileView: View {
     let db = Firestore.firestore()
+    @EnvironmentObject var appVariables: AppVariables
     @State private var isSignedOut = false
     @State private var showingSignOutConfirmation = false
     @State private var userProfile = UserProfile(
@@ -20,30 +21,20 @@ struct ProfileView: View {
         joinedDate: "",
         uniqueNameIdentifier: "")
     
-    
     private func formatDate(_ date: Date) -> String {
             let formatter = DateFormatter()
             formatter.dateStyle = .long
             formatter.timeStyle = .none
             return formatter.string(from: date)
         }
-
-    private func attemptSignOut() {
-        showingSignOutConfirmation = true
-        print("Attempting to sign out...")
-        }
     private func signOut() {
         do {
             try Auth.auth().signOut()
-            isSignedOut = true
+            appVariables.isSignedOut = true
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
     }
-
-
-
-    
     var body: some View {
         VStack{
             HStack{
@@ -105,35 +96,20 @@ struct ProfileView: View {
             Spacer()
             
             Button("Sign Out"){
-                attemptSignOut()
-
-
+                showingSignOutConfirmation = true
+                signOut()
+    
             }
-                .padding()
-                .border(Color.blue, width: 2)
-                .confirmationDialog("Are you sure you want to sign out?", isPresented: $showingSignOutConfirmation, actions:{
-                    Button("Sign Out", role: .destructive){
-                        signOut()
-                        print("Sign Out Button")
-                
-                    }
-                    Button("Cancel", role: .cancel){
-                        print("Sign Out Button Cancelled")
-                    }
-                })
-        NavigationLink(destination: Login(isLoggedIn: .constant(false)), isActive: $isSignedOut){
-            EmptyView() } // Redirect to Login Page, currently not working
-        
-            
-            
-
-                    
-            
-            
-        }
-        
-        .onAppear{
-            fetchUserProfile()
+            .padding()
+            .border(Color.blue, width: 2)
+            .confirmationDialog("Are you sure you want to sign out?", isPresented: $showingSignOutConfirmation){
+                Button("Sign Out", role: .destructive){
+                    signOut()
+                }
+                Button("Cancel", role: .cancel){ }
+            }
+            .navigationTitle("Profile")
+            .onAppear{ fetchUserProfile() }
         }
     }
     
@@ -166,6 +142,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView().environmentObject(AppVariables())
     }
 }
