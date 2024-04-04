@@ -6,6 +6,7 @@ import SwiftUI
 class AppVariables: ObservableObject {
     @Published var selectedTab: Int = 0
     @Published var isLoggedIn: Bool = false
+    @Published var isSignedOut: Bool = false
 }
 
 

@@ -12,14 +12,15 @@ struct FriendsView: View {
     @State private var showAlert = false
     @State private var friendEmail = ""
     @State private var alertMessage = ""
-    @State private var friendRequests: [String] = []
+    @State private var friendRequests: [FriendRequest] = []
 
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text("Friend Requests")) {
-                    ForEach(friendRequests, id: \.self) { request in
-                        FriendRequestView(requestEmail: request)
+                    ForEach(friendRequests) { request in
+                        FriendRequestView(request: request)
+                            .onAppear{ fetchFriendRequests() }
                     }
                 }
             }
@@ -40,8 +41,6 @@ struct FriendsView: View {
                         .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                     Button("Add") {
                         checkEmailAndSendRequest(email: friendEmail)
-//                        friendEmail = "" // Reset the input field after attempt
-//                        showingAddFriendPopover = false // Dismiss the popover
                     }
                     .padding()
                 }
@@ -57,41 +56,46 @@ struct FriendsView: View {
     }
 
     func checkEmailAndSendRequest(email: String) {
-        db.collection("User").whereField("email", isEqualTo: email).getDocuments { (snapshot, error) in
-            if let error = error {
-                self.alertMessage = "Error: \(error.localizedDescription)"
-                self.showAlert = true
-            } else if snapshot!.documents.isEmpty {
+        db.collection("Users").whereField("email", isEqualTo: email).getDocuments { (snapshot, error) in
+            guard let documents = snapshot?.documents, !documents.isEmpty, let doc = documents.first else {
                 self.alertMessage = "No user found with that email."
                 self.showAlert = true
-            } else {
-                let userId = Auth.auth().currentUser?.uid ?? ""
-                let friendUserId = snapshot!.documents.first!.documentID
-                let friendRequestRef = db.collection("User").document(userId).collection("friendRequests").document(friendUserId)
-                
-                friendRequestRef.setData(["email": email, "status": "pending"]) { error in
+                return
+            }
+            
+            let userId = Auth.auth().currentUser?.uid ?? ""
+            let friendUserId = doc.documentID
+            
+            guard userId != friendUserId else {
+                self.alertMessage = "You can't add yourself as a friend."
+                self.showAlert = true
+                return
+            }
+
+            let friendRequestRef = self.db.collection("Users").document(friendUserId).collection("friendRequests").document(userId)
+            
+            friendRequestRef.setData(["email": Auth.auth().currentUser?.email ?? "", "status": "pending"]) { error in
                 if let error = error {
                     self.alertMessage = "Failed to send friend request: \(error.localizedDescription)"
                 } else {
                     self.alertMessage = "Friend request sent to \(email)"
                 }
                 self.showAlert = true
+                self.friendEmail = ""
+                self.showingAddFriendPopover = false
             }
-            }
-            
         }
-        self.friendEmail = ""
-        self.showingAddFriendPopover = false
     }
     
     func fetchFriendRequests() {
        guard let userId = Auth.auth().currentUser?.uid else { return }
         
-        let friendRequestsRef = db.collection("User").document(userId).collection("friendRequests")
-        friendRequestsRef.getDocuments { snapshot, error in
+        let friendRequestsRef = db.collection("Users").document(userId).collection("friendRequests")
+        friendRequestsRef.whereField("status", isEqualTo: "pending").getDocuments { snapshot, error in
             if let documents = snapshot?.documents {
-                // Assuming the friend request documents contain an "email" field
-                self.friendRequests = documents.compactMap { $0.data()["email"] as? String }
+                self.friendRequests = documents.map { doc in
+                    FriendRequest(id: doc.documentID, email: doc.data()["email"] as? String ?? "", status: doc.data()["status"] as? String ?? "")
+                }
             }
         }
     }
