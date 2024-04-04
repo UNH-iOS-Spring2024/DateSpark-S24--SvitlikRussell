@@ -20,7 +20,7 @@ struct MapView: View {
         ZStack(alignment: .top) {
             Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: $userTrackingMode, annotationItems: pin != nil ? [pin!] : []) { pin in
                 MapAnnotation(coordinate: pin.location) {
-                    PinView()
+                    PinView(pin: pin)
                 }
             }
             .edgesIgnoringSafeArea(.all)
@@ -52,10 +52,11 @@ struct MapView: View {
                         VStack(alignment: .leading) {
                             ForEach(searchCompleter.suggestions, id: \.self) { suggestion in
                                 VStack(alignment: .leading) {
-                                    Text(suggestion.title) // Street address
+                                    Text(suggestion.title) // Location name or primary address
                                         .fontWeight(.bold)
                                     Text(suggestion.subtitle) // City, state, and ZIP
                                         .font(.caption)
+                                        .foregroundColor(.gray)
                                 }
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -82,17 +83,21 @@ struct MapView: View {
         let searchRequest = MKLocalSearch.Request(completion: suggestion)
         let search = MKLocalSearch(request: searchRequest)
         search.start { response, _ in
-            guard let coordinate = response?.mapItems.first?.placemark.coordinate else { return }
+            guard let mapItem = response?.mapItems.first else { return }
+            let coordinate = mapItem.placemark.coordinate
             
-            let placemark = response?.mapItems.first?.placemark
+            let placemark = mapItem.placemark
             region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-            pin = Pin(location: coordinate)
+            let name = mapItem.name ?? "Location"
+            pin = Pin(location: coordinate, name: name)
+            // Format the address components.
+            var addressComponents = [String]()
+            if let city = placemark.locality { addressComponents.append(city) }
+            if let state = placemark.administrativeArea { addressComponents.append(state) }
+            if let zip = placemark.postalCode { addressComponents.append(zip) }
             
-            if let city = placemark?.locality, let state = placemark?.administrativeArea, let zip = placemark?.postalCode {
-                detailedLocationInfo = "\(city), \(state) \(zip)"
-            } else {
-                detailedLocationInfo = nil
-            }
+            let address = addressComponents.joined(separator: ", ")
+            detailedLocationInfo = "\(name) - \(address)"
         }
     }
 
@@ -112,8 +117,15 @@ struct MapView: View {
 }
 
 struct PinView: View {
+    var pin: Pin
     var body: some View {
         VStack {
+            Text(pin.name)
+                .font(.caption)
+                .padding(5)
+                .background(Color.white)
+                .cornerRadius(5)
+                .foregroundColor(.black)
             Image(systemName: "mappin.circle.fill")
                 .font(.title)
                 .foregroundColor(.red)
