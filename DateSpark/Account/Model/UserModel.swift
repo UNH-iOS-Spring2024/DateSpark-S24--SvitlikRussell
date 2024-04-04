@@ -11,5 +11,5 @@ struct UserProfile {
     var email: String
     var userID: String
     var joinedDate: String  //Pull Firebase Timestamp
-    
+    var uniqueNameIdentifier: String
 }

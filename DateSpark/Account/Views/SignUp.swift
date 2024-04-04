@@ -81,10 +81,12 @@ struct SignUp: View {
                 self.errorMessage = "Error creating user: \(error.localizedDescription)"
                 return
             }
+            let uniqueNameIdentifier = "@\(txtLastName).\(txtPrefName)\(txtFirstName)"
             let userData = ["firstName" : txtFirstName,
                             "lastName" : txtLastName,
                             "prefName" : txtPrefName,
-                            "email" : txtEmail]
+                            "email" : txtEmail,
+                            "uniqueNameIdentifier" : uniqueNameIdentifier]
             if let userId = authResult?.user.uid{
                 self.db.collection("User").document(userId).setData(userData){err in
                     if let err = err{
@@ -93,7 +95,6 @@ struct SignUp: View {
                     print("User details added with ID: \(userId)")
                     DispatchQueue.main.async{
                         self.resetTextFields()
-                        //self.shouldNavigateToHome = true
                         self.appVariables.isLoggedIn = true
                         }
                     }

@@ -17,7 +17,8 @@ struct ProfileView: View {
         prefName: "",
         email:"",
         userID: "" ,
-        joinedDate: "" )
+        joinedDate: "",
+        uniqueNameIdentifier: "")
     
     
     private func formatDate(_ date: Date) -> String {
@@ -154,7 +155,8 @@ struct ProfileView: View {
                     prefName: data["prefName"] as? String ?? "",
                     email: data["email"] as? String ?? "",
                     userID: document.documentID,
-                    joinedDate: joinedDate
+                    joinedDate: joinedDate,
+                    uniqueNameIdentifier : data["uniqueNameIdentifier"] as? String ?? ""
                     )
                 }
             }
