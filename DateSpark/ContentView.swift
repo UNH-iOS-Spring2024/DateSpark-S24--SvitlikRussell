@@ -25,7 +25,7 @@ struct ContentView: View {
             if appVariables.isLoggedIn{
                 BottomBar(
                     AnyView(HomeView()),
-                    AnyView(SparkGPTView()),
+                    AnyView(HomeView()),
                     AnyView(MapView()),
                     AnyView(FriendsView()),
                     AnyView(ProfileView())

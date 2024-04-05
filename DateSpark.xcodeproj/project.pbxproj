@@ -10,6 +10,8 @@
 		504114D32BB71191001E8805 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 504114D22BB71191001E8805 /* OpenAISwift */; };
 		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
+		50E9A3662BC05FAB007A3DDB /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 50E9A3652BC05FAB007A3DDB /* OpenAIKit */; };
+		50E9A3692BC069DA007A3DDB /* SparkGPTController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */; };
 		FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84B6192BB3899D00E765EF /* SplashScreenView.swift */; };
 		FBA35BDB2BBF535C00DA7255 /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA35BDA2BBF535C00DA7255 /* FriendRequest.swift */; };
 		FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */; };
@@ -66,6 +68,7 @@
 /* Begin PBXFileReference section */
 		507378462BAA774D009ED169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
+		50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkGPTController.swift; sourceTree = "<group>"; };
 		FB84B6192BB3899D00E765EF /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		FBA35BDA2BBF535C00DA7255 /* FriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
 		FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedItem.swift; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 				FBDB05442BAA54C20076F915 /* FirebaseAppDistribution-Beta in Frameworks */,
 				FBDB05482BAA54C20076F915 /* FirebaseAuthCombine-Community in Frameworks */,
 				504114D32BB71191001E8805 /* OpenAISwift in Frameworks */,
+				50E9A3662BC05FAB007A3DDB /* OpenAIKit in Frameworks */,
 				FBDB05662BAA54C20076F915 /* FirebasePerformance in Frameworks */,
 				FBDB055E2BAA54C20076F915 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				FBDB056C2BAA54C20076F915 /* FirebaseStorage in Frameworks */,
@@ -139,6 +143,14 @@
 				50CC4E732BAA643800782828 /* DateClass.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		50E9A3672BC069B9007A3DDB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		FBA35BD92BBF533600DA7255 /* Model */ = {
@@ -378,6 +390,7 @@
 		FBDB05292BAA53F50076F915 /* SparkGPT */ = {
 			isa = PBXGroup;
 			children = (
+				50E9A3672BC069B9007A3DDB /* Controller */,
 				FBDB05282BAA53F50076F915 /* View */,
 			);
 			path = SparkGPT;
@@ -428,6 +441,7 @@
 				FBDB056B2BAA54C20076F915 /* FirebaseStorage */,
 				FBDB056D2BAA54C20076F915 /* FirebaseStorageCombine-Community */,
 				504114D22BB71191001E8805 /* OpenAISwift */,
+				50E9A3652BC05FAB007A3DDB /* OpenAIKit */,
 			);
 			productName = DateSpark;
 			productReference = FBDB04EB2BAA4FFB0076F915 /* DateSpark.app */;
@@ -460,6 +474,7 @@
 			packageReferences = (
 				FBDB05382BAA54C20076F915 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				504114D12BB71191001E8805 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
+				50E9A3642BC05FAB007A3DDB /* XCRemoteSwiftPackageReference "OpenAI" */,
 			);
 			productRefGroup = FBDB04EC2BAA4FFB0076F915 /* Products */;
 			projectDirPath = "";
@@ -501,6 +516,7 @@
 				FBDB05062BAA53D20076F915 /* Login.swift in Sources */,
 				FBDB05372BAA53F50076F915 /* SparkGPTView.swift in Sources */,
 				FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */,
+				50E9A3692BC069DA007A3DDB /* SparkGPTController.swift in Sources */,
 				FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */,
 				FBDB052C2BAA53F50076F915 /* ArchivedDatesView.swift in Sources */,
 				FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */,
@@ -727,6 +743,14 @@
 				minimumVersion = 1.4.1;
 			};
 		};
+		50E9A3642BC05FAB007A3DDB /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/FuturraGroup/OpenAI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.3;
+			};
+		};
 		FBDB05382BAA54C20076F915 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -742,6 +766,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 504114D12BB71191001E8805 /* XCRemoteSwiftPackageReference "OpenAISwift" */;
 			productName = OpenAISwift;
+		};
+		50E9A3652BC05FAB007A3DDB /* OpenAIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50E9A3642BC05FAB007A3DDB /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAIKit;
 		};
 		FBDB05392BAA54C20076F915 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
