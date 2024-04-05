@@ -73,7 +73,7 @@ struct BottomBar: View {
 #Preview {
     BottomBar(
         AnyView(HomeView()),
-        AnyView(HomeView()),
+        AnyView(SparkGPTView()),
         AnyView(MapView()),
         AnyView(FriendsView()),
         AnyView(ProfileView())
