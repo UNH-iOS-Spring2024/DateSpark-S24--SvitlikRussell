@@ -15,10 +15,10 @@ struct Login: View {
     
     var body: some View {
     
-        NavigationView {
+        NavigationStack {
             VStack {
                 HStack{
-                    Image("Logo") // Change when I upload logo with no background
+                    Image("Logo")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 100, height: 50)
@@ -58,7 +58,6 @@ struct Login: View {
                         .font(.system(size: 20))
                 }
                 
-                // Navigate to SignUp_View
                 NavigationLink(destination: SignUp(), label: {
                     Text("Don't have an account? Sign Up")
                 })

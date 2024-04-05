@@ -19,7 +19,7 @@ struct SignUp: View {
     @State private var errorMessage : String? = nil
  
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Text("Welcome to Date Spark")
                     .font(.system(size: 30))
@@ -40,19 +40,13 @@ struct SignUp: View {
                     Text (errorMessage)
                         .foregroundColor(.red)
                 }
-                
-                Button(action: {
-                    if txtPassword != "" {
+                Button("Sign Up!"){
                         userToFirebase()
-                    }
-                }) {
-                    Text("Sign Up!")
-                        .font(.system(size: 25))
                 }
                 .disabled(txtEmail.isEmpty || txtPassword.isEmpty)
                 
-                NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
-                
+                if shouldNavigateToHome {                    NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
+                }
                 NavigationLink(destination: Login(isLoggedIn: .constant(false))) {
                     Text("Already have an account? Login")
                         .font(.system(size: 20))
@@ -63,6 +57,7 @@ struct SignUp: View {
             .multilineTextAlignment(.center)
             .autocorrectionDisabled(true)
             .padding()
+            
         }
  
     }
