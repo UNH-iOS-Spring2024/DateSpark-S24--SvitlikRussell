@@ -11,66 +11,65 @@ struct AddFriendView: View {
     let completion: () -> Void
     @State private var uniqueIdentifier = ""
     @State private var feedbackMessage: String = ""
-    @State private var feedbackAlert = false
-    
-    @Environment(\.presentationMode) var presentationMode
+    @State private var showingFeedbackAlert = false
 
     var body: some View {
         VStack {
-            TextField("Enter the username", text: $uniqueIdentifier)
+            TextField("Enter the user name", text: $uniqueIdentifier)
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-            Button("Add Friend"){
+            Button("Add Friend") {
                 addFriendRequest()
-            }.padding()
+            }
+            .padding()
         }
         .padding()
-        .alert(isPresented: $feedbackAlert){
-            Alert(
-                title: Text("Friend Request"),
-                message: Text(feedbackMessage),
-                dismissButton: .default(Text("OK"))
-            )
+        .alert(isPresented: $showingFeedbackAlert) {
+            Alert(title: Text("Add Friend"), message: Text(feedbackMessage), dismissButton: .default(Text("OK"), action: completion))
         }
     }
     
-    func addFriendRequest(){
-        guard let currentUserID = Auth.auth().currentUser?.uid else{
-            feedbackMessage = "You need to be logged in to send a friend request."
+    func addFriendRequest() {
+        guard let currentUserID = Auth.auth().currentUser?.uid else {return }
+        
+        db.collection("User").whereField("uniqueIdentifier", isEqualTo: uniqueIdentifier).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                feedbackMessage = "Failed to find user: \(error.localizedDescription)"
+                showingFeedbackAlert = true
+            } else if let document = querySnapshot?.documents.first, let friendUserID = document.documentID as String? {
+                sendFriendRequest(toUserID: friendUserID, fromUserId: currentUserID)
+            } else {
+                feedbackMessage = "No user found."
+                showingFeedbackAlert = true
+            }
+        }
+    }
+    
+    func sendFriendRequest(toUserID: String, fromUserId: String) {
+        guard toUserID != fromUserId else {
+            feedbackMessage = "You cannot add yourself as a friend, silly."
+            showingFeedbackAlert = true
             return
         }
+
+        let friendRequestRef = db.collection("User").document(toUserID).collection("friendRequests").document(fromUserId)
         
-        db.collection("User").whereField("uniqueNameIdentifier", isEqualTo: uniqueIdentifier).getDocuments { (querySnapshot, error) in
-            if let error = error {
-                print("Error getting documents: \(error)")
-                feedbackMessage = "Failed to find user."
-                feedbackAlert = true
+        friendRequestRef.getDocument {(document, error) in
+            if let document = document, document.exists {
+                feedbackMessage = "Friend request already sent."
+                showingFeedbackAlert = true
             } else {
-                if let document = querySnapshot?.documents.first {
-                    sendFriendRequest(toUserID: document.documentID, fromUserId: currentUserID)
-                } else {
-                    feedbackMessage = "No user found."
-                    feedbackAlert = true
+                friendRequestRef.setData(["status": "pending", "uniqueIdentifier": uniqueIdentifier ?? ""]) { error in
+                    if let error = error {
+                        feedbackMessage = "Failed to send friend request: \(error.localizedDescription)"
+                    } else {
+                        feedbackMessage = "Friend request sent successfully!"
+                    }
+                    showingFeedbackAlert = true
                 }
             }
         }
     }
-    
-    func sendFriendRequest(toUserID: String, fromUserId: String){
-        let friendRequestRef = db.collection("Users").document(toUserID).collection("friendRequests").document(fromUserId)
-        friendRequestRef.setData(["status": "pending"]) { error in
-            if let error = error {
-                print("Error sending friend request: \(error.localizedDescription)")
-                feedbackMessage = "Failed to send friend request."
-            } else {
-                feedbackMessage = "Friend request sent to \(uniqueIdentifier)!"
-            }
-            feedbackAlert = true
-            completion()
-        }
-        
-    }
-    
 }
 
 struct AddFriendView_Previews: PreviewProvider {
