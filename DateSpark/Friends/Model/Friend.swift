@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct Friend {
+struct Friend: Identifiable {
     var id: String
     var uniqueIdentifier: String
 }
