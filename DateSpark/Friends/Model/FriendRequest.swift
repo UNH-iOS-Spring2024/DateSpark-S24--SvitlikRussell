@@ -5,7 +5,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct FriendRequest: Identifiable {
+struct FriendRequest {
     var id: String
     var email: String
     var status: String
