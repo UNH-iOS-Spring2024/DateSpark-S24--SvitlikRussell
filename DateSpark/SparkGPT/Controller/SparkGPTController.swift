@@ -34,43 +34,6 @@ class SparkGPTController: UIViewController {
         textField.becomeFirstResponder()
     }
     
-    @IBAction private func sendQuestion() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("Error: Unable to access AppDelegate")
-            return
-        }
-        
-        let openAI = appDelegate.openAI
-        
-        startLoading()
-        textView.text = ""
-        
-        let prompt = textField.text ?? ""
-        let previousMessages: [AIMessage] = []
-        
-        openAI.sendChatCompletion(newMessage: AIMessage(role: .user, content: prompt), previousMessages: previousMessages, model: .gptV3_5(.gptTurbo), maxTokens: 2048, n: 1) { [weak self] result in
-            DispatchQueue.main.async { self?.stopLoading() }
-            
-            switch result {
-            case .success(let aiResult):
-                DispatchQueue.main.async { [weak self] in
-                    if let text = aiResult.choices.first?.message?.content {
-                        self?.textView.text = text
-                    }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async { [weak self] in
-                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default))
-                    if let viewController = self {
-                        viewController.present(alert, animated: true)
-                    } else {
-                        print("Error: Unable to present alert. Self is nil.")
-                    }
-                }
-            }
-        }
-    }
 
     
     private func configureObservers() {

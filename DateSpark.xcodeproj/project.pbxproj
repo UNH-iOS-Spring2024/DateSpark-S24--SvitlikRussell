@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		504114D32BB71191001E8805 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 504114D22BB71191001E8805 /* OpenAISwift */; };
+		50486CD12BC2FE9F00BD5BDC /* SparkGPTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50486CD02BC2FE9F00BD5BDC /* SparkGPTViewModel.swift */; };
 		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
 		50E9A3662BC05FAB007A3DDB /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 50E9A3652BC05FAB007A3DDB /* OpenAIKit */; };
@@ -69,6 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50486CD02BC2FE9F00BD5BDC /* SparkGPTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkGPTViewModel.swift; sourceTree = "<group>"; };
 		507378462BAA774D009ED169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
 		50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkGPTController.swift; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50486CCF2BC2FE9500BD5BDC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				50486CD02BC2FE9F00BD5BDC /* SparkGPTViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		50CC4E722BAA642C00782828 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +409,7 @@
 		FBDB05292BAA53F50076F915 /* SparkGPT */ = {
 			isa = PBXGroup;
 			children = (
+				50486CCF2BC2FE9500BD5BDC /* Model */,
 				50E9A3672BC069B9007A3DDB /* Controller */,
 				FBDB05282BAA53F50076F915 /* View */,
 			);
@@ -538,6 +549,7 @@
 				FBA35BDF2BC0AD6700DA7255 /* FriendRequestView.swift in Sources */,
 				50CC4E742BAA643800782828 /* DateClass.swift in Sources */,
 				FBDB05082BAA53D20076F915 /* SignUp.swift in Sources */,
+				50486CD12BC2FE9F00BD5BDC /* SparkGPTViewModel.swift in Sources */,
 				FBA35BDB2BBF535C00DA7255 /* FriendRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

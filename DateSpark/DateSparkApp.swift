@@ -4,7 +4,7 @@ import OpenAIKit
 import UIKit
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    let apiToken: String = "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"
+    let apiToken: String = "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"
     let organizationName: String = "DateSpark"
     lazy var openAI = OpenAIKit(apiToken: apiToken, organization: organizationName)
 
