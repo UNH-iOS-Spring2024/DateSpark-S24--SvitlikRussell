@@ -3,6 +3,8 @@ import Firebase
 import OpenAIKit
 import UIKit
 
+
+
 class AppDelegate: NSObject, UIApplicationDelegate {
     private let apiToken: String = "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"
     let organizationName: String = "DateSpark"

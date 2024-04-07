@@ -7,8 +7,20 @@
 
 import Foundation
 import FirebaseFirestore
+import WeatherKit
+import CoreLocation
 
 class DateClass: ObservableObject{
+    
+    let weatherService = WeatherService()
+
+    let syracuse = CLLocation(latitude: 43, longitude: -76)
+
+    /* let weather = try! await weatherService.weather(for: syracuse)
+
+    let temperature = weather.currentWeather.temperature
+
+    let uvIndex = weather.currentWeather.uvIndex */
     
     var id: String
     
