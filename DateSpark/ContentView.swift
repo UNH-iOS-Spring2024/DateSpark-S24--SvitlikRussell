@@ -2,6 +2,7 @@
 //  DateSpark-S24-Svitlik-Russell
 //  Sarah Svitlik & Shannon Russell
 import SwiftUI
+import OpenAIKit
 
 class AppVariables: ObservableObject {
     @Published var selectedTab: Int = 0

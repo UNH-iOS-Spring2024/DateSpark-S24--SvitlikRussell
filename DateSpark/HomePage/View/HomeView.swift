@@ -216,7 +216,7 @@ struct HomeView: View {
     
     func locationAlert () {
         padding()
-        //TODO: Check with Firebase if the current user if we have asked the user about location services. If no, then show the pop up & write data to Firebase. If no, then skip. 
+        //TODO: Check with Firebase if the current user if we have asked the user about location services. If no, then show the pop up & write data to Firebase. If no, then skip.
             .alert(isPresented: $showingLocationAlert) {
             Alert(title: Text("Allow \"Date Spark\" to use your location? "))
         }

@@ -5,6 +5,7 @@
 //  Created by Sarah Svitlik & Shannon Russel on 03/01/24
 //
 import SwiftUI
+import OpenAIKit
 
 struct BottomBar: View {
     @EnvironmentObject private var app: AppVariables

@@ -6,9 +6,7 @@ import UIKit
 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    private let apiToken: String = "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"
-    let organizationName: String = "DateSpark"
-    lazy var openAI = OpenAIKit(apiToken: apiToken, organization: organizationName)
+   
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         let providerFactory = AppCheckDebugProviderFactory()

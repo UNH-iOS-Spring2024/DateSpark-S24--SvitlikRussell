@@ -22,23 +22,22 @@ class SparkGPTViewModel: ObservableObject {
         self.openAI = openAI
     }
     func sendQuestion() {
-            isLoading = true
-            response = ""
-
-            let prompt = text
-            // Assuming openAI is an instance of a class that handles the API call
-            openAI.sendChatCompletion(newMessage: AIMessage(role: .user, content: prompt), previousMessages: previousMessages, model: .gptV3_5(.gptTurbo), maxTokens: 2048, n: 1) { [weak self] result in
-                DispatchQueue.main.async {
-                    self?.isLoading = false
-                    switch result {
-                    case .success(let aiResult):
-                        if let text = aiResult.choices.first?.message?.content {
-                            self?.response = text
-                        }
-                    case .failure(let error):
-                        self?.response = "Error: \(error.localizedDescription)"
-                    }
+        isLoading = true
+        response = ""
+        
+        let prompt = text
+        openAI.sendStreamChatCompletion(newMessage: AIMessage(role: .user, content: "Hello!"), model: .gptV3_5(.gptTurbo), maxTokens: 2048) { result in
+            switch result {
+            case .success(let streamResult):
+                /// Hadle success response result
+                if let streamMessage = streamResult.message?.choices.first?.message {
+                    print("Stream message: \(streamMessage)") //"\n\nHello there, how may I assist you today?"
                 }
+            case .failure(let error):
+                // Handle error actions
+                print(error.localizedDescription)
             }
         }
- }
+    }
+}
+ 

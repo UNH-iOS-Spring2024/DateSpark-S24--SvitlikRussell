@@ -3,8 +3,8 @@
 import SwiftUI
 import FirebaseFirestore
 
+
 struct SelectedPage: View {
-    
     @State var selectedIndex: Int
     @State var index: Int
     @State var selectedTitle: String
@@ -12,10 +12,8 @@ struct SelectedPage: View {
     @State private var selectedWeather: String = "Weather"
     @State private var selectedOutfit: String = "Outfit"
     @State private var selectedTime: Date = Date()
-    @State var temperature: Measurement<UnitTemperature>?
-
     
-    //    @State private var selectedItem: DateItem?
+//    @State private var selectedItem: DateItem?
 //    @EnvironmentObject var archiveViewModel: ArchivedViewModel
     
     @State private var showingTime = false
@@ -40,15 +38,10 @@ struct SelectedPage: View {
                 .padding(10)
             
             Text(selectedDescription)
-            //take out menu and let it get the current weather
             
-            
-            if let temperature = temperature {
-                Text("Weather: \(temperature.value) \(temperature.unit.symbol)")
-            }
         
             //Menu for Weather choice
-            /* Menu(selectedWeather) {
+            Menu(selectedWeather) {
                 Button(action: { selectedWeather = "Sunny" }) {
                     Label("Sunny ☀️", systemImage: "sun.max.fill")
                 }
@@ -70,8 +63,8 @@ struct SelectedPage: View {
                 Button(action: { selectedWeather = "Stormy" }) {
                     Label("Stormy ⛈", systemImage: "tropicalstorm")
                 }
-            } */
-           // .padding(10)
+            }
+            .padding(10)
             
             
             //Menu for Outfit Choice
@@ -131,10 +124,7 @@ struct SelectedPage: View {
             
                 }/*.padding(30)*/
 //            }
-            .onAppear {
-                selectDateFromFirebase(forIndex: index)
-                initWeatherData()
-            }
+                .onAppear { selectDateFromFirebase(forIndex: index) }
             
         }
         .font(.system(size: 25))
@@ -156,52 +146,7 @@ struct SelectedPage: View {
             }
         }
     }
-    func initWeatherData() {
-        let headers = [
-            "X-RapidAPI-Key": "2797d169c7msh40182f1fc10cc77p1b8166jsn644081bdb37c",
-            "X-RapidAPI-Host": "weatherbit-v1-mashape.p.rapidapi.com"
-        ]
-
-        let request = NSMutableURLRequest(url: NSURL(string: "https://weatherbit-v1-mashape.p.rapidapi.com/current?lon=41&lat=73&units=metric")! as URL,
-                                            cachePolicy: .useProtocolCachePolicy,
-                                            timeoutInterval: 10.0)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
-
-        URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
-            if let error = error {
-                print("Error: \(error)")
-                return
-            }
-
-            if let data = data {
-                do {
-                    let response = try JSONDecoder().decode(WeatherResponse.self, from: data)
-                    let temperatureValue = response.data.temperature
-                    
-                    // Update temperature data in UI
-                    DispatchQueue.main.async {
-                        // Check if the temperature is negative and handle accordingly
-                        let formattedTemperatureValue = max(temperatureValue, 0)
-                        let temperatureMeasurement = Measurement(value: formattedTemperatureValue, unit: UnitTemperature.fahrenheit)
-                        self.temperature = temperatureMeasurement
-                    }
-                    
-                } catch {
-                    print("Error decoding JSON: \(error)")
-                }
-            }
-        }.resume()  
-    }
-
-    struct WeatherResponse: Codable {
-        let data: WeatherData
-    }
-
-    struct WeatherData: Codable {
-        let temperature: Double
-    }
-
+    
     func selectDateFromFirebase(forIndex index: Int) {
         let db = Firestore.firestore()
         let query = db.collection("Date")

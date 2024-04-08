@@ -9,8 +9,16 @@ import OpenAISwift
 import OpenAIKit
 
 struct SparkGPTView: View {
-    @StateObject var viewModel = SparkGPTViewModel(openAI: OpenAIKit(apiToken: "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", organization: "DateSpark"))
+    private let apiToken: String = "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"
+    public let openAI: OpenAIKit
 
+    @StateObject var viewModel: SparkGPTViewModel
+    
+    init(openAI: OpenAIKit = OpenAIKit(apiToken: "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")) {
+            self.openAI = openAI
+            self._viewModel = StateObject(wrappedValue: SparkGPTViewModel(openAI: openAI))
+        }
+    
     var body: some View {
         VStack {
             // Display the chat response
