@@ -16,11 +16,16 @@ struct HomeView: View {
     @State var index = 0
     @State var selectedIndex = -1 //index for firebase selected date
     @State private var showSelectedDateButton = false
-    private var db = Firestore.firestore()
+    @State var feedbackMessage: String = ""
+    @State var showingLocationAlert = false
+    private let db = Firestore.firestore()
+
     
     var body: some View {
         NavigationView{
             VStack {
+                //TODO: do a firebase check of the current user, it would have to be after signing in.
+
                 HStack {
                     Spacer()
                     
@@ -208,6 +213,14 @@ struct HomeView: View {
             }
         }
     }
+    
+    func locationAlert () {
+        padding()
+        //TODO: Check with Firebase if the current user if we have asked the user about location services. If no, then show the pop up & write data to Firebase. If no, then skip. 
+            .alert(isPresented: $showingLocationAlert) {
+            Alert(title: Text("Allow \"Date Spark\" to use your location? "))
+        }
+    }
  }
 
 //Add date after hitting the plus button
@@ -222,6 +235,9 @@ func addDate(userId: String, data: [String : Any]) {
                     }
                 }
             }
+
+
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
