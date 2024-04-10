@@ -9,12 +9,12 @@ import OpenAISwift
 import OpenAIKit
 
 struct SparkGPTView: View {
-    private let apiToken: String = "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"
+    private let apiToken: String = "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"
     public let openAI: OpenAIKit
 
     @StateObject var viewModel: SparkGPTViewModel
     
-    init(openAI: OpenAIKit = OpenAIKit(apiToken: "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")) {
+    init(openAI: OpenAIKit = OpenAIKit(apiToken: "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")) {
             self.openAI = openAI
             self._viewModel = StateObject(wrappedValue: SparkGPTViewModel(openAI: openAI))
         }
