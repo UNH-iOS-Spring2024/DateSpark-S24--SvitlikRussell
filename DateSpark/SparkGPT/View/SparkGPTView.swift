@@ -9,7 +9,7 @@ import OpenAISwift
 import OpenAIKit
 
 struct SparkGPTView: View {
-    private let apiToken: String = "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"
+    private let apiToken: String = "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"
     public let openAI: OpenAIKit
 
     @StateObject var viewModel: SparkGPTViewModel
