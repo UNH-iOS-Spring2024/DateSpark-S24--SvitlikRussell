@@ -5,6 +5,7 @@
 import SwiftUI
 import Charts
 import FirebaseFirestore
+import FirebaseAuth
 
 struct HomeView: View {
     @State private var isShowingPopover = false
@@ -210,6 +211,35 @@ struct HomeView: View {
                         print("Document with index of \(index)")
                     }
                 }
+            }
+        }
+    }
+    
+    
+    func checkLocation () {
+        
+        guard let userEmail = Auth.auth().currentUser?.email else {
+            print("User not signed in.")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        db.collection("Users").whereField("email", isEqualTo: userEmail).getDocuments {(querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            }
+            
+            guard let document = querySnapshot?.documents.first else {
+                        print("User document doesn't exist.")
+                        return
+                    }
+
+            let hasBeenAsked = document.data()["locationServicesAsked"] as? Bool ?? false
+            if !hasBeenAsked {
+                print ("Show location service pop-up")
+                //call function
+            } else {
+                print ("User has already enabled location services")
             }
         }
     }
