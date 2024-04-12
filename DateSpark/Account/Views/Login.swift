@@ -7,7 +7,7 @@ struct Login: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appVariables: AppVariables
 
-    @State var txtEmail: String = ""
+    @State var txtusername: String = ""
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome: Bool = false
     @State private var loginFailed: Bool = false
@@ -39,7 +39,7 @@ struct Login: View {
                     .padding(.bottom,10)
                 
                 
-                TextField("Email", text: $txtEmail)
+                TextField("Username", text: $txtusername)
                     .font(.system(size:30))
                     .autocapitalization(.none)
                     .keyboardType(.emailAddress)
@@ -73,7 +73,7 @@ struct Login: View {
     }
     
     func loginUser() {
-        Auth.auth().signIn(withEmail: txtEmail, password: txtPassword) { authResult, error in
+        Auth.auth().signIn(withEmail: txtusername, password: txtPassword) { authResult, error in
             if let error = error {
                 print("Error signing in: \(error.localizedDescription)")
                 self.loginFailed = true

@@ -7,9 +7,9 @@ import Foundation
 struct UserProfile {
     var firstName: String
     var lastName: String
-    var prefName: String
+    var username: String
     var email: String
     var userID: String
     var joinedDate: String  //Pull Firebase Timestamp
-    var uniqueNameIdentifier: String
+//    var uniqueNameIdentifier: String
 }
