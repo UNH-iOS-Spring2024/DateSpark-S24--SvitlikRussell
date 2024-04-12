@@ -46,8 +46,8 @@ struct FriendsView: View {
             .getDocuments { (snapshot, error) in
                 guard let documents = snapshot?.documents else { return }
                 self.friends = documents.map { doc -> Friend in
-                    let uniqueIdentifier = doc.data()["uniqueIdentifier"] as? String ?? ""
-                    return Friend(id: doc.documentID, uniqueIdentifier: uniqueIdentifier)
+                    let username = doc.data()["username"] as? String ?? ""
+                    return Friend(id: doc.documentID, uniqueIdentifier: username)
             }
         }
     }

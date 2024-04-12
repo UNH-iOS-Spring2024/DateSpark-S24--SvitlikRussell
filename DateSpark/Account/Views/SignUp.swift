@@ -76,12 +76,12 @@ struct SignUp: View {
                 self.errorMessage = "Error creating user: \(error.localizedDescription)"
                 return
             }
-//            let uniqueNameIdentifier = "@\(txtusername)"
-            let userData = ["firstName" : txtFirstName,
-                            "lastName" : txtLastName,
-                            "username" : txtusername,
-                            "email" : txtEmail
-                         /*   "uniqueNameIdentifier" : uniqueNameIdentifier*/]
+            let userData = [
+                "firstName" : txtFirstName,
+                "lastName" : txtLastName,
+                "username" : txtusername,
+                "email" : txtEmail
+                ]
             if let userId = authResult?.user.uid{
                 self.db.collection("User").document(userId).setData(userData){err in
                     if let err = err{
