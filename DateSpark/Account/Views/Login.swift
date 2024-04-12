@@ -2,6 +2,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 struct Login: View {
     @Environment(\.presentationMode) var presentationMode
@@ -73,15 +74,26 @@ struct Login: View {
     }
     
     func loginUser() {
-        Auth.auth().signIn(withEmail: txtusername, password: txtPassword) { authResult, error in
-            if let error = error {
-                print("Error signing in: \(error.localizedDescription)")
+        let usersRef = Firestore.firestore().collection("User")
+        usersRef.whereField("username", isEqualTo: txtusername).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
                 self.loginFailed = true
+            } else if let document = querySnapshot?.documents.first, let email = document.data()["email"] as? String {
+                Auth.auth().signIn(withEmail: email, password: txtPassword) { authResult, error in
+                    if let error = error {
+                        print("Error signing in: \(error.localizedDescription)")
+                        self.loginFailed = true
+                    } else {
+                        print("User logged in successfully")
+                        self.loginFailed = false
+                        self.appVariables.isLoggedIn = true
+                        self.shouldNavigateToHome = true
+                    }
+                }
             } else {
-                print("User logged in successfully")
-                self.loginFailed = false
-                self.appVariables.isLoggedIn = true
-                self.shouldNavigateToHome = true
+                print("No such user found")
+                self.loginFailed = true
             }
         }
     }
