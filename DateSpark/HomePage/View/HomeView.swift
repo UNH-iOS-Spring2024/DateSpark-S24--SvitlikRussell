@@ -6,6 +6,15 @@ import SwiftUI
 import Charts
 import FirebaseFirestore
 
+extension Color {
+    static let lightBeige = Color(red: 203/255, green: 195/255, blue: 187/255)
+    static let brown = Color(red: 66/255, green: 36/255, blue: 0/255)
+    static let lightPink = Color(red: 235/255, green: 135/255, blue: 149/255)
+    static let darkRed = Color(red: 234/255, green: 93/255, blue: 81/255)
+    static let beige = Color(red: 66/255, green: 0/255, blue: 0/255)
+}
+
+
 struct HomeView: View {
     @State private var isShowingPopover = false
     @State var txtchoice: String = ""
@@ -22,40 +31,37 @@ struct HomeView: View {
 
     
     var body: some View {
-        NavigationView{
-            VStack {
-                //TODO: do a firebase check of the current user, it would have to be after signing in.
-
-                HStack {
-                    Spacer()
-                    
-                    NavigationLink(destination: ArchivedDatesView().environmentObject(ArchivedViewModel())){
-                        Image(systemName: "archivebox.fill")
-                            .resizable()
-                            .frame(width: 28, height: 28)
-                            .foregroundColor(.blue)
-                    }
-                    .padding(.top, 40)
-                    .padding(.trailing, 20)
-                }
-                
-                Spacer()
-                
-                HStack {
-                    Text("Random Date")
-                        .font(.system(size: 40))
-                }
-                .padding(.bottom,50)
-                .padding(.top,50)
-
-                Spacer()
-                
+            NavigationView {
                 VStack {
-                    PieChartView(dataPoints: $dates)
-                        .rotationEffect(.degrees(wheelAngle))
-                }
-                
-                
+                    HStack {
+                        Spacer()
+                        NavigationLink(destination: ArchivedDatesView().environmentObject(ArchivedViewModel())) {
+                            Image(systemName: "archivebox.fill")
+                                .resizable()
+                                .frame(width: 28, height: 28)
+                                .foregroundColor(.lightPink)
+                        }
+                        .padding(.top, 40)
+                        .padding(.trailing, 20)
+                    }
+
+                    Spacer()
+
+                    HStack {
+                        Text("Random Date")
+                            .font(.system(size: 35))
+                    }
+                    .padding(.bottom, 50)
+                    .padding(.top, 50)
+
+                    Spacer()
+
+                    // Your Pie Chart with dataPoints
+                    VStack {
+                        PieChartView(dataPoints: $dates)
+                            .rotationEffect(.degrees(wheelAngle))
+                    }
+    
                 VStack {
                     Button(action: {
                         print("Button to start the wheel has been pressed")
@@ -64,9 +70,7 @@ struct HomeView: View {
                         Image(systemName: "triangle.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
-                            .foregroundColor(.purple)
-                           // .padding(.bottom, 100)
-                        
+                            .foregroundColor(.darkRed)
                     }
                     Spacer()
                 }
@@ -101,9 +105,9 @@ struct HomeView: View {
                         Image(systemName: "plus.circle")
                             .resizable()
                             .frame(width: 40, height: 40)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.lightPink)
                             .popover(isPresented: $isShowingPopover) {
-                                NavigationView { // Embed in NavigationView
+                                NavigationView {
                                     VStack {
                                         TextField("Enter a date to the wheel", text: $txtchoice)
                                             .padding()
@@ -151,15 +155,24 @@ struct HomeView: View {
     struct PieChartView: View {
         @Binding var dataPoints: [DateClass]
 
+        // Define your custom colors
+        private let colors: [Color] = [
+            .lightBeige,  // custom color 1
+            .brown,  // custom color 2
+            .lightPink,  // custom color 3
+            .darkRed,  // custom color 4
+            .beige  // custom color 5
+        ]
+
         var body: some View {
             VStack {
                 Chart {
-                    ForEach(dataPoints.prefix(6), id: \.id) { date in
+                    ForEach(dataPoints.prefix(5), id: \.id) { date in
                         SectorMark(angle: .value("portion", date.portion),
-                                   innerRadius: .ratio(0.618),
+                                   innerRadius: .ratio(0), // Set inner radius to zero
                                    angularInset: 3.5)
                             .cornerRadius(35)
-                            .foregroundStyle(Color.pink)
+                            .foregroundStyle(colors[dataPoints.firstIndex(of: date) ?? 0])
                     }
                 }
                 .frame(width: 250, height: 300)
@@ -167,6 +180,7 @@ struct HomeView: View {
             .padding(.bottom, 50)
         }
     }
+
 
     //Spins the wheel after hitting the triangle
     func spinWheel(){

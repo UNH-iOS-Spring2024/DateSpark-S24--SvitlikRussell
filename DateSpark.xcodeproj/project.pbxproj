@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		504114D32BB71191001E8805 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 504114D22BB71191001E8805 /* OpenAISwift */; };
 		50486CD12BC2FE9F00BD5BDC /* SparkGPTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50486CD02BC2FE9F00BD5BDC /* SparkGPTViewModel.swift */; };
+		506D9D912BCAFB720011922D /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 506D9D902BCAFB720011922D /* DGCharts */; };
+		506D9D932BCAFB720011922D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 506D9D922BCAFB720011922D /* DGChartsDynamic */; };
 		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
 		50E9A3662BC05FAB007A3DDB /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 50E9A3652BC05FAB007A3DDB /* OpenAIKit */; };
@@ -124,6 +126,7 @@
 				FBDB054A2BAA54C20076F915 /* FirebaseCrashlytics in Frameworks */,
 				FBDB056A2BAA54C20076F915 /* FirebaseRemoteConfigSwift in Frameworks */,
 				FBDB055C2BAA54C20076F915 /* FirebaseInAppMessaging-Beta in Frameworks */,
+				506D9D932BCAFB720011922D /* DGChartsDynamic in Frameworks */,
 				FBDB054E2BAA54C20076F915 /* FirebaseDatabaseSwift in Frameworks */,
 				FBDB05582BAA54C20076F915 /* FirebaseFunctions in Frameworks */,
 				FBDB056E2BAA54C20076F915 /* FirebaseStorageCombine-Community in Frameworks */,
@@ -132,6 +135,7 @@
 				FBDB05482BAA54C20076F915 /* FirebaseAuthCombine-Community in Frameworks */,
 				504114D32BB71191001E8805 /* OpenAISwift in Frameworks */,
 				50E9A3662BC05FAB007A3DDB /* OpenAIKit in Frameworks */,
+				506D9D912BCAFB720011922D /* DGCharts in Frameworks */,
 				FBDB05662BAA54C20076F915 /* FirebasePerformance in Frameworks */,
 				FBDB055E2BAA54C20076F915 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				FBDB056C2BAA54C20076F915 /* FirebaseStorage in Frameworks */,
@@ -462,6 +466,8 @@
 				FBDB056D2BAA54C20076F915 /* FirebaseStorageCombine-Community */,
 				504114D22BB71191001E8805 /* OpenAISwift */,
 				50E9A3652BC05FAB007A3DDB /* OpenAIKit */,
+				506D9D902BCAFB720011922D /* DGCharts */,
+				506D9D922BCAFB720011922D /* DGChartsDynamic */,
 			);
 			productName = DateSpark;
 			productReference = FBDB04EB2BAA4FFB0076F915 /* DateSpark.app */;
@@ -495,6 +501,7 @@
 				FBDB05382BAA54C20076F915 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				504114D12BB71191001E8805 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
 				50E9A3642BC05FAB007A3DDB /* XCRemoteSwiftPackageReference "OpenAI" */,
+				506D9D8F2BCAFB720011922D /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = FBDB04EC2BAA4FFB0076F915 /* Products */;
 			projectDirPath = "";
@@ -767,6 +774,14 @@
 				minimumVersion = 1.4.1;
 			};
 		};
+		506D9D8F2BCAFB720011922D /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		50E9A3642BC05FAB007A3DDB /* XCRemoteSwiftPackageReference "OpenAI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/FuturraGroup/OpenAI.git";
@@ -790,6 +805,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 504114D12BB71191001E8805 /* XCRemoteSwiftPackageReference "OpenAISwift" */;
 			productName = OpenAISwift;
+		};
+		506D9D902BCAFB720011922D /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 506D9D8F2BCAFB720011922D /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		506D9D922BCAFB720011922D /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 506D9D8F2BCAFB720011922D /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 		50E9A3652BC05FAB007A3DDB /* OpenAIKit */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -10,17 +10,7 @@ import FirebaseFirestore
 import WeatherKit
 import CoreLocation
 
-class DateClass: ObservableObject{
-    
-    let weatherService = WeatherService()
-
-    let syracuse = CLLocation(latitude: 43, longitude: -76)
-
-    /* let weather = try! await weatherService.weather(for: syracuse)
-
-    let temperature = weather.currentWeather.temperature
-
-    let uvIndex = weather.currentWeather.uvIndex */
+class DateClass: ObservableObject, Identifiable, Equatable{
     
     var id: String
     
@@ -32,6 +22,7 @@ class DateClass: ObservableObject{
     @Published var portion: Double
     @Published var rating: String
     @Published var index: Int
+    @Published var color: String
 
     required init?(id: String, data: [String: Any], title: String, index: Int) {
               let title = data["title"] as? String != nil ? data["title"] as! String : ""
@@ -41,6 +32,8 @@ class DateClass: ObservableObject{
               let weather = data["weather"] as? String != nil ? data["weather"] as! String : ""
               let portion = data["portion"] as? Double != nil ? data["portion"] as! Double : 50
               let rating = data["rating"] as? String != nil ? data["rating"] as! String : ""
+              let color = data["color"] as? String != nil ? data["color"] as! String : ""
+
 
 
         self.id = id
@@ -51,6 +44,11 @@ class DateClass: ObservableObject{
         self.weather = weather
         self.portion = portion
         self.rating = rating
-        self.index = index  
+        self.index = index 
+        self.color = color
     }
+    
+    static func == (lhs: DateClass, rhs: DateClass) -> Bool {
+           return lhs.id == rhs.id
+       }
 }
