@@ -14,6 +14,9 @@ struct Login: View {
     @State private var errorMessage: String? = nil
     @Binding var isLoggedIn: Bool
     
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
     
     var body: some View {
     
@@ -49,11 +52,15 @@ struct Login: View {
                     .font(.system(size:30))
                     .padding(.bottom, 20)
                 
-                if loginFailed {
-                    Text("Failed to login. Please check your credentials.")
-                        .foregroundColor(.red)
-                        .padding()
-                }
+                    .alert(isPresented: self.$showingAlert) {
+                        Alert (
+                            title: Text (alertTitle),
+                            message: Text(alertMessage),
+                        
+                            dismissButton: .cancel(Text("Close"), action : {
+                                
+                            }))
+                    }
                 
                 Button(action: loginUser) {
                     Text("Login")
@@ -77,8 +84,9 @@ struct Login: View {
     func loginUser() {
         Auth.auth().signIn(withEmail: txtEmail, password: txtPassword) { authResult, error in
             if let error = error {
-                print("Error signing in: \(error.localizedDescription)")
-                self.loginFailed = true
+                self.alertTitle = "Error"
+                self.alertMessage = "Failed to login: \(error.localizedDescription)"
+                self.showingAlert = true
             } else {
                 print("User logged in successfully")
                 self.loginFailed = false
