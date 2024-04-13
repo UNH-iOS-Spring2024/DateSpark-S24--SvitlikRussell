@@ -151,17 +151,15 @@ struct HomeView: View {
         }
     }
     
-    //Create the pie chart using Swift UI
-    struct PieChartView: View {
+     struct PieChartView: View {
         @Binding var dataPoints: [DateClass]
 
-        // Define your custom colors
-        private let colors: [Color] = [
-            .lightBeige,  // custom color 1
-            .brown,  // custom color 2
-            .lightPink,  // custom color 3
-            .darkRed,  // custom color 4
-            .beige  // custom color 5
+         private let colors: [Color] = [
+            .lightBeige,
+            .brown,
+            .lightPink,
+            .darkRed,
+            .beige
         ]
 
         var body: some View {
