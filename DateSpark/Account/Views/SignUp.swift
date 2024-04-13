@@ -16,8 +16,11 @@ struct SignUp: View {
     @State var txtEmail: String = ""
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome = false
-    @State private var errorMessage : String? = nil
- 
+    
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -36,10 +39,15 @@ struct SignUp: View {
                     .autocapitalization(.none)
                 SecureField("Password", text: $txtPassword)
 
-                if let errorMessage = errorMessage{
-                    Text (errorMessage)
-                        .foregroundColor(.red)
-                }
+                    .alert(isPresented: self.$showingAlert) {
+                        Alert (
+                            title: Text (alertTitle),
+                            message: Text(alertMessage),
+                        
+                            dismissButton: .cancel(Text("Close"), action : {
+                                
+                            }))
+                    }
                 Button("Sign Up!"){
                         userToFirebase()
                 }
@@ -73,7 +81,9 @@ struct SignUp: View {
     func userToFirebase(){
         Auth.auth().createUser(withEmail: txtEmail, password: txtPassword ) { authResult, error in
             if let error = error{
-                self.errorMessage = "Error creating user: \(error.localizedDescription)"
+                self.alertTitle = "Error"
+                self.alertMessage = "Failed to create user: \(error.localizedDescription)"
+                self.showingAlert = true
                 return
             }
             let uniqueNameIdentifier = "@\(txtLastName).\(txtPrefName)\(txtFirstName)"
@@ -85,8 +95,11 @@ struct SignUp: View {
             if let userId = authResult?.user.uid{
                 self.db.collection("User").document(userId).setData(userData){err in
                     if let err = err{
-                    self.errorMessage = "Error adding user details: \(err.localizedDescription)"
-                } else {
+                        self.alertTitle = "Error"
+                        self.alertMessage = "Failed to add user details: \(err.localizedDescription)"
+                        self.showingAlert = true
+                    }
+                    else {
                     print("User details added with ID: \(userId)")
                     DispatchQueue.main.async{
                         self.resetTextFields()

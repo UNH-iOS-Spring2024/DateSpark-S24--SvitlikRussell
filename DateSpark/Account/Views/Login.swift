@@ -11,7 +11,9 @@ struct Login: View {
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome: Bool = false
     @State private var loginFailed: Bool = false
+    @State private var errorMessage: String? = nil
     @Binding var isLoggedIn: Bool
+    
     
     var body: some View {
     
