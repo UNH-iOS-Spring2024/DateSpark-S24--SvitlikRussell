@@ -8,6 +8,8 @@ import FirebaseFirestore
 struct FriendsView: View {
     let db = Firestore.firestore()
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var viewModel = FriendRequestsViewModel()
+    
     @State private var showingAddFriendView = false
     @State private var friends: [Friend] = []
     
@@ -15,7 +17,9 @@ struct FriendsView: View {
         NavigationView {
             List {
                 Section(header: Text("Friend Requests")) {
-                    NavigationLink("View Friend Requests", destination: FriendRequestView())
+                    ForEach(viewModel.friendRequests.filter { $0.status == "confirmed" }, id: \.id) { friendRequest in
+                        Text(friendRequest.receiverUsername) // Assuming the receiver is the friend
+                    }
                 }
                 Section(header: Text("Friends")) {
                     ForEach(friends, id: \.id) { friend in
@@ -44,9 +48,11 @@ struct FriendsView: View {
         
         db.collection("User").document(userId).collection("friends")
             .getDocuments { (snapshot, error) in
-                guard let documents = snapshot?.documents else { return }
+                guard let documents = snapshot?.documents else {                     print("Error fetching documents: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
                 self.friends = documents.map { doc -> Friend in
-                    let username = doc.data()["username"] as? String ?? ""
+                    let username = doc.data()["username"] as? String ?? "Unknown"
                     return Friend(id: doc.documentID, uniqueIdentifier: username)
             }
         }

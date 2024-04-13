@@ -9,17 +9,20 @@ import FirebaseFirestore
 struct AddFriendView: View {
     let db = Firestore.firestore()
     let completion: () -> Void
-    @State private var uniqueIdentifier = ""
+    @ObservedObject var viewModel = FriendRequestsViewModel()
+    @State private var friendUsername = ""
+    
     @State private var feedbackMessage: String = ""
     @State private var showingFeedbackAlert = false
 
     var body: some View {
         VStack {
-            TextField("Enter the user name", text: $uniqueIdentifier)
+            TextField("Enter friend's username", text: $friendUsername)
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-            Button("Add Friend") {
+            Button("Send Friend Request") {
                 addFriendRequest()
+                viewModel.sendFriendRequest(to: friendUsername)
             }
             .padding()
         }
@@ -30,9 +33,12 @@ struct AddFriendView: View {
     }
     
     func addFriendRequest() {
-        guard let currentUserID = Auth.auth().currentUser?.uid else {return }
-        
-        db.collection("User").whereField("uniqueIdentifier", isEqualTo: uniqueIdentifier).getDocuments { (querySnapshot, error) in
+        guard let currentUserID = Auth.auth().currentUser?.uid, !friendUsername.isEmpty else {
+            feedbackMessage = "Invalid username"
+            showingFeedbackAlert = true
+            return
+        }
+        db.collection("User").whereField("username", isEqualTo: friendUsername).getDocuments { (querySnapshot, error) in
             if let error = error {
                 feedbackMessage = "Failed to find user: \(error.localizedDescription)"
                 showingFeedbackAlert = true
@@ -59,7 +65,7 @@ struct AddFriendView: View {
                 feedbackMessage = "Friend request already sent."
                 showingFeedbackAlert = true
             } else {
-                friendRequestRef.setData(["status": "pending", "uniqueIdentifier": uniqueIdentifier ?? ""]) { error in
+                friendRequestRef.setData(["status": "pending", "fromUserId": fromUserId, "toUserId": toUserID]) { error in
                     if let error = error {
                         feedbackMessage = "Failed to send friend request: \(error.localizedDescription)"
                     } else {

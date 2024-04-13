@@ -7,23 +7,46 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct FriendRequestView: View {
-    let db = Firestore.firestore()
+//    let db = Firestore.firestore()
     @ObservedObject var viewModel = FriendRequestsViewModel()
+    
+    init(viewModel: FriendRequestsViewModel = FriendRequestsViewModel()){
+        self.viewModel = viewModel
+    }
         
     var body: some View {
-        List(viewModel.friendRequests) { request in
-            HStack {
-                Text(request.uniqueIdentifier)
-                Spacer()
-                Button("Confirm") {
-                    viewModel.updateFriendRequest(requestId: request.id, status: "confirmed")
-                }
-                Button("Deny") {
-                    viewModel.updateFriendRequest(requestId: request.id, status: "denied")
+        List {
+            ForEach(viewModel.friendRequests.filter { $0.status == "pending" }) { request in
+                HStack {
+                    Text(request.senderUsername)
+                    Spacer()
+                    Button("Confirm") {
+                        confirmRequest(request)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .padding(.trailing)
+                    
+                    Button("Deny") {
+                        denyRequest(request)
+                    }
+                    .buttonStyle(.bordered)
                 }
             }
         }
-        .onAppear(perform: viewModel.fetchFriendRequests)
+        .navigationTitle("Friend Requests")
+        .onAppear(perform: viewModel.fetchPendingFriendRequests)
+    }
+    
+    private func confirmRequest(_ request: FriendRequest) {
+        viewModel.updateFriendRequest(id: request.id, newStatus: "confirmed") {
+            // Optionally add feedback to user here, e.g., using an alert
+        }
+    }
+    
+    private func denyRequest(_ request: FriendRequest) {
+        viewModel.updateFriendRequest(id: request.id, newStatus: "denied") {
+            // Optionally add feedback to user here, e.g., using an alert
+        }
     }
 }
 
