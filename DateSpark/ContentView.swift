@@ -10,7 +10,7 @@ class AppVariables: ObservableObject {
     @Published var isSignedOut: Bool = false
 }
 
-
+//test
 struct ContentView: View {
     init () {
         UITabBar.appearance().backgroundColor = UIColor.white
