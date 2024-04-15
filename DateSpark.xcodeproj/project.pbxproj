@@ -65,7 +65,7 @@
 		FBDB05312BAA53F50076F915 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05182BAA53F30076F915 /* MapView.swift */; };
 		FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05242BAA53F50076F915 /* SelectedPage.swift */; };
 		FBDB05372BAA53F50076F915 /* SparkGPTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05272BAA53F50076F915 /* SparkGPTView.swift */; };
-		FBF3AFEE2BCDB812001F991D /* FriendRequestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF3AFED2BCDB812001F991D /* FriendRequestList.swift */; };
+		FBF3AFEE2BCDB812001F991D /* FriendRequestListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF3AFED2BCDB812001F991D /* FriendRequestListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,7 +100,7 @@
 		FBDB05182BAA53F30076F915 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FBDB05242BAA53F50076F915 /* SelectedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPage.swift; sourceTree = "<group>"; };
 		FBDB05272BAA53F50076F915 /* SparkGPTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkGPTView.swift; sourceTree = "<group>"; };
-		FBF3AFED2BCDB812001F991D /* FriendRequestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestList.swift; sourceTree = "<group>"; };
+		FBF3AFED2BCDB812001F991D /* FriendRequestListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -349,7 +349,7 @@
 				FB2A01F02BCD93C400DF084E /* FriendsList.swift */,
 				FB2A01F82BCD97EF00DF084E /* SendFriendRequestView.swift */,
 				FB2A01FA2BCD989300DF084E /* FriendRequestView.swift */,
-				FBF3AFED2BCDB812001F991D /* FriendRequestList.swift */,
+				FBF3AFED2BCDB812001F991D /* FriendRequestListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -522,7 +522,7 @@
 				FBDB052B2BAA53F50076F915 /* DateItem.swift in Sources */,
 				FBD95F4D2BBC6FE80075B690 /* Pin.swift in Sources */,
 				FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */,
-				FBF3AFEE2BCDB812001F991D /* FriendRequestList.swift in Sources */,
+				FBF3AFEE2BCDB812001F991D /* FriendRequestListView.swift in Sources */,
 				FBDB05072BAA53D20076F915 /* ProfileView.swift in Sources */,
 				FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */,
 				FBC7274C2BB4BCAB003852BE /* UserModel.swift in Sources */,

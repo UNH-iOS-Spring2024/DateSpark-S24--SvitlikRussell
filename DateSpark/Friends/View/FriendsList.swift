@@ -6,7 +6,7 @@ struct FriendsList: View {
     @ObservedObject var viewModel: FriendsViewModel
     @State private var showingSendFriendRequest = false
     @State private var showingFriendRequests = false
-    
+
     var body: some View {
         NavigationView {
             List(viewModel.friends, id: \.self) { friend in
@@ -29,7 +29,7 @@ struct FriendsList: View {
                 SendFriendRequestView(viewModel: viewModel)
             }
             .popover(isPresented: $showingFriendRequests) {
-                FriendRequestList(viewModel: viewModel)
+                FriendRequestListView(viewModel: viewModel)
             }
         }
     }

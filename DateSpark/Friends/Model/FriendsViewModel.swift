@@ -26,11 +26,26 @@ enum RequestStatus: String {
 }
 
 class FriendsViewModel: ObservableObject {
-    @Published var friends: [String] = []
+//    @Published var friends: [String] = []
+    @Published var friends: [String] = ["Alice", "Bob", "Carol"]
+
     @Published var friendRequests: [FriendRequest] = []
     
     private var db = Firestore.firestore()
     private var userSession: User? 
+    
+    init() {
+            // Populate with mock data for testing and preview purposes
+            loadMockFriendRequests()
+        }
+    
+    func loadMockFriendRequests() {
+            friendRequests = [
+                FriendRequest(id: "1", from: "Alice", to: "User123", status: .pending),
+                FriendRequest(id: "2", from: "Bob", to: "User123", status: .pending),
+                FriendRequest(id: "3", from: "Carol", to: "User123", status: .pending)
+            ]
+        }
     
     func fetchFriends() {
         guard let user = userSession else { return }
