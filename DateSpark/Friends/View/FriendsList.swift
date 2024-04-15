@@ -4,20 +4,32 @@ import SwiftUI
 
 struct FriendsList: View {
     @ObservedObject var viewModel: FriendsViewModel
-    @State private var showingSendFriendRequest = false  
+    @State private var showingSendFriendRequest = false
+    @State private var showingFriendRequests = false
+    
     var body: some View {
         NavigationView {
             List(viewModel.friends, id: \.self) { friend in
                 Text(friend)
             }
             .navigationTitle("Friends List")
-            .navigationBarItems(trailing: Button(action: {
-                showingSendFriendRequest = true
-            }) {
-                Image(systemName: "plus")
-            })
+            .navigationBarItems(
+                leading: Button(action: {
+                    showingFriendRequests = true
+                }) {
+                    Image(systemName: "bell")
+                },
+                trailing: Button(action: {
+                    showingSendFriendRequest = true
+                }) {
+                    Image(systemName: "plus")
+                }
+            )
             .sheet(isPresented: $showingSendFriendRequest) {
                 SendFriendRequestView(viewModel: viewModel)
+            }
+            .popover(isPresented: $showingFriendRequests) {
+                FriendRequestList(viewModel: viewModel)
             }
         }
     }
