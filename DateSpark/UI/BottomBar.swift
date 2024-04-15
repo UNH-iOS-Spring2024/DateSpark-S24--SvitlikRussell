@@ -76,7 +76,7 @@ struct BottomBar: View {
         AnyView(HomeView()),
         AnyView(SparkGPTView()),
         AnyView(MapView()),
-        AnyView(FriendsView()),
+        AnyView(FriendsListView()),
         AnyView(ProfileView())
     )
         .environmentObject(AppVariables())

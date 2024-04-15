@@ -50,6 +50,6 @@ struct FriendRequestView: View {
 
 struct FriendRequestView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendRequestView()
+        FriendRequestView(requester: "exampleUsername", viewModel: FriendsListViewModel())
     }
 }

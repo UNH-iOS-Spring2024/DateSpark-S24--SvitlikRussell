@@ -36,6 +36,6 @@ struct SendFriendRequestView: View {
 
 struct SendFriendRequestView_Previews: PreviewProvider {
     static var previews: some View {
-        SendFriendRequestView()
+        SendFriendRequestView(viewModel: FriendsListViewModel())
     }
 }
