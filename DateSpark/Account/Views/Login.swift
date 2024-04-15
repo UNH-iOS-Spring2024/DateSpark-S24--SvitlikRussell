@@ -2,21 +2,17 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 struct Login: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appVariables: AppVariables
 
-    @State var txtEmail: String = ""
+    @State var txtusername: String = ""
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome: Bool = false
     @State private var loginFailed: Bool = false
-    @State private var errorMessage: String? = nil
     @Binding var isLoggedIn: Bool
-    
-    @State private var showingAlert = false
-    @State private var alertMessage = ""
-    @State private var alertTitle = ""
     
     var body: some View {
     
@@ -44,7 +40,7 @@ struct Login: View {
                     .padding(.bottom,10)
                 
                 
-                TextField("Email", text: $txtEmail)
+                TextField("Username", text: $txtusername)
                     .font(.system(size:30))
                     .autocapitalization(.none)
                     .keyboardType(.emailAddress)
@@ -52,15 +48,11 @@ struct Login: View {
                     .font(.system(size:30))
                     .padding(.bottom, 20)
                 
-                    .alert(isPresented: self.$showingAlert) {
-                        Alert (
-                            title: Text (alertTitle),
-                            message: Text(alertMessage),
-                        
-                            dismissButton: .cancel(Text("Close"), action : {
-                                
-                            }))
-                    }
+                if loginFailed {
+                    Text("Failed to login. Please check your credentials.")
+                        .foregroundColor(.red)
+                        .padding()
+                }
                 
                 Button(action: loginUser) {
                     Text("Login")
@@ -82,16 +74,26 @@ struct Login: View {
     }
     
     func loginUser() {
-        Auth.auth().signIn(withEmail: txtEmail, password: txtPassword) { authResult, error in
-            if let error = error {
-                self.alertTitle = "Error"
-                self.alertMessage = "Failed to login: \(error.localizedDescription)"
-                self.showingAlert = true
+        let usersRef = Firestore.firestore().collection("User")
+        usersRef.whereField("username", isEqualTo: txtusername).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+                self.loginFailed = true
+            } else if let document = querySnapshot?.documents.first, let email = document.data()["email"] as? String {
+                Auth.auth().signIn(withEmail: email, password: txtPassword) { authResult, error in
+                    if let error = error {
+                        print("Error signing in: \(error.localizedDescription)")
+                        self.loginFailed = true
+                    } else {
+                        print("User logged in successfully")
+                        self.loginFailed = false
+                        self.appVariables.isLoggedIn = true
+                        self.shouldNavigateToHome = true
+                    }
+                }
             } else {
-                print("User logged in successfully")
-                self.loginFailed = false
-                self.appVariables.isLoggedIn = true
-                self.shouldNavigateToHome = true
+                print("No such user found")
+                self.loginFailed = true
             }
         }
     }

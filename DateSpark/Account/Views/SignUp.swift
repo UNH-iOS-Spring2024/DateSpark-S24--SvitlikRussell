@@ -12,7 +12,7 @@ struct SignUp: View {
     
     @State var txtFirstName: String = ""
     @State var txtLastName: String = ""
-    @State var txtPrefName: String = ""
+    @State var txtusername: String = ""
     @State var txtEmail: String = ""
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome = false
@@ -34,7 +34,7 @@ struct SignUp: View {
                 
                 TextField("First Name", text: $txtFirstName)
                 TextField("Last Name", text: $txtLastName)
-                TextField("Preferred Name", text: $txtPrefName)
+                TextField("Username", text: $txtusername)
                 TextField("Email", text: $txtEmail)
                     .autocapitalization(.none)
                 SecureField("Password", text: $txtPassword)
@@ -73,7 +73,7 @@ struct SignUp: View {
     func resetTextFields(){
         txtFirstName = ""
         txtLastName = ""
-        txtPrefName = ""
+        txtusername = ""
         txtEmail = ""
         txtPassword = ""
     }
@@ -86,12 +86,12 @@ struct SignUp: View {
                 self.showingAlert = true
                 return
             }
-            let uniqueNameIdentifier = "@\(txtLastName).\(txtPrefName)\(txtFirstName)"
-            let userData = ["firstName" : txtFirstName,
-                            "lastName" : txtLastName,
-                            "prefName" : txtPrefName,
-                            "email" : txtEmail,
-                            "uniqueNameIdentifier" : uniqueNameIdentifier]
+            let userData = [
+                "firstName" : txtFirstName,
+                "lastName" : txtLastName,
+                "username" : txtusername,
+                "email" : txtEmail
+                ]
             if let userId = authResult?.user.uid{
                 self.db.collection("User").document(userId).setData(userData){err in
                     if let err = err{

@@ -12,33 +12,80 @@ import FirebaseAuth
 class FriendRequestsViewModel: ObservableObject {
     @Published var friendRequests: [FriendRequest] = []
     private let db = Firestore.firestore()
-
-    func fetchFriendRequests() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+    private var currentUser: String {
+        return Auth.auth().currentUser?.displayName ?? "currentUser" // Replace "defaultUsername" with appropriate fallback
+    }
+    
+    func sendFriendRequest(to username: String){
+        guard username != currentUser else{
+            print("Cannot send yourself a friend request.")
+            return
+        }
         
-        db.collection("User").document(userId).collection("friendRequests")
+        let newRequest = [
+            "senderUsername": currentUser,
+            "receiverUsername": username,
+            "status": "pending"
+        ]
+        //        let newRequest = FriendRequest(id: UUID().uuidString, senderUsername: currentUser, receiverUsername: username, status: "pending")
+        db.collection("friendRequests").addDocument(data: newRequest){ error in
+            if let error = error {
+                print("Error sending friend request: \(error.localizedDescription)")
+            } else {
+                print("Friend request successfully sent.")
+            }
+        }
+    }
+    
+//    func fetchFriendRequests() {
+//        db.collection("friendRequests")
+//            .whereField("receiverUsername", isEqualTo: currentUser)
+//            .whereFireld("status", isEqualTo: "pending")
+//            .addSnapshotListener { [weak self] querySnapshot, error in
+//                if let error = error {
+//                    print("Error fetching friend requests: \(error.localizedDescription)")
+//                    return
+//                }
+//                self?.friendRequests = querySnapshot?.documents.compactMap { document in
+//                    guard let sender = document.data()["senderUsername"] as? String,
+//                          let receiver = document.data()["receiverUsername"] as? String,
+//                          let status = document.data()["status"] as? String else {
+//                        return nil
+//                    }
+//                    return FriendRequest(id: document.documentID, senderUsername: sender, receiverUsername: receiver, status: status)
+//                } ?? []
+//            }
+//    }
+    
+    func fetchPendingFriendRequests() {
+        db.collection("friendRequests")
+            .whereField("receiverUsername", isEqualTo: currentUser)
             .whereField("status", isEqualTo: "pending")
-            .getDocuments {  snapshot, error in
-                guard let documents = snapshot?.documents else {
-                    print("Error fetching friend requests: \(error?.localizedDescription ?? "Unknown error")")
+            .addSnapshotListener { [weak self] querySnapshot, error in
+                if let error = error {
+                    print("Error fetching friend requests: \(error.localizedDescription)")
                     return
                 }
-                self.friendRequests = documents.map { doc in
-                    FriendRequest(id: doc.documentID, uniqueIdentifier: doc["uniqueIdentifier"] as? String ?? "", status: "pending")
+                
+                self?.friendRequests = querySnapshot?.documents.compactMap { document in
+                    guard let sender = document.data()["senderUsername"] as? String,
+                          let receiver = document.data()["receiverUsername"] as? String,
+                          let status = document.data()["status"] as? String else {
+                        return nil
+                    }
+                    return FriendRequest(id: document.documentID, senderUsername: sender, receiverUsername: receiver, status: status)
+                } ?? []
+            }
+        
+        func updateFriendRequest(id: String, newStatus: String, completion: @escaping () -> Void) {
+            db.collection("friendRequests").document(id).updateData(["status": newStatus]) { error in
+                if let error = error {
+                    print("Error updating friend request: \(error.localizedDescription)")
+                } else {
+                    print("Friend request status updated to \(newStatus).")
                 }
+                completion()
             }
-    }
-
-    func updateFriendRequest(requestId: String, status: String) {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-
-        let requestRef = db.collection("User").document(userId).collection("friendRequests").document(requestId)
-        requestRef.updateData(["status": status]) { [weak self] error in
-            if let error = error {
-                print("Error updating request: \(error.localizedDescription)")
-                return
-            }
-            self?.fetchFriendRequests()
         }
     }
 }

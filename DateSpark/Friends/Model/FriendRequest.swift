@@ -7,6 +7,7 @@ import FirebaseFirestore
 
 struct FriendRequest: Identifiable {
     var id: String
-    var uniqueIdentifier: String
+    var senderUsername: String
+    var receiverUsername: String
     var status: String
 }

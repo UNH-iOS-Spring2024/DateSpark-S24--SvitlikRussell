@@ -15,11 +15,11 @@ struct ProfileView: View {
     @State private var userProfile = UserProfile(
         firstName: "",
         lastName: "",
-        prefName: "",
+        username: "",
         email:"",
         userID: "" ,
-        joinedDate: "",
-        uniqueNameIdentifier: "")
+        joinedDate: "")
+//        uniqueNameIdentifier: "")
     
     private func formatDate(_ date: Date) -> String {
             let formatter = DateFormatter()
@@ -46,7 +46,7 @@ struct ProfileView: View {
             }
             .padding(.leading)
             
-            Text(userProfile.prefName)
+            Text(userProfile.username)
                 .font(.largeTitle)
                 .padding(.top, 20)
             
@@ -128,11 +128,11 @@ struct ProfileView: View {
                 self.userProfile = UserProfile(
                     firstName: data["firstName"] as? String ?? "",
                     lastName: data["lastName"] as? String ?? "",
-                    prefName: data["prefName"] as? String ?? "",
+                    username: data["username"] as? String ?? "",
                     email: data["email"] as? String ?? "",
                     userID: document.documentID,
-                    joinedDate: joinedDate,
-                    uniqueNameIdentifier : data["uniqueNameIdentifier"] as? String ?? ""
+                    joinedDate: joinedDate
+//                    uniqueNameIdentifier : data["uniqueNameIdentifier"] as? String ?? ""
                     )
                 }
             }
