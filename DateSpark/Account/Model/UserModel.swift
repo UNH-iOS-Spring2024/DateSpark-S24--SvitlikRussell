@@ -9,7 +9,5 @@ struct UserProfile {
     var lastName: String
     var username: String
     var email: String
-    var userID: String
-    var joinedDate: String  //Pull Firebase Timestamp
-//    var uniqueNameIdentifier: String
+    var joinedDate: String  
 }

@@ -17,9 +17,7 @@ struct ProfileView: View {
         lastName: "",
         username: "",
         email:"",
-        userID: "" ,
         joinedDate: "")
-//        uniqueNameIdentifier: "")
     
     private func formatDate(_ date: Date) -> String {
             let formatter = DateFormatter()
@@ -72,19 +70,6 @@ struct ProfileView: View {
                     Text("Email: ")
                     Text (userProfile.email)
                 }
-                HStack {
-                    Text("User ID: ")
-                    Text(userProfile.userID)
-                        .onTapGesture {
-                            UIPasteboard.general.string = userProfile.userID
-                        }
-                    if !userProfile.userID.isEmpty {
-                        Image(systemName: "doc.on.doc")
-                            .onTapGesture {
-                                UIPasteboard.general.string = userProfile.userID
-                            }
-                    }
-                }
                 HStack{
                     Spacer()
                     Text("Joined: ")
@@ -130,9 +115,8 @@ struct ProfileView: View {
                     lastName: data["lastName"] as? String ?? "",
                     username: data["username"] as? String ?? "",
                     email: data["email"] as? String ?? "",
-                    userID: document.documentID,
+//                    userID: document.documentID,
                     joinedDate: joinedDate
-//                    uniqueNameIdentifier : data["uniqueNameIdentifier"] as? String ?? ""
                     )
                 }
             }
