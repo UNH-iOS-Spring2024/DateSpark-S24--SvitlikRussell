@@ -7,20 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		504114D32BB71191001E8805 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 504114D22BB71191001E8805 /* OpenAISwift */; };
 		50486CD12BC2FE9F00BD5BDC /* SparkGPTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50486CD02BC2FE9F00BD5BDC /* SparkGPTViewModel.swift */; };
 		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
-		50E9A3662BC05FAB007A3DDB /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 50E9A3652BC05FAB007A3DDB /* OpenAIKit */; };
 		50E9A3692BC069DA007A3DDB /* SparkGPTController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */; };
 		FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84B6192BB3899D00E765EF /* SplashScreenView.swift */; };
-		FBA35BDB2BBF535C00DA7255 /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA35BDA2BBF535C00DA7255 /* FriendRequest.swift */; };
-		FBA35BDD2BC0A79000DA7255 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA35BDC2BC0A79000DA7255 /* Friend.swift */; };
-		FBA35BDF2BC0AD6700DA7255 /* FriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA35BDE2BC0AD6700DA7255 /* FriendRequestView.swift */; };
-		FBA35BE12BC0B50C00DA7255 /* FriendRequestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA35BE02BC0B50C00DA7255 /* FriendRequestsViewModel.swift */; };
 		FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */; };
 		FBC7274C2BB4BCAB003852BE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7274B2BB4BCAB003852BE /* UserModel.swift */; };
-		FBD95F4A2BBC67D70075B690 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD95F492BBC67D70075B690 /* AddFriendView.swift */; };
 		FBD95F4D2BBC6FE80075B690 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD95F4C2BBC6FE80075B690 /* Pin.swift */; };
 		FBD95F4F2BBC780C0075B690 /* SearchCompleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD95F4E2BBC780C0075B690 /* SearchCompleter.swift */; };
 		FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */; };
@@ -37,36 +30,12 @@
 		FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05122BAA53F20076F915 /* HomeView.swift */; };
 		FBDB05302BAA53F50076F915 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05152BAA53F30076F915 /* Movie.swift */; };
 		FBDB05312BAA53F50076F915 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05182BAA53F30076F915 /* MapView.swift */; };
-		FBDB05342BAA53F50076F915 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB051D2BAA53F40076F915 /* FriendsView.swift */; };
 		FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05242BAA53F50076F915 /* SelectedPage.swift */; };
 		FBDB05372BAA53F50076F915 /* SparkGPTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05272BAA53F50076F915 /* SparkGPTView.swift */; };
-		FBDB053A2BAA54C20076F915 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05392BAA54C20076F915 /* FirebaseAnalytics */; };
-		FBDB053C2BAA54C20076F915 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB053B2BAA54C20076F915 /* FirebaseAnalyticsOnDeviceConversion */; };
-		FBDB053E2BAA54C20076F915 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB053D2BAA54C20076F915 /* FirebaseAnalyticsSwift */; };
-		FBDB05402BAA54C20076F915 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB053F2BAA54C20076F915 /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		FBDB05422BAA54C20076F915 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05412BAA54C20076F915 /* FirebaseAppCheck */; };
-		FBDB05442BAA54C20076F915 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05432BAA54C20076F915 /* FirebaseAppDistribution-Beta */; };
-		FBDB05462BAA54C20076F915 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05452BAA54C20076F915 /* FirebaseAuth */; };
-		FBDB05482BAA54C20076F915 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05472BAA54C20076F915 /* FirebaseAuthCombine-Community */; };
-		FBDB054A2BAA54C20076F915 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05492BAA54C20076F915 /* FirebaseCrashlytics */; };
-		FBDB054C2BAA54C20076F915 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB054B2BAA54C20076F915 /* FirebaseDatabase */; };
-		FBDB054E2BAA54C20076F915 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB054D2BAA54C20076F915 /* FirebaseDatabaseSwift */; };
-		FBDB05502BAA54C20076F915 /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB054F2BAA54C20076F915 /* FirebaseDynamicLinks */; };
-		FBDB05522BAA54C20076F915 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05512BAA54C20076F915 /* FirebaseFirestore */; };
-		FBDB05542BAA54C20076F915 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05532BAA54C20076F915 /* FirebaseFirestoreCombine-Community */; };
-		FBDB05562BAA54C20076F915 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05552BAA54C20076F915 /* FirebaseFirestoreSwift */; };
-		FBDB05582BAA54C20076F915 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05572BAA54C20076F915 /* FirebaseFunctions */; };
-		FBDB055A2BAA54C20076F915 /* FirebaseFunctionsCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05592BAA54C20076F915 /* FirebaseFunctionsCombine-Community */; };
-		FBDB055C2BAA54C20076F915 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB055B2BAA54C20076F915 /* FirebaseInAppMessaging-Beta */; };
-		FBDB055E2BAA54C20076F915 /* FirebaseInAppMessagingSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB055D2BAA54C20076F915 /* FirebaseInAppMessagingSwift-Beta */; };
-		FBDB05602BAA54C20076F915 /* FirebaseInstallations in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB055F2BAA54C20076F915 /* FirebaseInstallations */; };
-		FBDB05622BAA54C20076F915 /* FirebaseMLModelDownloader in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05612BAA54C20076F915 /* FirebaseMLModelDownloader */; };
-		FBDB05642BAA54C20076F915 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05632BAA54C20076F915 /* FirebaseMessaging */; };
-		FBDB05662BAA54C20076F915 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05652BAA54C20076F915 /* FirebasePerformance */; };
-		FBDB05682BAA54C20076F915 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05672BAA54C20076F915 /* FirebaseRemoteConfig */; };
-		FBDB056A2BAA54C20076F915 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05692BAA54C20076F915 /* FirebaseRemoteConfigSwift */; };
-		FBDB056C2BAA54C20076F915 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB056B2BAA54C20076F915 /* FirebaseStorage */; };
-		FBDB056E2BAA54C20076F915 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB056D2BAA54C20076F915 /* FirebaseStorageCombine-Community */; };
+		FBFEA9002BCC927500202FA6 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFEA8FF2BCC927500202FA6 /* FriendsListView.swift */; };
+		FBFEA9022BCC93D100202FA6 /* SendFriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFEA9012BCC93D100202FA6 /* SendFriendRequestView.swift */; };
+		FBFEA9042BCC943800202FA6 /* FriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFEA9032BCC943800202FA6 /* FriendRequestView.swift */; };
+		FBFEA9062BCC94AC00202FA6 /* FriendsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFEA9052BCC94AC00202FA6 /* FriendsListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,13 +44,8 @@
 		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
 		50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkGPTController.swift; sourceTree = "<group>"; };
 		FB84B6192BB3899D00E765EF /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
-		FBA35BDA2BBF535C00DA7255 /* FriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
-		FBA35BDC2BC0A79000DA7255 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
-		FBA35BDE2BC0AD6700DA7255 /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
-		FBA35BE02BC0B50C00DA7255 /* FriendRequestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestsViewModel.swift; sourceTree = "<group>"; };
 		FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedItem.swift; sourceTree = "<group>"; };
 		FBC7274B2BB4BCAB003852BE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		FBD95F492BBC67D70075B690 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		FBD95F4C2BBC6FE80075B690 /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		FBD95F4E2BBC780C0075B690 /* SearchCompleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompleter.swift; sourceTree = "<group>"; };
 		FBDB04EB2BAA4FFB0076F915 /* DateSpark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateSpark.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,9 +64,12 @@
 		FBDB05122BAA53F20076F915 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FBDB05152BAA53F30076F915 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		FBDB05182BAA53F30076F915 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		FBDB051D2BAA53F40076F915 /* FriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		FBDB05242BAA53F50076F915 /* SelectedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPage.swift; sourceTree = "<group>"; };
 		FBDB05272BAA53F50076F915 /* SparkGPTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkGPTView.swift; sourceTree = "<group>"; };
+		FBFEA8FF2BCC927500202FA6 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
+		FBFEA9012BCC93D100202FA6 /* SendFriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFriendRequestView.swift; sourceTree = "<group>"; };
+		FBFEA9032BCC943800202FA6 /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
+		FBFEA9052BCC94AC00202FA6 /* FriendsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,9 +139,7 @@
 		FBA35BD92BBF533600DA7255 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FBA35BDA2BBF535C00DA7255 /* FriendRequest.swift */,
-				FBA35BE02BC0B50C00DA7255 /* FriendRequestsViewModel.swift */,
-				FBA35BDC2BC0A79000DA7255 /* Friend.swift */,
+				FBFEA9052BCC94AC00202FA6 /* FriendsListViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -350,9 +315,9 @@
 		FBDB051E2BAA53F40076F915 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FBDB051D2BAA53F40076F915 /* FriendsView.swift */,
-				FBD95F492BBC67D70075B690 /* AddFriendView.swift */,
-				FBA35BDE2BC0AD6700DA7255 /* FriendRequestView.swift */,
+				FBFEA8FF2BCC927500202FA6 /* FriendsListView.swift */,
+				FBFEA9012BCC93D100202FA6 /* SendFriendRequestView.swift */,
+				FBFEA9032BCC943800202FA6 /* FriendRequestView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -522,35 +487,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBA35BE12BC0B50C00DA7255 /* FriendRequestsViewModel.swift in Sources */,
 				FBDB052B2BAA53F50076F915 /* DateItem.swift in Sources */,
+				FBFEA9062BCC94AC00202FA6 /* FriendsListViewModel.swift in Sources */,
+				FBFEA9042BCC943800202FA6 /* FriendRequestView.swift in Sources */,
 				FBD95F4D2BBC6FE80075B690 /* Pin.swift in Sources */,
+				FBFEA9002BCC927500202FA6 /* FriendsListView.swift in Sources */,
 				FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */,
 				FBDB05072BAA53D20076F915 /* ProfileView.swift in Sources */,
-				FBDB05342BAA53F50076F915 /* FriendsView.swift in Sources */,
 				FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */,
 				FBC7274C2BB4BCAB003852BE /* UserModel.swift in Sources */,
 				FBDB05302BAA53F50076F915 /* Movie.swift in Sources */,
 				FBDB052D2BAA53F50076F915 /* BottomBar.swift in Sources */,
 				FBDB05312BAA53F50076F915 /* MapView.swift in Sources */,
 				FBDB052A2BAA53F50076F915 /* ArchivedViewModel.swift in Sources */,
-				FBA35BDD2BC0A79000DA7255 /* Friend.swift in Sources */,
 				FBDB05062BAA53D20076F915 /* Login.swift in Sources */,
 				FBDB05372BAA53F50076F915 /* SparkGPTView.swift in Sources */,
+				FBFEA9022BCC93D100202FA6 /* SendFriendRequestView.swift in Sources */,
 				FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */,
 				50E9A3692BC069DA007A3DDB /* SparkGPTController.swift in Sources */,
 				FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */,
 				FBDB052C2BAA53F50076F915 /* ArchivedDatesView.swift in Sources */,
 				FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */,
 				FBDB052E2BAA53F50076F915 /* Card.swift in Sources */,
-				FBD95F4A2BBC67D70075B690 /* AddFriendView.swift in Sources */,
 				FBD95F4F2BBC780C0075B690 /* SearchCompleter.swift in Sources */,
 				FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */,
-				FBA35BDF2BC0AD6700DA7255 /* FriendRequestView.swift in Sources */,
 				50CC4E742BAA643800782828 /* DateClass.swift in Sources */,
 				FBDB05082BAA53D20076F915 /* SignUp.swift in Sources */,
 				50486CD12BC2FE9F00BD5BDC /* SparkGPTViewModel.swift in Sources */,
-				FBA35BDB2BBF535C00DA7255 /* FriendRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

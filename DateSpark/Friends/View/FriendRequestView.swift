@@ -3,8 +3,6 @@
 //  Sarah Svitlik & Shannon Russell
 
 import SwiftUI
-import FirebaseAuth
-import FirebaseFirestore
 
 struct FriendRequestView: View {
 //    let db = Firestore.firestore()
