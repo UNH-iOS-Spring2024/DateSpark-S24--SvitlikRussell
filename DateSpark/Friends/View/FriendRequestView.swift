@@ -16,11 +16,14 @@ struct FriendRequestView: View {
                     viewModel.respondToRequest(request, accept: true)
                 }
                 .buttonStyle(.borderedProminent)
-
+                .disabled(request.status != .pending)
+                
                 Button("Reject") {
                     viewModel.respondToRequest(request, accept: false)
                 }
                 .buttonStyle(.bordered)
+                .disabled(request.status != .pending)
+
             }
         }
         .padding()

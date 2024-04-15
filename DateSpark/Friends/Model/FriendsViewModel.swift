@@ -35,9 +35,41 @@ class FriendsViewModel: ObservableObject {
     private var userSession: User? 
     
     init() {
-            // Populate with mock data for testing and preview purposes
             loadMockFriendRequests()
         }
+    
+    func sendFriendRequest(to username: String, completion: @escaping (String) -> Void) {
+        guard let sender = userSession, sender.username != username else {
+            completion("You cannot add yourself as a friend.")
+            return
+        }
+        
+        let usersRef = db.collection("User")
+        usersRef.whereField("username", isEqualTo: username).getDocuments { [weak self] snapshot, error in
+            guard let snapshot = snapshot, !snapshot.documents.isEmpty else {
+                completion("User not found.")
+                return
+            }
+            
+            if let receiverDoc = snapshot.documents.first, receiverDoc.documentID != sender.id {
+                let request = FriendRequest(id: UUID().uuidString, from: sender.username, to: username, status: .pending)
+                
+                usersRef.document(receiverDoc.documentID).collection("friendRequests").document(request.id).setData([
+                    "from": sender.username,
+                    "to": username,
+                    "status": "Pending"
+                ]) { err in
+                    if let err = err {
+                        completion("Error sending request: \(err.localizedDescription)")
+                    } else {
+                        completion("Friend request sent successfully to \(username).")
+                    }
+                }
+            } else {
+                completion("You cannot add yourself as a friend, silly.")
+            }
+        }
+    }
     
     func loadMockFriendRequests() {
             friendRequests = [
@@ -57,39 +89,25 @@ class FriendsViewModel: ObservableObject {
         }
     }
     
-    func sendFriendRequest(to username: String) {
-        guard let sender = userSession else { return }
-        
-        let usersRef = db.collection("User")
-        usersRef.whereField("username", isEqualTo: username).getDocuments { snapshot, error in
-            guard let snapshot = snapshot, !snapshot.documents.isEmpty else {
-                print("User not found")
-                return
-            }
-            
-            let receiverId = snapshot.documents.first!.documentID
-            let request = FriendRequest(id: UUID().uuidString, from: sender.username, to: username, status: .pending)
-            
-            usersRef.document(receiverId).collection("friendRequests").document(request.id).setData([
-                "from": sender.username,
-                "to": username,
-                "status": "Pending"
-            ])
-        }
-    }
-    
     func respondToRequest(_ request: FriendRequest, accept: Bool) {
         guard let user = userSession else { return }
         
+        // Update Firestore data
         db.collection("User").document(user.id).collection("friendRequests").document(request.id).updateData([
             "status": accept ? "Accepted" : "Rejected"
-        ]) { error in
-            if accept {
-                self.addFriend(for: request.from)
-            } else {
-                // Optionally handle rejection notification to the sender
+        ]) { [weak self] error in
+            if let self = self, error == nil {
+                // Immediately update local data
+                if accept {
+                    self.addFriend(for: request.from)
+                }
+                self.removeRequest(request)
             }
         }
+    }
+    func removeRequest(_ request: FriendRequest) {
+        // Remove the request from the local array
+        friendRequests.removeAll { $0.id == request.id }
     }
     
     private func addFriend(for username: String) {
