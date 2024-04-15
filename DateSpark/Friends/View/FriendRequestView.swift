@@ -1,55 +1,37 @@
 //  FriendRequestView.swift
-//  DateSpark-S24-Svitlik-Russell
-//  Sarah Svitlik & Shannon Russell
 
 import SwiftUI
 
 struct FriendRequestView: View {
-//    let db = Firestore.firestore()
-    @ObservedObject var viewModel = FriendRequestsViewModel()
+    @ObservedObject var viewModel: FriendsViewModel
+    var request: FriendRequest
     
-    init(viewModel: FriendRequestsViewModel = FriendRequestsViewModel()){
-        self.viewModel = viewModel
-    }
-        
     var body: some View {
-        List {
-            ForEach(viewModel.friendRequests.filter { $0.status == "pending" }) { request in
-                HStack {
-                    Text(request.senderUsername)
-                    Spacer()
-                    Button("Confirm") {
-                        confirmRequest(request)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding(.trailing)
-                    
-                    Button("Deny") {
-                        denyRequest(request)
-                    }
-                    .buttonStyle(.bordered)
+        VStack {
+            Text("Friend Request from \(request.from)")
+                .font(.headline)
+            
+            HStack {
+                Button("Accept") {
+                    viewModel.respondToRequest(request, accept: true)
                 }
+                .buttonStyle(.borderedProminent)
+
+                Button("Reject") {
+                    viewModel.respondToRequest(request, accept: false)
+                }
+                .buttonStyle(.bordered)
             }
         }
-        .navigationTitle("Friend Requests")
-        .onAppear(perform: viewModel.fetchPendingFriendRequests)
-    }
-    
-    private func confirmRequest(_ request: FriendRequest) {
-        viewModel.updateFriendRequest(id: request.id, newStatus: "confirmed") {
-            // Optionally add feedback to user here, e.g., using an alert
-        }
-    }
-    
-    private func denyRequest(_ request: FriendRequest) {
-        viewModel.updateFriendRequest(id: request.id, newStatus: "denied") {
-            // Optionally add feedback to user here, e.g., using an alert
-        }
+        .padding()
     }
 }
 
+
 struct FriendRequestView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendRequestView(requester: "exampleUsername", viewModel: FriendsListViewModel())
+        let viewModel = FriendsViewModel()
+        let mockRequest = FriendRequest(id: "1", from: "Alice", to: "Bob", status: .pending)
+        FriendRequestView(viewModel: viewModel, request: mockRequest)
     }
 }

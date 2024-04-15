@@ -1,41 +1,30 @@
 //  SendFriendRequestView.swift
-//  DateSpark-S24-Svitlik-Russell
-//  Sarah Svitlik & Shannon Russell
 
 import SwiftUI
 
 struct SendFriendRequestView: View {
-    @Environment(\.dismiss) var dismiss
-    @State private var username: String = ""
-    @ObservedObject var viewModel: FriendsListViewModel
-
+    @ObservedObject var viewModel: FriendsViewModel
+    @State private var username = ""
+    
     var body: some View {
-        NavigationView {
-            Form {
-                TextField("Enter username", text: $username)
-                Button("Send Request") {
-                    viewModel.sendFriendRequest(to: username) { success, message in
-                        if success {
-                            dismiss()
-                        } else {
-                            // Show alert or message to the user
-                            print(message)
-                        }
-                    }
-                }
+        VStack(spacing: 20) {
+            TextField("Enter friend's username", text: $username)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            Button("Send Friend Request") {
+                viewModel.sendFriendRequest(to: username)
             }
-            .navigationTitle("Send Friend Request")
-            .toolbar {
-                Button("Cancel") {
-                    dismiss()
-                }
-            }
+            .disabled(username.isEmpty)
         }
+        .padding()
     }
 }
 
+
 struct SendFriendRequestView_Previews: PreviewProvider {
     static var previews: some View {
-        SendFriendRequestView(viewModel: FriendsListViewModel())
+        let viewModel = FriendsViewModel()
+        SendFriendRequestView(viewModel: viewModel)
     }
 }

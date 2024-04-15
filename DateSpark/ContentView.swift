@@ -20,6 +20,8 @@ struct ContentView: View {
     @State private var isLoggedIn: Bool = false
     @State private var showLoginPage: Bool = false
     @EnvironmentObject var appVariables: AppVariables
+    private var friendsViewModel = FriendsViewModel()
+
     
     var body: some View {
         ZStack {
@@ -28,7 +30,7 @@ struct ContentView: View {
                     AnyView(HomeView()),
                     AnyView(SparkGPTView()),
                     AnyView(MapView()),
-                    AnyView(FriendsListView()),
+                    AnyView(FriendsList(viewModel: friendsViewModel)),
                     AnyView(ProfileView())
                 )
                 .environmentObject(AppVariables())

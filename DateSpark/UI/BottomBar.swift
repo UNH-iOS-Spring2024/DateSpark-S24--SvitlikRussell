@@ -71,13 +71,16 @@ struct BottomBar: View {
     }
 }
 
-#Preview {
-    BottomBar(
-        AnyView(HomeView()),
-        AnyView(SparkGPTView()),
-        AnyView(MapView()),
-        AnyView(FriendsListView()),
-        AnyView(ProfileView())
-    )
+struct BottomBar_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = FriendsViewModel()
+        BottomBar(
+            AnyView(HomeView()),
+            AnyView(SparkGPTView()),
+            AnyView(MapView()),
+            AnyView(FriendsList(viewModel: viewModel)),
+            AnyView(ProfileView())
+        )
         .environmentObject(AppVariables())
+    }
 }
