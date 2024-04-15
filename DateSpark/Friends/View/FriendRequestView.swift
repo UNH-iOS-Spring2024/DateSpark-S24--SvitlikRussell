@@ -7,22 +7,26 @@ struct FriendRequestView: View {
     var request: FriendRequest
     
     var body: some View {
-        VStack {
-            Text("Friend Request from \(request.from)")
+        HStack {
+            Text("Request from \(request.from)")
                 .font(.headline)
             
             HStack {
                 Button("Accept") {
                     viewModel.respondToRequest(request, accept: true)
+                    print("Accepted")
+
                 }
                 .buttonStyle(.borderedProminent)
 
                 Button("Reject") {
                     viewModel.respondToRequest(request, accept: false)
+                    print("Rejected")
                 }
                 .buttonStyle(.bordered)
             }
         }
+        .frame(width: 1000, height: 100)
         .padding()
     }
 }
