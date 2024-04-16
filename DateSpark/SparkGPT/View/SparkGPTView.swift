@@ -1,4 +1,3 @@
-//
 //  SparkGPTView.swift
 //  DateSpark-S24-Svitlik-Russell
 //
@@ -9,41 +8,58 @@ import OpenAISwift
 import OpenAIKit
 
 struct SparkGPTView: View {
-    private let apiToken: String = "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"
-    public let openAI: OpenAIKit
-
-    @StateObject var viewModel: SparkGPTViewModel
+    @State var response: String = ""
+    @State var isLoading: Bool = false
+    @State var txt: String = ""
     
-    init(openAI: OpenAIKit = OpenAIKit(apiToken: "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")) {
-            self.openAI = openAI
-            self._viewModel = StateObject(wrappedValue: SparkGPTViewModel(openAI: openAI))
-        }
+    private let apiToken: String = "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"
+    public let openAI: OpenAIKit = OpenAIKit(apiToken: "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")
     
     var body: some View {
         VStack {
             // Display the chat response
-            Text(viewModel.response)
+            Text(response)
             
             Spacer()
             
             HStack {
-                TextField("Need date ideas?", text: $viewModel.text)
+                TextField("Need date ideas?", text: $txt)
                 Button("Send") {
-                    viewModel.sendQuestion()
+                    sendQuestion()
                 }
             }
         }
         .padding()
         .overlay(
             Group {
-                if viewModel.isLoading {
+                if isLoading {
                     ProgressView()
                 }
             }
         )
     }
-}
     
-#Preview {
-    SparkGPTView()
+    func sendQuestion() {
+        isLoading = true
+        response = ""
+        
+        let prompt = txt
+        openAI.sendStreamChatCompletion(newMessage: AIMessage(role: .user, content: txt), model: .gptV3_5(.gptTurbo), maxTokens: 2048) { result in
+            switch result {
+            case .success(let streamResult):
+                /// Hadle success response result
+                if let streamMessage = streamResult.message?.choices.first?.message {
+                    print("Stream message: \(streamMessage)") //"\n\nHello there, how may I assist you today?"
+                }
+            case .failure(let error):
+                // Handle error actions
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
+        
+        #Preview {
+            SparkGPTView()
+        }
+    
