@@ -27,16 +27,11 @@ enum RequestStatus: String {
 
 class FriendsViewModel: ObservableObject {
     @Published var friends: [String] = []
-//    @Published var friends: [String] = ["Alice", "Bob", "Carol"]
     @Published var friendRequests: [FriendRequest] = []
-    
     private var db = Firestore.firestore()
     private var userSession: User?
     
-    init() {
-        fetchCurrentUser()
-//        loadMockFriendRequests()
-    }
+    init() { fetchCurrentUser() }
     
     func fetchCurrentUser(){
         Auth.auth().addStateDidChangeListener{[weak self] (auth,user) in
@@ -87,7 +82,6 @@ class FriendsViewModel: ObservableObject {
     
     func fetchFriends() {
         guard let user = userSession else { return }
-        
         db.collection("User").document(user.id).collection("friends").getDocuments { snapshot, error in
             if let snapshot = snapshot {
                 self.friends = snapshot.documents.map { $0["username"] as? String ?? "" }
@@ -123,20 +117,9 @@ class FriendsViewModel: ObservableObject {
             }
     }
     
-    func loadMockFriendRequests() {
-        friendRequests = [
-            FriendRequest(id: "1", from: "Alice", to: "User123", status: .pending),
-            FriendRequest(id: "2", from: "Bob", to: "User123", status: .pending),
-            FriendRequest(id: "3", from: "Carol", to: "User123", status: .pending)
-        ]
-    }
-    
-    
-    
+
     func respondToRequest(_ request: FriendRequest, accept: Bool) {
         guard let user = userSession else { return }
-        
-        // Update Firestore data
         let requestRef = db.collection("User").document(user.id).collection("friendRequests").document(request.id)
         if accept {
             requestRef.updateData(["status": "Accepted"]) { [weak self] error in
@@ -154,21 +137,10 @@ class FriendsViewModel: ObservableObject {
                 }
             }
         }
-        
-        //        db.collection("User").document(user.id).collection("friendRequests").document(request.id).updateData([
-        //            "status": accept ? "Accepted" : "Rejected"
-        //        ]) { [weak self] error in
-        //            if let self = self, error == nil {
-        //                // Immediately update local data
-        //                if accept {
-        //                    self.addFriend(for: request.from)
-        //                }
-        //                self.removeRequest(request)
-        //            }
-        //        }
     }
+    
     func removeRequest(_ request: FriendRequest) {
-        friendRequests.removeAll { $0.id == request.id } // Remove the request from the local array
+        friendRequests.removeAll { $0.id == request.id } // Remove the request in app once accepted/denied
     }
     
     private func addFriend(for senderUsername: String, to receiverUsername: String) {
@@ -176,7 +148,6 @@ class FriendsViewModel: ObservableObject {
         usersRef.whereField("username", isEqualTo: senderUsername).getDocuments { [weak self] snapshot, _ in
             guard let self = self, let senderId = snapshot?.documents.first?.documentID else { return }
             usersRef.document(senderId).collection("friends").addDocument(data: ["username": receiverUsername])
-            
             usersRef.whereField("username", isEqualTo: receiverUsername).getDocuments { snapshot, _ in
                 if let receiverId = snapshot?.documents.first?.documentID {
                     usersRef.document(receiverId).collection("friends").addDocument(data: ["username": senderUsername])

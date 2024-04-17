@@ -7,8 +7,8 @@ struct FriendRequestView: View {
     var request: FriendRequest
 
     var body: some View {
-        VStack {
-            Text("Friend Request from \(request.from)")
+        HStack {
+            Text("\(request.from) added you as a friend")
                 .font(.headline)
 
             HStack {
@@ -27,7 +27,7 @@ struct FriendRequestView: View {
             }
         }
         .padding()
-        .frame(width: 300, height: 100) // Adjust the size based on your needs
+        .frame(width: 300, height: 100)
     }
 }
 
