@@ -43,9 +43,8 @@ class FriendsViewModel: ObservableObject {
             completion("You cannot add yourself as a friend.")
             return
         }
-        
         let usersRef = db.collection("User")
-        usersRef.whereField("username", isEqualTo: username).getDocuments { [weak self] snapshot, error in
+        usersRef.whereField("username", isEqualTo: username).getDocuments { snapshot, error in
             guard let snapshot = snapshot, !snapshot.documents.isEmpty else {
                 completion("User not found.")
                 return
@@ -65,10 +64,23 @@ class FriendsViewModel: ObservableObject {
                         completion("Friend request sent successfully to \(username).")
                     }
                 }
-            } else {
-                completion("You cannot add yourself as a friend, silly.")
             }
         }
+    }
+    
+    
+    func searchUsers(query: String, completion: @escaping ([String]) -> Void){
+         db.collection("User")
+            .whereField("username", isGreaterThanOrEqualTo: query)
+            .whereField("username", isLessThanOrEqualTo: query + "\u{f8ff}")
+            .getDocuments { snapshot, error in
+                guard let documents = snapshot?.documents else{
+                    completion([])
+                    return
+                }
+                let names = documents.map { $0["username"] as? String ?? ""}
+                completion(names)
+            }
     }
     
     func loadMockFriendRequests() {
