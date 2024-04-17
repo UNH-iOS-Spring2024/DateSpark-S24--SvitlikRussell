@@ -26,17 +26,17 @@ enum RequestStatus: String {
 }
 
 class FriendsViewModel: ObservableObject {
-//    @Published var friends: [String] = []
+    //    @Published var friends: [String] = []
     @Published var friends: [String] = ["Alice", "Bob", "Carol"]
-
+    
     @Published var friendRequests: [FriendRequest] = []
     
     private var db = Firestore.firestore()
-    private var userSession: User? 
+    private var userSession: User?
     
     init() {
-            loadMockFriendRequests()
-        }
+        loadMockFriendRequests()
+    }
     
     func sendFriendRequest(to username: String, completion: @escaping (String) -> Void) {
         guard let sender = userSession, sender.username != username else {
@@ -70,7 +70,7 @@ class FriendsViewModel: ObservableObject {
     
     
     func searchUsers(query: String, completion: @escaping ([String]) -> Void){
-         db.collection("User")
+        db.collection("User")
             .whereField("username", isGreaterThanOrEqualTo: query)
             .whereField("username", isLessThanOrEqualTo: query + "\u{f8ff}")
             .getDocuments { snapshot, error in
@@ -84,12 +84,12 @@ class FriendsViewModel: ObservableObject {
     }
     
     func loadMockFriendRequests() {
-            friendRequests = [
-                FriendRequest(id: "1", from: "Alice", to: "User123", status: .pending),
-                FriendRequest(id: "2", from: "Bob", to: "User123", status: .pending),
-                FriendRequest(id: "3", from: "Carol", to: "User123", status: .pending)
-            ]
-        }
+        friendRequests = [
+            FriendRequest(id: "1", from: "Alice", to: "User123", status: .pending),
+            FriendRequest(id: "2", from: "Bob", to: "User123", status: .pending),
+            FriendRequest(id: "3", from: "Carol", to: "User123", status: .pending)
+        ]
+    }
     
     func fetchFriends() {
         guard let user = userSession else { return }
@@ -105,30 +105,50 @@ class FriendsViewModel: ObservableObject {
         guard let user = userSession else { return }
         
         // Update Firestore data
-        db.collection("User").document(user.id).collection("friendRequests").document(request.id).updateData([
-            "status": accept ? "Accepted" : "Rejected"
-        ]) { [weak self] error in
-            if let self = self, error == nil {
-                // Immediately update local data
-                if accept {
-                    self.addFriend(for: request.from)
+        let requestRef = db.collection("User").document(user.id).collection("friendRequests").document(request.id)
+        if accept {
+            requestRef.updateData(["status": "Accepted"]) { [weak self] error in
+                guard let self = self else { return }
+                if error == nil {
+                    self.addFriend(for: request.from, to: request.to)
+                    self.removeRequest(request)
                 }
-                self.removeRequest(request)
+            }
+        } else {
+            requestRef.delete { [weak self] error in
+                guard let self = self else { return }
+                if error == nil {
+                    self.removeRequest(request)
+                }
             }
         }
+        
+        //        db.collection("User").document(user.id).collection("friendRequests").document(request.id).updateData([
+        //            "status": accept ? "Accepted" : "Rejected"
+        //        ]) { [weak self] error in
+        //            if let self = self, error == nil {
+        //                // Immediately update local data
+        //                if accept {
+        //                    self.addFriend(for: request.from)
+        //                }
+        //                self.removeRequest(request)
+        //            }
+        //        }
     }
     func removeRequest(_ request: FriendRequest) {
-        // Remove the request from the local array
-        friendRequests.removeAll { $0.id == request.id }
+        friendRequests.removeAll { $0.id == request.id } // Remove the request from the local array
     }
     
-    private func addFriend(for username: String) {
-        guard let user = userSession else { return }
-        
-        db.collection("User").document(user.id).collection("friends").addDocument(data: ["username": username])
-        db.collection("User").whereField("username", isEqualTo: username).getDocuments { snapshot, _ in
-            if let docId = snapshot?.documents.first?.documentID {
-                self.db.collection("User").document(docId).collection("friends").addDocument(data: ["username": user.username])
+    private func addFriend(for senderUsername: String, to receiverUsername: String) {
+        let usersRef = db.collection("User")
+        usersRef.whereField("username", isEqualTo: senderUsername).getDocuments { [weak self] snapshot, _ in
+            guard let self = self, let senderId = snapshot?.documents.first?.documentID else { return }
+            usersRef.document(senderId).collection("friends").addDocument(data: ["username": receiverUsername])
+            
+            usersRef.whereField("username", isEqualTo: receiverUsername).getDocuments { snapshot, _ in
+                if let receiverId = snapshot?.documents.first?.documentID {
+                    usersRef.document(receiverId).collection("friends").addDocument(data: ["username": senderUsername])
+                }
             }
         }
     }

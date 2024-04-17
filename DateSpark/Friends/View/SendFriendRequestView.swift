@@ -18,6 +18,7 @@ struct SendFriendRequestView: View {
                     }
                 }                
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .autocorrectionDisabled()
                 .padding()
             
             List(searchResults, id:\.self){user in
