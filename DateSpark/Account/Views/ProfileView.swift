@@ -11,6 +11,9 @@ import PhotosUI
 
 struct ProfileView: View {
     let db = Firestore.firestore()
+    let storage = Storage.storage()
+    
+    
     @EnvironmentObject var appVariables: AppVariables
     @State private var showImagePicker = false
     @State private var inputImage: UIImage?
@@ -52,20 +55,33 @@ struct ProfileView: View {
             Text(userProfile.username)
                 .font(.largeTitle)
                 .padding(.top, 20)
-            
-            Image(uiImage: inputImage ?? UIImage(named: "PlaceholderImage")!)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 200, height: 200)
-                .clipShape(Circle())
-                .overlay(Circle().stroke(Color.black, lineWidth: 4))
-                .shadow(radius: 10)
-                .onTapGesture { showImagePicker = true }
-                .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
-                    PHPickerViewController.View(image: $inputImage)
-                    
+            ZStack(alignment: .bottomTrailing){
+                Image(uiImage: inputImage ?? UIImage(named: "PlaceholderImage")!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 200, height: 200)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.black, lineWidth: 4))
+                    .shadow(radius: 10)
+                Button(action: {
+                    self.showImagePicker = true
+                }) {
+                    Image(systemName: "pencil.tip")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .padding()
+                        .background(Color.white)
+                        .clipShape(Circle())
+                        .shadow(radius: 10)
                 }
-            Spacer()
+                .offset(x: -10, y: -10)
+            }
+            .onTapGesture { showImagePicker = true }
+            .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
+                PHPickerViewController.View(image: $inputImage)
+            }
+            
             VStack(alignment: .center, spacing: 4) {
                 Text("\(userProfile.firstName) \(userProfile.lastName)")
                     .font(.system(size: 24))
@@ -141,7 +157,6 @@ struct ProfileView: View {
     
     func uploadImage (image: UIImage){
         guard let imageData = image.jpegData(compressionQuality: 0.5) else { return }
-        let storage = Storage.storage()
         let storageRef = storage.reference()
         let userProfileRef = storageRef.child("profileImages/\(Auth.auth().currentUser?.uid ?? "unknownUser").jpg")
         
