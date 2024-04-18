@@ -118,36 +118,42 @@ struct ProfileView: View {
         }
     }
     
-    func fetchUserProfile(){
+    func fetchUserProfile() {
         guard let userEmail = Auth.auth().currentUser?.email else { return }
+        db.collection("User").whereField("email", isEqualTo: userEmail).getDocuments { (querySnapshot, error) in
+            guard let document = querySnapshot?.documents.first, let data = document.data() as? [String: Any] else { return }
+            updateProfile(data: data)
+        }
+    }
+    
+    func updateProfile(data: [String: Any]) {
+        let joinedDate = (data["joinedDate"] as? Timestamp)?.dateValue() ?? Date()
+        let newProfile = UserProfile(
+            firstName: data["firstName"] as? String ?? "",
+            lastName: data["lastName"] as? String ?? "",
+            username: data["username"] as? String ?? "",
+            email: data["email"] as? String ?? "",
+            joinedDate: formatDate(joinedDate)
+        )
+
+        DispatchQueue.main.async {
+            self.userProfile = newProfile
+        }
         
-        db.collection("User").whereField("email", isEqualTo: userEmail).getDocuments {(querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                let data = document.data()
-                let joinedTimestamp = data["joinedDate"] as? Timestamp ?? Timestamp()
-                let joinedDate = formatDate(joinedTimestamp.dateValue())
-                
-                if let imageUrlString = data["profileImageUrl"] as? String, let imageUrl = URL(string: imageUrlString) {
-                    self.profileImageUrl = imageUrl
-                    URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-                        if let data = data {
-                            self.inputImage = UIImage(data: data)
-                        }
-                    }.resume()
-                }
-                self.userProfile = UserProfile(
-                    firstName: data["firstName"] as? String ?? "",
-                    lastName: data["lastName"] as? String ?? "",
-                    username: data["username"] as? String ?? "",
-                    email: data["email"] as? String ?? "",
-                    joinedDate: joinedDate
-                    )
+        if let imageUrlString = data["profileImageUrl"] as? String, let imageUrl = URL(string: imageUrlString) {
+            self.profileImageUrl = imageUrl
+            downloadImage(url: imageUrl)
+        }
+    }
+    
+    func downloadImage(url: URL) {
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            if let data = data {
+                DispatchQueue.main.async {
+                    self.inputImage = UIImage(data: data)
                 }
             }
-        }
+        }.resume()
     }
     
     func loadImage() {
@@ -155,30 +161,23 @@ struct ProfileView: View {
         uploadImage(image: inputImage)
     }
     
-    func uploadImage (image: UIImage){
-        guard let imageData = image.jpegData(compressionQuality: 0.5) else { return }
-        let storageRef = storage.reference()
-        let userProfileRef = storageRef.child("profileImages/\(Auth.auth().currentUser?.uid ?? "unknownUser").jpg")
-        
-        userProfileRef.putData(imageData, metadata: nil) { metadata, error in
-            guard metadata != nil else { return }
-            
-            userProfileRef.downloadURL { url, error in
-                guard let downloadURL = url else { return}
-                
-                updateProfileImageUrl(downloadURL)
+    func uploadImage(image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 0.5),
+              let userID = Auth.auth().currentUser?.uid else { return }
+        let storageRef = storage.reference().child("profileImages/\(userID).jpg")
+        storageRef.putData(imageData, metadata: nil) { _, error in
+            guard error == nil else { return }
+            storageRef.downloadURL { url, _ in
+                guard let downloadURL = url else { return }
                 self.profileImageUrl = downloadURL
+                self.updateProfileImageUrl(downloadURL)
             }
         }
     }
     
     func updateProfileImageUrl(_ url: URL) {
-        let userEmail = Auth.auth().currentUser?.email ?? ""
-        db.collection("User").whereField("email", isEqualTo: userEmail).getDocuments { (querySnapshot, err) in
-            guard let document = querySnapshot?.documents.first else { return }
-            let userRef = db.collection("User").document(document.documentID)
-            userRef.updateData(["profileImageUrl": url.absoluteString])
-        }
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        db.collection("User").document(userID).updateData(["profileImageUrl": url.absoluteString])
     }
 }
 
