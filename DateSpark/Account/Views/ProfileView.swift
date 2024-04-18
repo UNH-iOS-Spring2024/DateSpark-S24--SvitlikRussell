@@ -63,46 +63,40 @@ struct ProfileView: View {
                 .onTapGesture { showImagePicker = true }
                 .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
                     PHPickerViewController.View(image: $inputImage)
-
+                    
                 }
-            
             Spacer()
-            Group{
-                HStack{
-                    Text("First Name: ")
-                    Text (userProfile.firstName)
-                }
-                HStack{
-                    Text("Last Name: ")
-                    Text (userProfile.lastName)
-                }
-                HStack{
-                    Text("Email: ")
-                    Text (userProfile.email)
-                }
-                HStack{
-                    Spacer()
-                    Text("Joined: ")
-                    Text (userProfile.joinedDate)
-                        .underline()
-                    Spacer()
-                }
+            VStack(alignment: .center, spacing: 4) {
+                Text("\(userProfile.firstName) \(userProfile.lastName)")
+                    .font(.system(size: 24))
+                    .padding(20)
+                Text(userProfile.email)
+                    .foregroundColor(.gray)
+                    .font(.system(size: 24))
             }
+            .font(.system(size: 24))
+            .padding(.vertical)
             Spacer()
+            HStack {
+                Text("Joined: \(userProfile.joinedDate)")
+                    .multilineTextAlignment(.leading)
+                
+                Spacer()
             
-            Button("Sign Out"){
-                showingSignOutConfirmation = true
-                signOut()
-    
-            }
-            .padding()
-            .border(Color.blue, width: 2)
-            .confirmationDialog("Are you sure you want to sign out?", isPresented: $showingSignOutConfirmation){
-                Button("Sign Out", role: .destructive){
+                Button("Sign Out") {
+                    showingSignOutConfirmation = true
                     signOut()
                 }
-                Button("Cancel", role: .cancel){ }
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .confirmationDialog("Are you sure you want to sign out?", isPresented: $showingSignOutConfirmation) {
+                    Button("Sign Out", role: .destructive) { signOut() }
+                    Button("Cancel", role: .cancel) { }
+                }
             }
+            .padding(.horizontal)
             .navigationTitle("Profile")
             .onAppear{ fetchUserProfile() }
         }
