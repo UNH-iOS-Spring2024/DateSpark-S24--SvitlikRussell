@@ -6,10 +6,15 @@ import SwiftUI
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
+import PhotosUI
 
 struct ProfileView: View {
     let db = Firestore.firestore()
     @EnvironmentObject var appVariables: AppVariables
+    @State private var showImagePicker = false
+    @State private var inputImage: UIImage?
+    @State private var profileImageUrl: URL?
     @State private var isSignedOut = false
     @State private var showingSignOutConfirmation = false
     @State private var userProfile = UserProfile(
@@ -48,13 +53,18 @@ struct ProfileView: View {
                 .font(.largeTitle)
                 .padding(.top, 20)
             
-            Image("PlaceholderImage")
+            Image(uiImage: inputImage ?? UIImage(named: "PlaceholderImage")!)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 200, height: 200)
                 .clipShape(Circle())
                 .overlay(Circle().stroke(Color.black, lineWidth: 4))
                 .shadow(radius: 10)
+                .onTapGesture { showImagePicker = true }
+                .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
+                    PHPickerViewController.View(image: $inputImage)
+
+                }
             
             Spacer()
             Group{
@@ -110,16 +120,55 @@ struct ProfileView: View {
                 let joinedTimestamp = data["joinedDate"] as? Timestamp ?? Timestamp()
                 let joinedDate = formatDate(joinedTimestamp.dateValue())
                 
+                if let imageUrlString = data["profileImageUrl"] as? String, let imageUrl = URL(string: imageUrlString) {
+                    self.profileImageUrl = imageUrl
+                    URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
+                        if let data = data {
+                            self.inputImage = UIImage(data: data)
+                        }
+                    }.resume()
+                }
                 self.userProfile = UserProfile(
                     firstName: data["firstName"] as? String ?? "",
                     lastName: data["lastName"] as? String ?? "",
                     username: data["username"] as? String ?? "",
                     email: data["email"] as? String ?? "",
-//                    userID: document.documentID,
                     joinedDate: joinedDate
                     )
                 }
             }
+        }
+    }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        uploadImage(image: inputImage)
+    }
+    
+    func uploadImage (image: UIImage){
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else { return }
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let userProfileRef = storageRef.child("profileImages/\(Auth.auth().currentUser?.uid ?? "unknownUser").jpg")
+        
+        userProfileRef.putData(imageData, metadata: nil) { metadata, error in
+            guard metadata != nil else { return }
+            
+            userProfileRef.downloadURL { url, error in
+                guard let downloadURL = url else { return}
+                
+                updateProfileImageUrl(downloadURL)
+                self.profileImageUrl = downloadURL
+            }
+        }
+    }
+    
+    func updateProfileImageUrl(_ url: URL) {
+        let userEmail = Auth.auth().currentUser?.email ?? ""
+        db.collection("User").whereField("email", isEqualTo: userEmail).getDocuments { (querySnapshot, err) in
+            guard let document = querySnapshot?.documents.first else { return }
+            let userRef = db.collection("User").document(document.documentID)
+            userRef.updateData(["profileImageUrl": url.absoluteString])
         }
     }
 }
