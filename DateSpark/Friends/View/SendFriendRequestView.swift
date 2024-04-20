@@ -7,12 +7,26 @@ struct SendFriendRequestView: View {
     @State private var username = ""
     @State private var alertMessage = ""
     @State private var showAlert = false
+    @State private var searchResults: [String] = []
     
     var body: some View {
         VStack(spacing: 20) {
             TextField("Enter friend's username", text: $username)
+                .onChange(of: username){ newValue in
+                    viewModel.searchUsers(query: newValue){ users in
+                        self.searchResults = users
+                    }
+                }                
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .autocorrectionDisabled()
                 .padding()
+            
+            List(searchResults, id:\.self){user in
+                Button(user){
+                    username = user
+                    searchResults = []
+                }
+            }
             
             Button("Send Friend Request") {
                 viewModel.sendFriendRequest(to: username) { message in

@@ -44,6 +44,7 @@
 		FB2A01F72BCD976800DF084E /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A01F62BCD976700DF084E /* FriendsViewModel.swift */; };
 		FB2A01F92BCD97EF00DF084E /* SendFriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A01F82BCD97EF00DF084E /* SendFriendRequestView.swift */; };
 		FB2A01FB2BCD989300DF084E /* FriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A01FA2BCD989300DF084E /* FriendRequestView.swift */; };
+		FB4861F62BD0A1D30019FE6D /* PHPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4861F52BD0A1D30019FE6D /* PHPickerViewController.swift */; };
 		FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84B6192BB3899D00E765EF /* SplashScreenView.swift */; };
 		FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */; };
 		FBC7274C2BB4BCAB003852BE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7274B2BB4BCAB003852BE /* UserModel.swift */; };
@@ -77,6 +78,7 @@
 		FB2A01F62BCD976700DF084E /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		FB2A01F82BCD97EF00DF084E /* SendFriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFriendRequestView.swift; sourceTree = "<group>"; };
 		FB2A01FA2BCD989300DF084E /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
+		FB4861F52BD0A1D30019FE6D /* PHPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPickerViewController.swift; sourceTree = "<group>"; };
 		FB84B6192BB3899D00E765EF /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedItem.swift; sourceTree = "<group>"; };
 		FBC7274B2BB4BCAB003852BE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 		FBDB04FF2BAA53D20076F915 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FB4861F52BD0A1D30019FE6D /* PHPickerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */,
 				50E9A3692BC069DA007A3DDB /* SparkGPTController.swift in Sources */,
 				FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */,
+				FB4861F62BD0A1D30019FE6D /* PHPickerViewController.swift in Sources */,
 				FBDB052C2BAA53F50076F915 /* ArchivedDatesView.swift in Sources */,
 				FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */,
 				FB2A01F92BCD97EF00DF084E /* SendFriendRequestView.swift in Sources */,

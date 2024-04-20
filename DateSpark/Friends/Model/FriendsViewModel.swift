@@ -26,26 +26,37 @@ enum RequestStatus: String {
 }
 
 class FriendsViewModel: ObservableObject {
-//    @Published var friends: [String] = []
-    @Published var friends: [String] = ["Alice", "Bob", "Carol"]
-
+    @Published var friends: [String] = []
     @Published var friendRequests: [FriendRequest] = []
-    
     private var db = Firestore.firestore()
-    private var userSession: User? 
+    private var userSession: User?
     
-    init() {
-            loadMockFriendRequests()
+    init() { fetchCurrentUser() }
+    
+    func fetchCurrentUser(){
+        Auth.auth().addStateDidChangeListener{[weak self] (auth,user) in
+            if let userID = user?.uid {
+                self?.db.collection("User").document(userID).getDocument { (document, error) in
+                    if let document = document, document.exists {
+                        let username = document.data()?["username"] as? String ?? "Unknown"
+                        self?.userSession = User(id: userID, username: username)
+                        self?.fetchFriends()
+                        self?.fetchFriendRequests()
+                    } else {
+                        print("Document does not exist")
+                    }
+                }
+            }
         }
+    }
     
     func sendFriendRequest(to username: String, completion: @escaping (String) -> Void) {
         guard let sender = userSession, sender.username != username else {
-            completion("You cannot add yourself as a friend.")
+            completion("You cannot add yourself as a friend, silly.")
             return
         }
-        
         let usersRef = db.collection("User")
-        usersRef.whereField("username", isEqualTo: username).getDocuments { [weak self] snapshot, error in
+        usersRef.whereField("username", isEqualTo: username).getDocuments { snapshot, error in
             guard let snapshot = snapshot, !snapshot.documents.isEmpty else {
                 completion("User not found.")
                 return
@@ -65,23 +76,12 @@ class FriendsViewModel: ObservableObject {
                         completion("Friend request sent successfully to \(username).")
                     }
                 }
-            } else {
-                completion("You cannot add yourself as a friend, silly.")
             }
         }
     }
     
-    func loadMockFriendRequests() {
-            friendRequests = [
-                FriendRequest(id: "1", from: "Alice", to: "User123", status: .pending),
-                FriendRequest(id: "2", from: "Bob", to: "User123", status: .pending),
-                FriendRequest(id: "3", from: "Carol", to: "User123", status: .pending)
-            ]
-        }
-    
     func fetchFriends() {
         guard let user = userSession else { return }
-        
         db.collection("User").document(user.id).collection("friends").getDocuments { snapshot, error in
             if let snapshot = snapshot {
                 self.friends = snapshot.documents.map { $0["username"] as? String ?? "" }
@@ -89,34 +89,69 @@ class FriendsViewModel: ObservableObject {
         }
     }
     
-    func respondToRequest(_ request: FriendRequest, accept: Bool) {
+    func fetchFriendRequests() {
         guard let user = userSession else { return }
-        
-        // Update Firestore data
-        db.collection("User").document(user.id).collection("friendRequests").document(request.id).updateData([
-            "status": accept ? "Accepted" : "Rejected"
-        ]) { [weak self] error in
-            if let self = self, error == nil {
-                // Immediately update local data
-                if accept {
-                    self.addFriend(for: request.from)
+        db.collection("User").document(user.id).collection("friendRequests").whereField("status", isEqualTo: "Pending").getDocuments { snapshot, error in
+            if let snapshot = snapshot {
+                self.friendRequests = snapshot.documents.map { doc -> FriendRequest in
+                    let id = doc.documentID
+                    let from = doc["from"] as? String ?? ""
+                    let to = doc["to"] as? String ?? ""
+                    return FriendRequest(id: id, from: from, to: to, status: .pending)
                 }
-                self.removeRequest(request)
             }
         }
     }
-    func removeRequest(_ request: FriendRequest) {
-        // Remove the request from the local array
-        friendRequests.removeAll { $0.id == request.id }
+    
+    func searchUsers(query: String, completion: @escaping ([String]) -> Void){
+        db.collection("User")
+            .whereField("username", isGreaterThanOrEqualTo: query)
+            .whereField("username", isLessThanOrEqualTo: query + "\u{f8ff}")
+            .getDocuments { snapshot, error in
+                guard let documents = snapshot?.documents else{
+                    completion([])
+                    return
+                }
+                let names = documents.map { $0["username"] as? String ?? ""}
+                completion(names)
+            }
     }
     
-    private func addFriend(for username: String) {
+
+    func respondToRequest(_ request: FriendRequest, accept: Bool) {
         guard let user = userSession else { return }
-        
-        db.collection("User").document(user.id).collection("friends").addDocument(data: ["username": username])
-        db.collection("User").whereField("username", isEqualTo: username).getDocuments { snapshot, _ in
-            if let docId = snapshot?.documents.first?.documentID {
-                self.db.collection("User").document(docId).collection("friends").addDocument(data: ["username": user.username])
+        let requestRef = db.collection("User").document(user.id).collection("friendRequests").document(request.id)
+        if accept {
+            requestRef.updateData(["status": "Accepted"]) { [weak self] error in
+                guard let self = self else { return }
+                if error == nil {
+                    self.addFriend(for: request.from, to: request.to)
+                    self.removeRequest(request)
+                }
+            }
+        } else {
+            requestRef.delete { [weak self] error in
+                guard let self = self else { return }
+                if error == nil {
+                    self.removeRequest(request)
+                }
+            }
+        }
+    }
+    
+    func removeRequest(_ request: FriendRequest) {
+        friendRequests.removeAll { $0.id == request.id } // Remove the request in app once accepted/denied
+    }
+    
+    private func addFriend(for senderUsername: String, to receiverUsername: String) {
+        let usersRef = db.collection("User")
+        usersRef.whereField("username", isEqualTo: senderUsername).getDocuments { [weak self] snapshot, _ in
+            guard let self = self, let senderId = snapshot?.documents.first?.documentID else { return }
+            usersRef.document(senderId).collection("friends").addDocument(data: ["username": receiverUsername])
+            usersRef.whereField("username", isEqualTo: receiverUsername).getDocuments { snapshot, _ in
+                if let receiverId = snapshot?.documents.first?.documentID {
+                    usersRef.document(receiverId).collection("friends").addDocument(data: ["username": senderUsername])
+                }
             }
         }
     }
