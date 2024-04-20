@@ -19,39 +19,40 @@ struct SparkGPTView: View {
     public let openAI = OpenAIKit(apiToken: "sk-proj-HE6uylswy2zmIMtmpTHhT3BlbkFJXeAnYN3zpP0JJ4Pm0DEf", organization: "org-AGjsVJi2tjy6VBltQ9HmvodS")
     
     var body: some View {
-           VStack {
-              
-               
-               Text("SparkGPT: \(response)")
-                   .padding(.horizontal)
-                   .padding(.bottom, 500)
+            VStack {
+                VStack(alignment: .leading) {
+                    Text("SparkGPT:")
+                    TextEditor(text: $response)
+                        .frame(minHeight: 600)
+                }
+                .padding(.horizontal)
+                .padding(.top, 150)
 
-               Spacer()
+                Spacer()
 
-               HStack {
-                   TextField("Ask me for ideas!", text: $question)
-                       .textFieldStyle(RoundedBorderTextFieldStyle())
-                   Button(action: {
-                       sendQuestion()
-                   }) {
-                       Image(systemName: "paperplane")
-                           .resizable()
-                           .frame(width: 30, height: 30)
-                           .foregroundColor(.lightPink)
-                   }
-                   .buttonStyle(BorderlessButtonStyle())
-                   .padding(.horizontal)
-               }
-               
-               TextEditor(text: $description)
-                   .background(Color(.systemBackground))
-                   .foregroundColor(Color(.label))
-                   .padding(.horizontal)
-                   .frame(minHeight: 100)
-           }
-           .padding()
-       }
+                HStack {
+                    TextField("Ask me for ideas!", text: $question)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Button(action: {
+                        sendQuestion()
+                    }) {
+                        Image(systemName: "paperplane")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.lightPink)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.horizontal)
+                }
 
+                TextEditor(text: $description)
+                    .background(Color(.systemBackground))
+                    .foregroundColor(Color(.label))
+                    .padding(.horizontal)
+                    .frame(minHeight: 100)
+            }
+            .padding()
+        }
     
     
     func sendQuestion() {
