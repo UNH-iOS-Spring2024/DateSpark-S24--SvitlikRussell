@@ -15,7 +15,7 @@ struct MapView: View {
         center: CLLocationCoordinate2D(latitude: 41.292190, longitude: -72.961180),
         span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
     )
-    @StateObject private var locationManager = LocationManager()
+    @StateObject private var locationManager = LocationManager()  // Corrected here
     @ObservedObject var searchCompleter = SearchCompleter()
 
     var body: some View {
@@ -31,7 +31,7 @@ struct MapView: View {
             }
             .alert("Location Permission Needed", isPresented: $showingLocationAlert) {
                 Button("Open Settings") {
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
                 }
             } message: {
                 Text("Please allow location access in Settings to enable all features.")

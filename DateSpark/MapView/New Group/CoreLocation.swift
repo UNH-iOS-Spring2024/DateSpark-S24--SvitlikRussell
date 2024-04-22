@@ -4,8 +4,9 @@
 
 import Foundation
 import CoreLocation
+import UserNotifications
 
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+class LocationManager: UNNotificationServiceExtension, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     @Published var lastLocation: CLLocation?
     @Published var authorizationStatus = CLAuthorizationStatus.notDetermined

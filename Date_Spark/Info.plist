@@ -28,5 +28,12 @@
 		<string>MKDirectionsModeTaxi</string>
 		<string>MKDirectionsModeTrain</string>
 	</array>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.location.push.service</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>$(PRODUCT_MODULE_NAME).LocationPushService</string>
+	</dict>
 </dict>
 </plist>
