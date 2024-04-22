@@ -29,40 +29,40 @@ struct HomeView: View {
     @State var feedbackMessage: String = ""
     @State var showingLocationAlert = false
     private let db = Firestore.firestore()
-
+    
     
     var body: some View {
-            NavigationView {
+        NavigationView {
+            VStack {
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: ArchivedDatesView().environmentObject(ArchivedViewModel())) {
+                        Image(systemName: "archivebox.fill")
+                            .resizable()
+                            .frame(width: 28, height: 28)
+                            .foregroundColor(.lightPink)
+                    }
+                    .padding(.top, 40)
+                    .padding(.trailing, 20)
+                }
+                
+                Spacer()
+                
+                HStack {
+                    Text("Random Date")
+                        .font(.system(size: 35))
+                }
+                .padding(.bottom, 50)
+                .padding(.top, 50)
+                
+                Spacer()
+                
+                // Your Pie Chart with dataPoints
                 VStack {
-                    HStack {
-                        Spacer()
-                        NavigationLink(destination: ArchivedDatesView().environmentObject(ArchivedViewModel())) {
-                            Image(systemName: "archivebox.fill")
-                                .resizable()
-                                .frame(width: 28, height: 28)
-                                .foregroundColor(.lightPink)
-                        }
-                        .padding(.top, 40)
-                        .padding(.trailing, 20)
-                    }
-
-                    Spacer()
-
-                    HStack {
-                        Text("Random Date")
-                            .font(.system(size: 35))
-                    }
-                    .padding(.bottom, 50)
-                    .padding(.top, 50)
-
-                    Spacer()
-
-                    // Your Pie Chart with dataPoints
-                    VStack {
-                        PieChartView(dataPoints: $dates)
-                            .rotationEffect(.degrees(wheelAngle))
-                    }
-    
+                    PieChartView(dataPoints: $dates)
+                        .rotationEffect(.degrees(wheelAngle))
+                }
+                
                 VStack {
                     Button(action: {
                         print("Button to start the wheel has been pressed")
@@ -75,23 +75,23 @@ struct HomeView: View {
                     }
                     Spacer()
                 }
-    
+                
                 //after hitting the show selected date button:
                 if showSelectedDateButton{
                     VStack {
                         NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
-                                index: index,
-                                selectedTitle: selectedDate?.title ?? "Title",
-                                selectedDescription: selectedDate?.description ?? "Description")) {
+                                                                 index: index,
+                                                                 selectedTitle: selectedDate?.title ?? "Title",
+                                                                 selectedDescription: selectedDate?.description ?? "Description")) {
                             Text("Show selected date")
                                 .frame(maxWidth: 300)
-                                //.frame(maxHeight: 100)
+                            //.frame(maxHeight: 100)
                                 .padding()
                                 .background(Color.black)
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                         }
-                                                                 
+                        
                     }
                 }
                 
@@ -100,7 +100,7 @@ struct HomeView: View {
                     Button(action: {
                         self.isShowingPopover = true
                         print("Add date button pressed.")
-                
+                        
                         
                     }) {
                         Image(systemName: "plus.circle")
@@ -112,8 +112,8 @@ struct HomeView: View {
                                     VStack {
                                         TextField("Enter a date to the wheel", text: $txtchoice)
                                             .padding()
-                                       
-
+                                        
+                                        
                                         Spacer()
                                         
                                         Button(action: {
@@ -145,42 +145,44 @@ struct HomeView: View {
                 .padding(.trailing, 20)
             }
             
-         }
+        }
         
         .onAppear {
             getDatesFromFirebase()
         }
     }
     
-     struct PieChartView: View {
+    struct PieChartView: View {
         @Binding var dataPoints: [DateClass]
-
-         private let colors: [Color] = [
+        
+        private let colors: [Color] = [
             .lightBeige,
             .brown,
             .lightPink,
             .darkRed,
             .beige
         ]
-
+        
         var body: some View {
             VStack {
                 Chart {
-                    ForEach(dataPoints.prefix(5), id: \.id) { date in
+                    ForEach(dataPoints.indices, id: \.self) { index in
+                        let colorIndex = index % colors.count
+                        let date = dataPoints[index]
                         SectorMark(angle: .value("portion", date.portion),
                                    innerRadius: .ratio(0), // Set inner radius to zero
                                    angularInset: 3.5)
-                            .cornerRadius(35)
-                            .foregroundStyle(colors[dataPoints.firstIndex(of: date) ?? 0])
+                        .cornerRadius(35)
+                        .foregroundStyle(colors[colorIndex])
                     }
                 }
-                .frame(width: 250, height: 300)
+                .frame(width: 300, height: 300)
             }
             .padding(.bottom, 50)
         }
     }
-
-
+    
+    
     //Spins the wheel after hitting the triangle
     func spinWheel(){
         showSelectedDateButton = false
@@ -206,11 +208,11 @@ struct HomeView: View {
     }
     
     func calculateIndexFromAngle(_ angle: Double) -> Int {
-           return Int.random(in: 0..<dates.count)
-       }
+        return Int.random(in: 0..<dates.count)
+    }
     
     func getDatesFromFirebase() {
-        db.collection("Date").getDocuments() { (querySnapshot, err) in
+        db.collection("Date").limit(to: 5).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -227,27 +229,25 @@ struct HomeView: View {
         }
     }
     
-    func locationAlert () {
-        padding()
-        //TODO: Check with Firebase if the current user if we have asked the user about location services. If no, then show the pop up & write data to Firebase. If no, then skip.
-            .alert(isPresented: $showingLocationAlert) {
-            Alert(title: Text("Allow \"Date Spark\" to use your location? "))
-        }
-    }
- }
-
-//Add date after hitting the plus button
-func addDate(userId: String, data: [String : Any]) {
+    
+    //Add date after hitting the plus button
+    func addDate(userId: String, data: [String : Any]) {
         let db = Firestore.firestore()
-        var ref: DocumentReference? = nil
-        ref = db.collection("Date").addDocument(data: data) {err in
-            if let err = err {
-                print ("Error adding document: \(err)")
-                } else {
-                        print ("Document added with ID: \(ref!.documentID)")
-                    }
+        db.collection("Date").addDocument(data: data) { [self] error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully")
+                
+                // Create a new DateClass instance and add it to the dates array
+                if let dateitem = DateClass(id: "", data: data, title: data["title"] as? String ?? "", index: index) {
+                    self.dates.append(dateitem)
+                    selectedIndex += 1
                 }
             }
+        }
+    }
+}
 
 
 
