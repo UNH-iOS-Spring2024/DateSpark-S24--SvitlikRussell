@@ -12,15 +12,12 @@ struct MapView: View {
     @State private var showingLocationAlert = false
     @State private var detailedLocationInfo: String?
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: UserDefaults.standard.double(forKey: "userLatitude"),
-            longitude: UserDefaults.standard.double(forKey: "userLongitude")
-        ),
+        center: CLLocationCoordinate2D(latitude: 41.292190, longitude: -72.961180),
         span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
     )
     @StateObject private var locationManager = LocationManager()
     @ObservedObject var searchCompleter = SearchCompleter()
-    
+
     var body: some View {
         ZStack(alignment: .top) {
             Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: $userTrackingMode, annotationItems: pin != nil ? [pin!] : []) { pin in
@@ -31,23 +28,17 @@ struct MapView: View {
             .edgesIgnoringSafeArea(.all)
             .onAppear {
                 locationManager.requestPermission()
-                updateRegionToUserLocation()
             }
             .alert("Location Permission Needed", isPresented: $showingLocationAlert) {
                 Button("Open Settings") {
-                    if let url = URL(string: UIApplication.openSettingsURLString),
-                       UIApplication.shared.canOpenURL(url) {
-                        UIApplication.shared.open(url)
-                    }
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 }
             } message: {
                 Text("Please allow location access in Settings to enable all features.")
             }
-            .onChange(of: locationManager.authorizationStatus) { status in
-                if status == .notDetermined {
-                    locationManager.requestPermission()
-                } else if status == .denied || status == .restricted {
-                    showingLocationAlert = true
+            .onChange(of: locationManager.lastLocation) { newLocation in
+                if let newLocation = newLocation {
+                    updateRegionToUserLocation(newLocation)
                 }
             }
 
@@ -70,7 +61,7 @@ struct MapView: View {
             .frame(maxWidth: .infinity, alignment: .top)
         }
     }
-    
+
     var suggestionsList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
@@ -98,15 +89,16 @@ struct MapView: View {
         .cornerRadius(5)
         .shadow(radius: 5)
     }
-    
-    func updateRegionToUserLocation() {
-        if let location = locationManager.lastLocation {
-            let userCoordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            region.center = userCoordinate
-            pin = Pin(location: userCoordinate, name: "Current Location")
-        }
+
+    func updateRegionToUserLocation(_ location: CLLocation) {
+        let coordinate = location.coordinate
+        region = MKCoordinateRegion(
+            center: coordinate,
+            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        )
+        pin = Pin(location: coordinate, name: "Current Location")
     }
-    
+
     func fetchLocationDetails(for suggestion: MKLocalSearchCompletion) {
         let searchRequest = MKLocalSearch.Request(completion: suggestion)
         let search = MKLocalSearch(request: searchRequest)
@@ -134,7 +126,6 @@ struct MapView: View {
         }
     }
 }
-
 
 struct PinView: View {
     var pin: Pin
