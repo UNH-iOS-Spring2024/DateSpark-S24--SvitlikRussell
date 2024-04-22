@@ -9,11 +9,16 @@ struct MapView: View {
     @State var location = ""
     @State private var pin: Pin?
     @State private var userTrackingMode: MapUserTrackingMode = .follow
+    @State private var showingLocationAlert = false
     @State private var detailedLocationInfo: String?
     @State private var region = MKCoordinateRegion(
-        center:CLLocationCoordinate2D ( latitude: 41.292190, longitude: -72.961180 ),
-        span: MKCoordinateSpan( latitudeDelta: 0.009, longitudeDelta: 0.009)
+        center: CLLocationCoordinate2D(
+            latitude: UserDefaults.standard.double(forKey: "userLatitude"),
+            longitude: UserDefaults.standard.double(forKey: "userLongitude")
+        ),
+        span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
     )
+    @StateObject private var locationManager = LocationManager()
     @ObservedObject var searchCompleter = SearchCompleter()
     
     var body: some View {
@@ -24,14 +29,25 @@ struct MapView: View {
                 }
             }
             .edgesIgnoringSafeArea(.all)
-            .overlay(alignment: .bottom) {
-                if let detailedLocationInfo = detailedLocationInfo {
-                    Text(detailedLocationInfo)
-                        .padding()
-                        .background(Color.white.opacity(0.8))
-                        .cornerRadius(8)
-                        .padding()
-                        .transition(.slide)
+            .onAppear {
+                locationManager.requestPermission()
+                updateRegionToUserLocation()
+            }
+            .alert("Location Permission Needed", isPresented: $showingLocationAlert) {
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString),
+                       UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            } message: {
+                Text("Please allow location access in Settings to enable all features.")
+            }
+            .onChange(of: locationManager.authorizationStatus) { status in
+                if status == .notDetermined {
+                    locationManager.requestPermission()
+                } else if status == .denied || status == .restricted {
+                    showingLocationAlert = true
                 }
             }
 
@@ -46,75 +62,79 @@ struct MapView: View {
                     .cornerRadius(8)
                     .shadow(radius: 3)
                     .padding()
-
+                
                 if !searchCompleter.suggestions.isEmpty {
-                    ScrollView(.vertical, showsIndicators: false) {
-                        VStack(alignment: .leading) {
-                            ForEach(searchCompleter.suggestions, id: \.self) { suggestion in
-                                VStack(alignment: .leading) {
-                                    Text(suggestion.title) // Location name or primary address
-                                        .fontWeight(.bold)
-                                    Text(suggestion.subtitle) // City, state, and ZIP
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(Color.white)
-                                .onTapGesture {
-                                    self.location = suggestion.title
-                                    fetchLocationDetails(for: suggestion)
-                                    searchCompleter.suggestions = []
-                                }
-                            }
-                        }
-                    }
-                    .frame(maxHeight: 200)
-                    .background(Color.white)
-                    .cornerRadius(5)
-                    .shadow(radius: 5)
+                    suggestionsList
                 }
             }
             .frame(maxWidth: .infinity, alignment: .top)
         }
     }
-
+    
+    var suggestionsList: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .leading) {
+                ForEach(searchCompleter.suggestions, id: \.self) { suggestion in
+                    VStack(alignment: .leading) {
+                        Text(suggestion.title) // Location name or primary address
+                            .fontWeight(.bold)
+                        Text(suggestion.subtitle) // City, state, and ZIP
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white)
+                    .onTapGesture {
+                        self.location = suggestion.title
+                        fetchLocationDetails(for: suggestion)
+                        searchCompleter.suggestions = []
+                    }
+                }
+            }
+        }
+        .frame(maxHeight: 200)
+        .background(Color.white)
+        .cornerRadius(5)
+        .shadow(radius: 5)
+    }
+    
+    func updateRegionToUserLocation() {
+        if let location = locationManager.lastLocation {
+            let userCoordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            region.center = userCoordinate
+            pin = Pin(location: userCoordinate, name: "Current Location")
+        }
+    }
+    
     func fetchLocationDetails(for suggestion: MKLocalSearchCompletion) {
         let searchRequest = MKLocalSearch.Request(completion: suggestion)
         let search = MKLocalSearch(request: searchRequest)
-        search.start { response, _ in
-            guard let mapItem = response?.mapItems.first else { return }
+        search.start { response, error in
+            if let error = error {
+                print("Error occurred during location search: \(error.localizedDescription)")
+                return
+            }
+            guard let mapItem = response?.mapItems.first else {
+                print("No results found.")
+                return
+            }
             let coordinate = mapItem.placemark.coordinate
             
-            let placemark = mapItem.placemark
-            region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-            let name = mapItem.name ?? "Location"
-            pin = Pin(location: coordinate, name: name)
-            // Format the address components.
-            var addressComponents = [String]()
-            if let city = placemark.locality { addressComponents.append(city) }
-            if let state = placemark.administrativeArea { addressComponents.append(state) }
-            if let zip = placemark.postalCode { addressComponents.append(zip) }
-            
-            let address = addressComponents.joined(separator: ", ")
-            detailedLocationInfo = "\(name) - \(address)"
-        }
-    }
-
-    func search() {
-        guard !location.isEmpty else { return }
-        let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = location
-
-        let search = MKLocalSearch(request: searchRequest)
-        search.start { response, _ in
-            guard let coordinate = response?.mapItems.first?.placemark.coordinate else { return }
-            region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-            pin = Pin(location: coordinate)
-            searchCompleter.suggestions = []
+            // Update region centered on the found location
+            let newRegion = MKCoordinateRegion(
+                center: coordinate,
+                span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            )
+            DispatchQueue.main.async {
+                self.region = newRegion
+                self.pin = Pin(location: coordinate, name: mapItem.name ?? "Selected Location")
+                self.detailedLocationInfo = mapItem.name ?? "Selected Location"
+            }
         }
     }
 }
+
 
 struct PinView: View {
     var pin: Pin
@@ -141,3 +161,4 @@ struct MapView_Previews: PreviewProvider {
         MapView()
     }
 }
+/* Reference for UserLocation: https://developer.apple.com/documentation/corelocation/getting_the_current_location_of_a_device ----- May be Buggy rn */

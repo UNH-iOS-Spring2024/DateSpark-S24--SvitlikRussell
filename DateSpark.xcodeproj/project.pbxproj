@@ -45,6 +45,7 @@
 		FB2A01F92BCD97EF00DF084E /* SendFriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A01F82BCD97EF00DF084E /* SendFriendRequestView.swift */; };
 		FB2A01FB2BCD989300DF084E /* FriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A01FA2BCD989300DF084E /* FriendRequestView.swift */; };
 		FB4861F62BD0A1D30019FE6D /* PHPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4861F52BD0A1D30019FE6D /* PHPickerViewController.swift */; };
+		FB48621B2BD6C3530019FE6D /* CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48621A2BD6C3520019FE6D /* CoreLocation.swift */; };
 		FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84B6192BB3899D00E765EF /* SplashScreenView.swift */; };
 		FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */; };
 		FBC7274C2BB4BCAB003852BE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7274B2BB4BCAB003852BE /* UserModel.swift */; };
@@ -62,7 +63,6 @@
 		FBDB052D2BAA53F50076F915 /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB050F2BAA53F20076F915 /* BottomBar.swift */; };
 		FBDB052E2BAA53F50076F915 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05102BAA53F20076F915 /* Card.swift */; };
 		FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05122BAA53F20076F915 /* HomeView.swift */; };
-		FBDB05302BAA53F50076F915 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05152BAA53F30076F915 /* Movie.swift */; };
 		FBDB05312BAA53F50076F915 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05182BAA53F30076F915 /* MapView.swift */; };
 		FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05242BAA53F50076F915 /* SelectedPage.swift */; };
 		FBDB05372BAA53F50076F915 /* SparkGPTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05272BAA53F50076F915 /* SparkGPTView.swift */; };
@@ -79,6 +79,7 @@
 		FB2A01F82BCD97EF00DF084E /* SendFriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFriendRequestView.swift; sourceTree = "<group>"; };
 		FB2A01FA2BCD989300DF084E /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
 		FB4861F52BD0A1D30019FE6D /* PHPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPickerViewController.swift; sourceTree = "<group>"; };
+		FB48621A2BD6C3520019FE6D /* CoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocation.swift; sourceTree = "<group>"; };
 		FB84B6192BB3899D00E765EF /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedItem.swift; sourceTree = "<group>"; };
 		FBC7274B2BB4BCAB003852BE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -98,7 +99,6 @@
 		FBDB050F2BAA53F20076F915 /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
 		FBDB05102BAA53F20076F915 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		FBDB05122BAA53F20076F915 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		FBDB05152BAA53F30076F915 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		FBDB05182BAA53F30076F915 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FBDB05242BAA53F50076F915 /* SelectedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPage.swift; sourceTree = "<group>"; };
 		FBDB05272BAA53F50076F915 /* SparkGPTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkGPTView.swift; sourceTree = "<group>"; };
@@ -169,6 +169,15 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		FB4862192BD6C2FB0019FE6D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FB48621A2BD6C3520019FE6D /* CoreLocation.swift */,
+			);
+			name = Controller;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		FBA35BD92BBF533600DA7255 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,7 +224,6 @@
 				FBDB051F2BAA53F40076F915 /* Friends */,
 				FBDB05142BAA53F20076F915 /* HomePage */,
 				FBDB051A2BAA53F30076F915 /* MapView */,
-				FBDB05172BAA53F30076F915 /* Movies */,
 				FBDB05262BAA53F50076F915 /* SelectedDates */,
 				FBDB05292BAA53F50076F915 /* SparkGPT */,
 				FBDB05112BAA53F20076F915 /* UI */,
@@ -313,22 +321,6 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
-		FBDB05162BAA53F30076F915 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				FBDB05152BAA53F30076F915 /* Movie.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		FBDB05172BAA53F30076F915 /* Movies */ = {
-			isa = PBXGroup;
-			children = (
-				FBDB05162BAA53F30076F915 /* Model */,
-			);
-			path = Movies;
-			sourceTree = "<group>";
-		};
 		FBDB05192BAA53F30076F915 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +332,7 @@
 		FBDB051A2BAA53F30076F915 /* MapView */ = {
 			isa = PBXGroup;
 			children = (
+				FB4862192BD6C2FB0019FE6D /* Controller */,
 				FBD95F4B2BBC6FCF0075B690 /* Model */,
 				FBDB05192BAA53F30076F915 /* View */,
 			);
@@ -529,7 +522,6 @@
 				FBDB05072BAA53D20076F915 /* ProfileView.swift in Sources */,
 				FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */,
 				FBC7274C2BB4BCAB003852BE /* UserModel.swift in Sources */,
-				FBDB05302BAA53F50076F915 /* Movie.swift in Sources */,
 				FBDB052D2BAA53F50076F915 /* BottomBar.swift in Sources */,
 				FBDB05312BAA53F50076F915 /* MapView.swift in Sources */,
 				FBDB052A2BAA53F50076F915 /* ArchivedViewModel.swift in Sources */,
@@ -549,6 +541,7 @@
 				50CC4E742BAA643800782828 /* DateClass.swift in Sources */,
 				FB2A01FB2BCD989300DF084E /* FriendRequestView.swift in Sources */,
 				FBDB05082BAA53D20076F915 /* SignUp.swift in Sources */,
+				FB48621B2BD6C3530019FE6D /* CoreLocation.swift in Sources */,
 				50486CD12BC2FE9F00BD5BDC /* SparkGPTViewModel.swift in Sources */,
 				FB2A01F72BCD976800DF084E /* FriendsViewModel.swift in Sources */,
 			);
@@ -689,6 +682,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DateSpark/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -719,6 +713,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DateSpark/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
