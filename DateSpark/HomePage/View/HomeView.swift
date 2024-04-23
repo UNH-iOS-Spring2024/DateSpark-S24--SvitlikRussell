@@ -6,6 +6,7 @@
 import SwiftUI
 import Charts
 import FirebaseFirestore
+import FirebaseAuth
 
 extension Color {
     static let lightBeige = Color(red: 203/255, green: 195/255, blue: 187/255)
@@ -28,6 +29,8 @@ struct HomeView: View {
     @State private var showSelectedDateButton = false
     @State var feedbackMessage: String = ""
     @State var showingLocationAlert = false
+//    @State var userId: String
+    @State private var userId: String? = Auth.auth().currentUser?.uid
     private let db = Firestore.firestore()
     
     
@@ -82,7 +85,8 @@ struct HomeView: View {
                         NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
                                                                  index: index,
                                                                  selectedTitle: selectedDate?.title ?? "Title",
-                                                                 selectedDescription: selectedDate?.description ?? "Description")) {
+                                                                 selectedDescription: selectedDate?.description ?? "Description",
+                                                                 userId: userId ?? "DefaultUserId")) {
                             Text("Show selected date")
                                 .frame(maxWidth: 300)
                             //.frame(maxHeight: 100)
@@ -119,7 +123,7 @@ struct HomeView: View {
                                         Button(action: {
                                             let dataToAdd: [String: Any] = ["title": self.txtchoice, "date": Date()]
                                             print("Add Button pressed")
-                                            addDate(userId: "userID", data: dataToAdd)
+                                            addDate(userId: userId ?? "DefaultUserId", data: dataToAdd)
                                             getDatesFromFirebase()
                                             self.txtchoice = ""
                                             self.isShowingPopover = false

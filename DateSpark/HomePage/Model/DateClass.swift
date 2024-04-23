@@ -33,6 +33,7 @@ class DateClass: ObservableObject, Identifiable, Equatable{
     @Published var rating: String
     @Published var index: Int
     @Published var color: String
+    @published var userId: String
 
     required init?(id: String, data: [String: Any], title: String, index: Int) {
               let title = data["title"] as? String != nil ? data["title"] as! String : ""
@@ -55,6 +56,7 @@ class DateClass: ObservableObject, Identifiable, Equatable{
         self.rating = rating
         self.index = index
         self.color = color
+        self.userId = userId
             }
             
             static func == (lhs: DateClass, rhs: DateClass) -> Bool {
