@@ -69,7 +69,7 @@ struct Login: View {
             }
             .multilineTextAlignment(.center)
             .padding()
-            
+            .navigationBarHidden(true)
         }
     }
     

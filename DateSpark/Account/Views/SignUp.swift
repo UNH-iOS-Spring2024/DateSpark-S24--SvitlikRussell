@@ -57,6 +57,7 @@ struct SignUp: View {
             .multilineTextAlignment(.center)
             .autocorrectionDisabled(true)
             .padding()
+            .navigationBarHidden(true)
             
         }
  
