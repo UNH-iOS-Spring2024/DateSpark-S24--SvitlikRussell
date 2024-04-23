@@ -18,9 +18,8 @@ struct ArchivedDatesView: View {
     var body: some View {
         List(viewModel.archivedItems) { item in
             VStack(alignment: .leading) {
-                //When Generated Dates work, the Archive List will mention the Date with the rest
-                /*Text(item.date)
-                 .font(.headline)*/
+                Text(item.title)
+                 .font(.headline)
                 Text(item.outfit)
                     .font(.subheadline)
                 Text(item.weather)
@@ -48,7 +47,7 @@ struct ArchivedDatesView: View {
 
 struct ArchivedDatesView_Previews: PreviewProvider {
     static var previews: some View {
-        ArchivedDatesView().environmentObject(ArchivedViewModel())
+        ArchivedDatesView().environmentObject(ArchivedViewModel(userId: "yourUserId"))
     }
 }
 
