@@ -85,8 +85,7 @@ struct HomeView: View {
                         NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
                                                                  index: index,
                                                                  selectedTitle: selectedDate?.title ?? "Title",
-                                                                 selectedDescription: selectedDate?.description ?? "Description",
-                                                                 userId: userId ?? "DefaultUserId")) {
+                                                                 selectedDescription: selectedDate?.description ?? "Description")) {
                             Text("Show selected date")
                                 .frame(maxWidth: 300)
                             //.frame(maxHeight: 100)
@@ -223,7 +222,7 @@ struct HomeView: View {
                 self.dates.removeAll()
                 for document in querySnapshot!.documents {
                     print("\(document.documentID)")
-                    if let dateitem = DateClass(id: document.documentID, data: document.data(), title: document.get("title") as? String ?? "", index: index) {
+                    if let dateitem = DateClass(id: document.documentID, data: document.data(), title: document.get("title") as? String ?? "", index: index, userId: userId ?? "") {
                         self.dates.append(dateitem)
                         selectedIndex += 1
                         print("Document with index of \(index)")
@@ -244,7 +243,7 @@ struct HomeView: View {
                 print("Document added successfully")
                 
                 // Create a new DateClass instance and add it to the dates array
-                if let dateitem = DateClass(id: "", data: data, title: data["title"] as? String ?? "", index: index) {
+                if let dateitem = DateClass(id: "", data: data, title: data["title"] as? String ?? "", index: index, userId: userId) {
                     self.dates.append(dateitem)
                     selectedIndex += 1
                 }

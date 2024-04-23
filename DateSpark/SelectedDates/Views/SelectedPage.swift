@@ -26,6 +26,19 @@ struct SelectedPage: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
+            Button(action: {
+                if !isSaved {
+                    saveToFirebase(userId: userId ?? "")
+                }
+                isSaved.toggle() // Toggle saved state
+            }) {
+                Image(systemName: isSaved ? "bookmark.fill" : "bookmark")
+                    .resizable()
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(isSaved ? .pink : .primary)
+            }
+            .padding()
+            
             VStack{
                 Text("Selected Choice:")
                     .font(.system(size: 24))
@@ -80,17 +93,7 @@ struct SelectedPage: View {
                         }
                     Text("Selected time: \(timeFormatter.string(from: selectedTime))")
                 }
-                .padding()
-                
-                if let userId = userId {
-                    Button("Save to My Archive") {
-                        saveToFirebase(userId: userId)
-                    }
-                    .padding()
-                } else {
-                    Text("You need to be signed in to save items.")
-                        .padding()
-                }
+                .padding(.all)
             }
             .font(.system(size: 25))
         }

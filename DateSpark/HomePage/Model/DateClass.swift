@@ -33,9 +33,9 @@ class DateClass: ObservableObject, Identifiable, Equatable{
     @Published var rating: String
     @Published var index: Int
     @Published var color: String
-    @published var userId: String
+    @Published var userId: String
 
-    required init?(id: String, data: [String: Any], title: String, index: Int) {
+    required init?(id: String, data: [String: Any], title: String, index: Int, userId: String) {
               let title = data["title"] as? String != nil ? data["title"] as! String : ""
               let description = data["description"] as? String != nil ? data["description"] as! String : ""
               let outfit = data["outfit"] as? String != nil ? data["outfit"] as! String : ""
