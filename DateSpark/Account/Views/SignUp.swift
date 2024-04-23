@@ -32,6 +32,7 @@ struct SignUp: View {
                 TextField("First Name", text: $txtFirstName)
                 TextField("Last Name", text: $txtLastName)
                 TextField("Username", text: $txtusername)
+                    .autocapitalization(.none)
                 TextField("Email", text: $txtEmail)
                     .autocapitalization(.none)
                 SecureField("Password", text: $txtPassword)
