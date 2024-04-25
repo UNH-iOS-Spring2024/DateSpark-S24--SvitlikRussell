@@ -20,18 +20,24 @@ struct ArchiveView: View {
         List {
            if viewModel.archives.isEmpty {
                 Text("No archives available")
-           } else {
-               ForEach(viewModel.archives, id: \.id) { archive in
-                   VStack(alignment: .leading) {
-                       Text("Date: \(archive.title)").font(.headline)
-                       Text(archive.description).font(.subheadline)
-                       Text("Outfit: \(archive.outfit)").font(.caption)
-                       Text("Weather: \(archive.weather)").font(.caption)
-                       Text("Time: \(archive.time, formatter: dateFormatter)").font(.caption)
-                   }
-               }
-           }
+                    .frame(maxWidth: .infinity, alignment: .center)
+            } else {
+                ForEach(viewModel.archives, id: \.id) { archive in
+                    VStack(alignment: .leading) {
+                        Text("Date: \(archive.title)").font(.headline).padding(.bottom, 10)
+                        Text(archive.description).font(.subheadline).padding(.bottom, 10)
+                        Text("Outfit: \(archive.outfit)").font(.caption)
+                        Text("Weather: \(archive.weather)").font(.caption)
+                        Text("Time: \(archive.time, formatter: dateFormatter)").font(.caption)
+                    }
+                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .shadow(radius: 5)
+                    .padding(.bottom, 5)
+                }
+            }
         }
+        .background(Color.pink.edgesIgnoringSafeArea(.all))
         .onAppear {
             viewModel.observeAuthChanges()
         }
@@ -44,4 +50,3 @@ struct ArchiveView_Previews: PreviewProvider {
         ArchiveView(viewModel: ArchiveViewModel())
     }
 }
-
