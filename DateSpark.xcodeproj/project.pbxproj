@@ -11,6 +11,9 @@
 		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
 		50E9A3692BC069DA007A3DDB /* SparkGPTController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */; };
+		FB0C3F5A2BD9D9A0009C14CE /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F592BD9D9A0009C14CE /* ArchiveView.swift */; };
+		FB0C3F5C2BD9D9DC009C14CE /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F5B2BD9D9DC009C14CE /* Archive.swift */; };
+		FB0C3F5E2BD9DDAF009C14CE /* ArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F5D2BD9DDAF009C14CE /* ArchiveViewModel.swift */; };
 		FB2A01D32BCD8E3600DF084E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05392BAA54C20076F915 /* FirebaseAnalytics */; };
 		FB2A01D42BCD8E3600DF084E /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB053B2BAA54C20076F915 /* FirebaseAnalyticsOnDeviceConversion */; };
 		FB2A01D52BCD8E3600DF084E /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB053D2BAA54C20076F915 /* FirebaseAnalyticsSwift */; };
@@ -48,7 +51,6 @@
 		FB48621B2BD6C3530019FE6D /* CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48621A2BD6C3520019FE6D /* CoreLocation.swift */; };
 		FB48622C2BD7247F0019FE6D /* LocationPushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4862222BD71F2F0019FE6D /* LocationPushService.swift */; };
 		FB84B61A2BB3899D00E765EF /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84B6192BB3899D00E765EF /* SplashScreenView.swift */; };
-		FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */; };
 		FBC7274C2BB4BCAB003852BE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7274B2BB4BCAB003852BE /* UserModel.swift */; };
 		FBD95F4D2BBC6FE80075B690 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD95F4C2BBC6FE80075B690 /* Pin.swift */; };
 		FBD95F4F2BBC780C0075B690 /* SearchCompleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD95F4E2BBC780C0075B690 /* SearchCompleter.swift */; };
@@ -58,9 +60,7 @@
 		FBDB05062BAA53D20076F915 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05012BAA53D20076F915 /* Login.swift */; };
 		FBDB05072BAA53D20076F915 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05022BAA53D20076F915 /* ProfileView.swift */; };
 		FBDB05082BAA53D20076F915 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05032BAA53D20076F915 /* SignUp.swift */; };
-		FBDB052A2BAA53F50076F915 /* ArchivedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05092BAA53F20076F915 /* ArchivedViewModel.swift */; };
 		FBDB052B2BAA53F50076F915 /* DateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB050A2BAA53F20076F915 /* DateItem.swift */; };
-		FBDB052C2BAA53F50076F915 /* ArchivedDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB050C2BAA53F20076F915 /* ArchivedDatesView.swift */; };
 		FBDB052D2BAA53F50076F915 /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB050F2BAA53F20076F915 /* BottomBar.swift */; };
 		FBDB052E2BAA53F50076F915 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05102BAA53F20076F915 /* Card.swift */; };
 		FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05122BAA53F20076F915 /* HomeView.swift */; };
@@ -88,6 +88,9 @@
 		507378462BAA774D009ED169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
 		50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkGPTController.swift; sourceTree = "<group>"; };
+		FB0C3F592BD9D9A0009C14CE /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
+		FB0C3F5B2BD9D9DC009C14CE /* Archive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archive.swift; sourceTree = "<group>"; };
+		FB0C3F5D2BD9DDAF009C14CE /* ArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArchiveViewModel.swift; path = DateSpark/ArchivedDates/Model/ArchiveViewModel.swift; sourceTree = SOURCE_ROOT; };
 		FB2A01F02BCD93C400DF084E /* FriendsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsList.swift; sourceTree = "<group>"; };
 		FB2A01F62BCD976700DF084E /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		FB2A01F82BCD97EF00DF084E /* SendFriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFriendRequestView.swift; sourceTree = "<group>"; };
@@ -96,7 +99,6 @@
 		FB48621A2BD6C3520019FE6D /* CoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocation.swift; sourceTree = "<group>"; };
 		FB4862222BD71F2F0019FE6D /* LocationPushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPushService.swift; sourceTree = "<group>"; };
 		FB84B6192BB3899D00E765EF /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
-		FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedItem.swift; sourceTree = "<group>"; };
 		FBC7274B2BB4BCAB003852BE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		FBD95F4C2BBC6FE80075B690 /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		FBD95F4E2BBC780C0075B690 /* SearchCompleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompleter.swift; sourceTree = "<group>"; };
@@ -108,9 +110,7 @@
 		FBDB05012BAA53D20076F915 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		FBDB05022BAA53D20076F915 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		FBDB05032BAA53D20076F915 /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
-		FBDB05092BAA53F20076F915 /* ArchivedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchivedViewModel.swift; sourceTree = "<group>"; };
 		FBDB050A2BAA53F20076F915 /* DateItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateItem.swift; sourceTree = "<group>"; };
-		FBDB050C2BAA53F20076F915 /* ArchivedDatesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchivedDatesView.swift; sourceTree = "<group>"; };
 		FBDB050F2BAA53F20076F915 /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
 		FBDB05102BAA53F20076F915 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		FBDB05122BAA53F20076F915 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -171,6 +171,7 @@
 		50CC4E722BAA642C00782828 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FBDB050A2BAA53F20076F915 /* DateItem.swift */,
 				50CC4E732BAA643800782828 /* DateClass.swift */,
 			);
 			path = Model;
@@ -182,6 +183,38 @@
 				50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		FB0C3F512BD9CCEC009C14CE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FBF3AFED2BCDB812001F991D /* FriendRequestListView.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FB0C3F562BD9D852009C14CE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FB0C3F5B2BD9D9DC009C14CE /* Archive.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FB0C3F572BD9D858009C14CE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FB0C3F5D2BD9DDAF009C14CE /* ArchiveViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FB0C3F582BD9D85D009C14CE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FB0C3F592BD9D9A0009C14CE /* ArchiveView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		FB4862192BD6C2FB0019FE6D /* Controller */ = {
@@ -284,29 +317,12 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
-		FBDB050B2BAA53F20076F915 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				FBDB05092BAA53F20076F915 /* ArchivedViewModel.swift */,
-				FBC649A92BAB933C0017F9C9 /* ArchivedItem.swift */,
-				FBDB050A2BAA53F20076F915 /* DateItem.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		FBDB050D2BAA53F20076F915 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				FBDB050C2BAA53F20076F915 /* ArchivedDatesView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		FBDB050E2BAA53F20076F915 /* ArchivedDates */ = {
 			isa = PBXGroup;
 			children = (
-				FBDB050B2BAA53F20076F915 /* Model */,
-				FBDB050D2BAA53F20076F915 /* View */,
+				FB0C3F562BD9D852009C14CE /* Controller */,
+				FB0C3F572BD9D858009C14CE /* Model */,
+				FB0C3F582BD9D85D009C14CE /* View */,
 			);
 			path = ArchivedDates;
 			sourceTree = "<group>";
@@ -361,7 +377,6 @@
 				FB2A01F02BCD93C400DF084E /* FriendsList.swift */,
 				FB2A01F82BCD97EF00DF084E /* SendFriendRequestView.swift */,
 				FB2A01FA2BCD989300DF084E /* FriendRequestView.swift */,
-				FBF3AFED2BCDB812001F991D /* FriendRequestListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -369,6 +384,7 @@
 		FBDB051F2BAA53F40076F915 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
+				FB0C3F512BD9CCEC009C14CE /* Controller */,
 				FBA35BD92BBF533600DA7255 /* Model */,
 				FBDB051E2BAA53F40076F915 /* View */,
 			);
@@ -535,14 +551,13 @@
 				FB48622C2BD7247F0019FE6D /* LocationPushService.swift in Sources */,
 				FBDB052B2BAA53F50076F915 /* DateItem.swift in Sources */,
 				FBD95F4D2BBC6FE80075B690 /* Pin.swift in Sources */,
+				FB0C3F5E2BD9DDAF009C14CE /* ArchiveViewModel.swift in Sources */,
 				FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */,
 				FBF3AFEE2BCDB812001F991D /* FriendRequestListView.swift in Sources */,
 				FBDB05072BAA53D20076F915 /* ProfileView.swift in Sources */,
-				FBC649AA2BAB933C0017F9C9 /* ArchivedItem.swift in Sources */,
 				FBC7274C2BB4BCAB003852BE /* UserModel.swift in Sources */,
 				FBDB052D2BAA53F50076F915 /* BottomBar.swift in Sources */,
 				FBDB05312BAA53F50076F915 /* MapView.swift in Sources */,
-				FBDB052A2BAA53F50076F915 /* ArchivedViewModel.swift in Sources */,
 				FBDB05062BAA53D20076F915 /* Login.swift in Sources */,
 				FB2A01F12BCD93C400DF084E /* FriendsList.swift in Sources */,
 				FBDB05372BAA53F50076F915 /* SparkGPTView.swift in Sources */,
@@ -550,12 +565,13 @@
 				50E9A3692BC069DA007A3DDB /* SparkGPTController.swift in Sources */,
 				FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */,
 				FB4861F62BD0A1D30019FE6D /* PHPickerViewController.swift in Sources */,
-				FBDB052C2BAA53F50076F915 /* ArchivedDatesView.swift in Sources */,
 				FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */,
 				FB2A01F92BCD97EF00DF084E /* SendFriendRequestView.swift in Sources */,
 				FBDB052E2BAA53F50076F915 /* Card.swift in Sources */,
 				FBD95F4F2BBC780C0075B690 /* SearchCompleter.swift in Sources */,
 				FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */,
+				FB0C3F5A2BD9D9A0009C14CE /* ArchiveView.swift in Sources */,
+				FB0C3F5C2BD9D9DC009C14CE /* Archive.swift in Sources */,
 				50CC4E742BAA643800782828 /* DateClass.swift in Sources */,
 				FB2A01FB2BCD989300DF084E /* FriendRequestView.swift in Sources */,
 				FBDB05082BAA53D20076F915 /* SignUp.swift in Sources */,

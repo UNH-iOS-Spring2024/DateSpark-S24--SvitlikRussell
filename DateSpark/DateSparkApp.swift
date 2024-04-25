@@ -9,12 +9,12 @@ struct DateSpark_S24_Svitlik_RussellApp: App {
         
         FirebaseApp.configure()
         }
-    @StateObject private var archiveViewModel = ArchivedViewModel(userId: "yourUserId")  
+    @StateObject private var archiveViewModel = ArchiveViewModel()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(archiveViewModel)
+                .environmentObject(archiveViewModel) 
         }
     }
 }
