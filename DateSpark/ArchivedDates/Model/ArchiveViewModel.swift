@@ -20,11 +20,11 @@ class ArchiveViewModel: ObservableObject {
                 let data = document.data()
                 let archive = Archive(
                     id: document.documentID,
-                    title: data["title"] as? String ?? "",
-                    description: data["description"] as? String ?? "",
-                    outfit: data["outfit"] as? String ?? "",
-                    weather: data["weather"] as? String ?? "",
-                    time: (data["time"] as? Timestamp)?.dateValue() ?? Date()
+                    title: data["Title"] as? String ?? "",
+                    description: data["Description"] as? String ?? "",
+                    outfit: data["Outfit"] as? String ?? "",
+                    weather: data["Weather"] as? String ?? "", 
+                    time: (data["Time"] as? Timestamp)?.dateValue() ?? Date()
                 )
                 fetchedArchives.append(archive)
             }
@@ -43,12 +43,6 @@ class ArchiveViewModel: ObservableObject {
                     self?.archives = []
                 }
             }
-        }
-    }
-    
-    func removeAuthObserver() {
-        if let listenerRegistration = listenerRegistration {
-            Auth.auth().removeStateDidChangeListener(listenerRegistration)
         }
     }
 }

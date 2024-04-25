@@ -17,20 +17,23 @@ struct ArchiveView: View {
     }()
 
     var body: some View {
-        List(viewModel.archives, id: \.id) { archive in
-            VStack(alignment: .leading) {
-                Text("Date: \(archive.title)").font(.headline)
-                Text(archive.description).font(.subheadline)
-                Text("Outfit: \(archive.outfit)").font(.caption)
-                Text("Weather: \(archive.weather)").font(.caption)
-                Text("Time: \(archive.time, formatter: dateFormatter)").font(.caption)
-            }
+        List {
+           if viewModel.archives.isEmpty {
+                Text("No archives available")
+           } else {
+               ForEach(viewModel.archives, id: \.id) { archive in
+                   VStack(alignment: .leading) {
+                       Text("Date: \(archive.title)").font(.headline)
+                       Text(archive.description).font(.subheadline)
+                       Text("Outfit: \(archive.outfit)").font(.caption)
+                       Text("Weather: \(archive.weather)").font(.caption)
+                       Text("Time: \(archive.time, formatter: dateFormatter)").font(.caption)
+                   }
+               }
+           }
         }
         .onAppear {
             viewModel.observeAuthChanges()
-        }
-        .onDisappear {
-            viewModel.removeAuthObserver()
         }
     }
 }
