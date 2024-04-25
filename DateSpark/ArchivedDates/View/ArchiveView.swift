@@ -19,7 +19,7 @@ struct ArchiveView: View {
     var body: some View {
         List(viewModel.archives, id: \.id) { archive in
             VStack(alignment: .leading) {
-                Text(archive.title).font(.headline)
+                Text("Date: \(archive.title)").font(.headline)
                 Text(archive.description).font(.subheadline)
                 Text("Outfit: \(archive.outfit)").font(.caption)
                 Text("Weather: \(archive.weather)").font(.caption)
@@ -27,10 +27,14 @@ struct ArchiveView: View {
             }
         }
         .onAppear {
-            viewModel.fetchArchiveData(userID: "YourUserID")
+            viewModel.observeAuthChanges()
+        }
+        .onDisappear {
+            viewModel.removeAuthObserver()
         }
     }
 }
+
 
 struct ArchiveView_Previews: PreviewProvider {
     static var previews: some View {

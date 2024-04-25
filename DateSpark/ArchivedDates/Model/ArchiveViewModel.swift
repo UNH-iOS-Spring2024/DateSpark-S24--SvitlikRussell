@@ -6,10 +6,10 @@ import Firebase
 
 class ArchiveViewModel: ObservableObject {
     @Published var archives: [Archive] = []
+    private var listenerRegistration: AuthStateDidChangeListenerHandle?
 
-    func fetchArchiveData(userID: String) {
+    private func fetchArchiveData(userID: String) {
         let db = Firestore.firestore()
-
         db.collection("User").document(userID).collection("Archive").getDocuments { [weak self] (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -33,4 +33,23 @@ class ArchiveViewModel: ObservableObject {
             }
         }
     }
+    
+    func observeAuthChanges() {
+        listenerRegistration = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
+            if let userID = user?.uid {
+                self?.fetchArchiveData(userID: userID)
+            } else {
+                DispatchQueue.main.async {
+                    self?.archives = []
+                }
+            }
+        }
+    }
+    
+    func removeAuthObserver() {
+        if let listenerRegistration = listenerRegistration {
+            Auth.auth().removeStateDidChangeListener(listenerRegistration)
+        }
+    }
 }
+
