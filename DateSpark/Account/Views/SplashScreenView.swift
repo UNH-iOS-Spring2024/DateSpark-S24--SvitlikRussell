@@ -8,6 +8,7 @@ struct SplashScreenView: View {
     @State private var progressValue: Double = 0.0
     @State private var flashingOpacity: Double = 1.0
     
+    
     var body: some View {
         ZStack {
             Color.black

@@ -32,7 +32,8 @@ struct HomeView: View {
     @State private var actionCompleted = false
     @State private var userId: String? = Auth.auth().currentUser?.uid
     private let db = Firestore.firestore()
-    
+    let titleFont = Font.largeTitle.lowercaseSmallCaps()
+
     
     var body: some View {
         NavigationView {
@@ -53,7 +54,7 @@ struct HomeView: View {
                 
                 HStack {
                     Text("Random Date")
-                        .font(.system(size: 35))
+                        .font(titleFont)
                 }
                 .padding(.bottom, 50)
                 .padding(.top, 50)

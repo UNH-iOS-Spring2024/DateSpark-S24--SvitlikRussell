@@ -16,15 +16,15 @@ struct SparkGPTView: View {
     @State var question: String = ""
     let organizationName: String = "Personal"
     private let apiToken: String = "sk-proj-HE6uylswy2zmIMtmpTHhT3BlbkFJXeAnYN3zpP0JJ4Pm0DEf"
-    
+    let titleFont = Font.largeTitle.lowercaseSmallCaps()
+
     public let openAI = OpenAIKit(apiToken: "sk-proj-HE6uylswy2zmIMtmpTHhT3BlbkFJXeAnYN3zpP0JJ4Pm0DEf", organization: "org-AGjsVJi2tjy6VBltQ9HmvodS")
     
     var body: some View {
         VStack {
             ZStack {
             Text("SparkGPT")
-                .font(.system(size: 35))
-            //.padding(.bottom, 50)
+                .font(titleFont)
                 .padding(.top, 50)
         }
                 List(messages) { message in

@@ -13,32 +13,25 @@ struct Login: View {
     @State private var shouldNavigateToHome: Bool = false
     @State private var loginFailed: Bool = false
     @Binding var isLoggedIn: Bool
+    let titleFont = Font.largeTitle.lowercaseSmallCaps()
+
     
     var body: some View {
     
         NavigationStack {
             VStack {
-                HStack{
+                VStack{
                     Image("Logo")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 100, height: 50)
-                    Spacer()
+                        .frame(width: 300, height: 300)
                 }
-                .padding()
                 
-                Text("Sign In")
-                    .font(.system(size: 30))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 10)
-                    .padding(.bottom, 20)
-                    
-                Text("Welcome Back")
-                    .font(.system(size: 30))
+                Text("Sign in!")
+                    .font(titleFont)
                     .bold()
-                    .padding(.bottom,10)
-                
+                     .padding(.bottom,30)
+                     
                 
                 TextField("Username", text: $txtusername)
                     .font(.system(size:30))
@@ -62,8 +55,8 @@ struct Login: View {
                 NavigationLink(destination: SignUp(), label: {
                     Text("Don't have an account? Sign Up")
                 })
-                .padding()
-                
+                .padding(.bottom, 30)
+
                 NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
 
             }
