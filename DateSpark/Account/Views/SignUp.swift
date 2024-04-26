@@ -17,16 +17,18 @@ struct SignUp: View {
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome = false
     @State private var errorMessage : String? = nil
+    let titleFont = Font.largeTitle.lowercaseSmallCaps()
+
  
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Welcome to Date Spark")
-                    .font(.system(size: 30))
+                Text("Welcome!")
+                    .font(titleFont)
                     .bold()
                 
                 Text("Create An Account")
-                    .font(.system(size: 30))
+                    .font(titleFont)
                     .bold()
                 
                 TextField("First Name", text: $txtFirstName)

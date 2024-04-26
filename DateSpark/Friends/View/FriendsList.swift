@@ -6,6 +6,7 @@ struct FriendsList: View {
     @ObservedObject var viewModel: FriendsViewModel
     @State private var showingSendFriendRequest = false
     @State private var showingFriendRequests = false
+    let titleFont = Font.largeTitle.lowercaseSmallCaps()
 
     var body: some View {
         NavigationView {
@@ -13,6 +14,8 @@ struct FriendsList: View {
                 Text(friend)
             }
             .navigationTitle("Friends List")
+                //.font(titleFont)
+
             .navigationBarItems(
                 leading: Button(action: {
                     showingFriendRequests = true

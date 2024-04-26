@@ -15,7 +15,8 @@ struct SelectedPage: View {
     @State private var showingTime = false
     @State private var isSaved: Bool = false
     @State private var userId: String? = Auth.auth().currentUser?.uid
-    
+    let titleFont = Font.largeTitle.lowercaseSmallCaps()
+
     private var timeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -40,12 +41,9 @@ struct SelectedPage: View {
             .padding()
             
             VStack{
-                Text("Selected Choice:")
-                    .font(.system(size: 24))
-                
                 Text(selectedTitle)
-                    .font(.title)
-                    .underline()
+                    .font(titleFont)
+                    .bold()
                     .padding(10)
                 
                 Text(selectedDescription)

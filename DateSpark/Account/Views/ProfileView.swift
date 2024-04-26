@@ -20,6 +20,8 @@ struct ProfileView: View {
     @State private var profileImageUrl: URL?
     @State private var isSignedOut = false
     @State private var showingSignOutConfirmation = false
+    let titleFont = Font.largeTitle.lowercaseSmallCaps()
+
     @State private var userProfile = UserProfile(
         firstName: "",
         lastName: "",
@@ -53,7 +55,7 @@ struct ProfileView: View {
             .padding(.leading)
             
             Text(userProfile.username)
-                .font(.largeTitle)
+                .font(titleFont)
                 .padding(.top, 20)
             ZStack(alignment: .bottomTrailing){
                 Image(uiImage: inputImage ?? UIImage(named: "PlaceholderImage")!)

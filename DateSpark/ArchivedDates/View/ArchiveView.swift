@@ -8,6 +8,8 @@ import FirebaseAuth
 
 struct ArchiveView: View {
     @ObservedObject var viewModel: ArchiveViewModel
+    let titleFont = Font.largeTitle.lowercaseSmallCaps()
+
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -18,13 +20,18 @@ struct ArchiveView: View {
 
     var body: some View {
         List {
+            HStack {
+                Text("Archived Dates")
+                    .font(titleFont)
+            }
+            
            if viewModel.archives.isEmpty {
                 Text("No archives available")
                     .frame(maxWidth: .infinity, alignment: .center)
             } else {
                 ForEach(viewModel.archives, id: \.id) { archive in
                     VStack(alignment: .leading) {
-                        Text("Date: \(archive.title)").font(.headline).padding(.bottom, 10)
+                        Text("\(archive.title)").font(.headline).padding(.bottom, 10)
                         Text(archive.description).font(.subheadline).padding(.bottom, 10)
                         Text("Outfit: \(archive.outfit)").font(.caption)
                         Text("Weather: \(archive.weather)").font(.caption)
