@@ -29,7 +29,7 @@ struct HomeView: View {
     @State private var showSelectedDateButton = false
     @State var feedbackMessage: String = ""
     @State var showingLocationAlert = false
-//    @State var userId: String
+    @State private var actionCompleted = false
     @State private var userId: String? = Auth.auth().currentUser?.uid
     private let db = Firestore.firestore()
     
@@ -69,7 +69,9 @@ struct HomeView: View {
                 VStack {
                     Button(action: {
                         print("Button to start the wheel has been pressed")
-                        spinWheel()
+                        spinWheel() {
+                            self.actionCompleted = true // Set this to true after the wheel spins
+                        }
                     }) {
                         Image(systemName: "triangle.fill")
                             .resizable()
@@ -77,26 +79,14 @@ struct HomeView: View {
                             .foregroundColor(.darkRed)
                     }
                     Spacer()
-                }
-                
-                //after hitting the show selected date button:
-                if showSelectedDateButton{
-                    VStack {
-                        NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
-                                                                 index: index,
-                                                                 selectedTitle: selectedDate?.title ?? "Title",
-                                                                 selectedDescription: selectedDate?.description ?? "Description")) {
-                            Text("Show selected date")
-                                .frame(maxWidth: 300)
-                            //.frame(maxHeight: 100)
-                                .padding()
-                                .background(Color.black)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                        }
-                        
+                    NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
+                                                             index: index,
+                                                             selectedTitle: selectedDate?.title ?? "Title",
+                                                             selectedDescription: selectedDate?.description ?? "Description"), isActive: $actionCompleted) {
+                        EmptyView()
                     }
                 }
+
                 
                 HStack {
                     Spacer()
@@ -187,7 +177,7 @@ struct HomeView: View {
     
     
     //Spins the wheel after hitting the triangle
-    func spinWheel(){
+    func spinWheel(completion: @escaping () -> Void ){
         showSelectedDateButton = false
         let randomAngle = Double.random(in: 0...360)
         let rotations = Int.random(in: 2...5) //random number of wheel spins from 2-5
@@ -206,8 +196,8 @@ struct HomeView: View {
             selectedDate = dates[selectedIndex]
             self.showSelectedDateButton = true
             print("Index: \(index)")
+            completion()
         }
-        
     }
     
     func calculateIndexFromAngle(_ angle: Double) -> Int {
