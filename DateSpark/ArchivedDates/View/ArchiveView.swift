@@ -10,7 +10,6 @@ struct ArchiveView: View {
     @ObservedObject var viewModel: ArchiveViewModel
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
 
-    
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
@@ -25,7 +24,7 @@ struct ArchiveView: View {
                     .font(titleFont)
             }
             
-           if viewModel.archives.isEmpty {
+            if viewModel.archives.isEmpty {
                 Text("No archives available")
                     .frame(maxWidth: .infinity, alignment: .center)
             } else {
@@ -42,6 +41,7 @@ struct ArchiveView: View {
                     .shadow(radius: 5)
                     .padding(.bottom, 5)
                 }
+                .onDelete(perform: deleteFromFirebase) // Move this line here
             }
         }
         .background(Color.pink.edgesIgnoringSafeArea(.all))
@@ -49,6 +49,30 @@ struct ArchiveView: View {
             viewModel.observeAuthChanges()
         }
     }
+    
+    func deleteFromFirebase (at offsets: IndexSet) {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("Error: No current user")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        for index in offsets {
+            let archive = viewModel.archives[index]
+            
+            db.collection("User").document(userID).collection("Archive").document(archive.id).delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                    DispatchQueue.main.async {
+                        self.viewModel.archives.remove(at: index)
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 

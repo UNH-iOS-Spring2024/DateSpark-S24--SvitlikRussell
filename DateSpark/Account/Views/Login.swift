@@ -50,6 +50,8 @@ struct Login: View {
                 Button(action: loginUser) {
                     Text("Login")
                         .font(.system(size: 20))
+                        .padding(.bottom, 10)
+
                 }
                 
                 NavigationLink(destination: SignUp(), label: {

@@ -55,6 +55,7 @@ struct HomeView: View {
                 HStack {
                     Text("Random Date")
                         .font(titleFont)
+                        .bold()
                 }
                 .padding(.bottom, 50)
                 .padding(.top, 50)
@@ -78,6 +79,7 @@ struct HomeView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundColor(.darkRed)
+                             
                     }
                     Spacer()
                     NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
@@ -97,7 +99,7 @@ struct HomeView: View {
                         
                         
                     }) {
-                        Image(systemName: "plus.circle")
+                        Image(systemName: "plus.circle.fill")
                             .resizable()
                             .frame(width: 40, height: 40)
                             .foregroundColor(.lightPink)
