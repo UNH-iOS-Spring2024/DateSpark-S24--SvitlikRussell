@@ -47,16 +47,26 @@ struct HomeView: View {
                             .foregroundColor(.lightPink)
                     }
                     .padding(.top, 40)
-                    .padding(.trailing, 20)
+                    .padding(.trailing, 30)
                 }
                 
                 Spacer()
                 
                 HStack {
-                    Text("Random Date")
+                    Text("Spin for a")
                         .font(titleFont)
                         .bold()
+                        .padding(.bottom, -50)
+                        .padding(.top, 50)
+                        .foregroundColor(.beige)
                 }
+                HStack {
+                Text("Random Date ✨")
+                    .font(titleFont)
+                    .bold()
+                    .foregroundColor(.beige)
+             }
+        
                 .padding(.bottom, 50)
                 .padding(.top, 50)
                 
@@ -77,8 +87,9 @@ struct HomeView: View {
                     }) {
                         Image(systemName: "triangle.fill")
                             .resizable()
-                            .frame(width: 50, height: 50)
+                            .frame(width: 60, height: 60)
                             .foregroundColor(.darkRed)
+                            .padding(.top, -35)
                              
                     }
                     Spacer()
