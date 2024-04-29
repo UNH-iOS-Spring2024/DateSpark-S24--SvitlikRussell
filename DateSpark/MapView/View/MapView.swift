@@ -15,16 +15,22 @@ struct MapView: View {
         center: CLLocationCoordinate2D(latitude: 41.292190, longitude: -72.961180),
         span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
     )
-    @StateObject private var locationManager = LocationManager()  // Corrected here
+    @StateObject private var locationManager = LocationManager()
     @ObservedObject var searchCompleter = SearchCompleter()
 
     var body: some View {
         ZStack(alignment: .top) {
-            Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: $userTrackingMode, annotationItems: pin != nil ? [pin!] : []) { pin in
+            Map(coordinateRegion: $region, showsUserLocation: false, userTrackingMode: $userTrackingMode, annotationItems: pin != nil ? [pin!] : []) { pin in
                 MapAnnotation(coordinate: pin.location) {
                     PinView(pin: pin)
                 }
             }
+            .overlay(
+                Circle()
+                    .fill(Color.blue.opacity(0.3))
+                    .frame(width: 20, height: 20)
+                    .position(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
+            )
             .edgesIgnoringSafeArea(.all)
             .onAppear {
                 locationManager.requestPermission()
@@ -149,7 +155,8 @@ struct PinView: View {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView()
+        MapView().environmentObject(LocationManager())
     }
 }
-/* Reference for UserLocation: https://developer.apple.com/documentation/corelocation/getting_the_current_location_of_a_device ----- May be Buggy rn */
+
+/* Reference for UserLocation: https://developer.apple.com/documentation/corelocation/getting_the_current_location_of_a_device */
