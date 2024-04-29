@@ -17,19 +17,10 @@ class LocationPushService: UNNotificationServiceExtension, CLLocationPushService
     }
     
     func serviceExtensionWillTerminate() {
-        // Called just before the extension will be terminated by the system.
         self.completion?()
     }
-
-    // MARK: - CLLocationManagerDelegate methods
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        // Process the location(s) as appropriate
-        // let location = locations.first
-
-        // If sharing the locations to another user, end-to-end encrypt them to protect privacy
-        
-        // When finished, always call completion()
         self.completion?()
     }
     

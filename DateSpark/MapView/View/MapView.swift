@@ -16,12 +16,23 @@ struct MapView: View {
     )
     @StateObject private var locationManager = LocationManager()
     @ObservedObject var searchCompleter = SearchCompleter()
+    @State private var userLocation: CLLocationCoordinate2D?
+
 
     var body: some View {
         ZStack(alignment: .top) {
             Map(coordinateRegion: $region, showsUserLocation: false, userTrackingMode: $userTrackingMode, annotationItems: pin != nil ? [pin!] : []) { pin in
                 MapAnnotation(coordinate: pin.location) {
                     PinView(pin: pin)
+                    Circle()
+                        .fill(Color.blue)
+                        .opacity(0.3)
+                        .frame(width: 20, height: 20)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.blue, lineWidth: 2)
+                                .frame(width: 25, height: 25)
+                        )
                 }
             }
             .overlay(
@@ -45,6 +56,7 @@ struct MapView: View {
             }
             .onChange(of: locationManager.lastLocation) { newLocation in
                 if let newLocation = newLocation {
+                    userLocation = newLocation.coordinate
                     updateRegionToUserLocation(newLocation)
                 }
             }
@@ -103,7 +115,6 @@ struct MapView: View {
             center: coordinate,
             span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         )
-        pin = Pin(location: coordinate, name: "Current Location")
     }
 
     func fetchLocationDetails(for suggestion: MKLocalSearchCompletion) {
@@ -130,6 +141,11 @@ struct MapView: View {
             }
         }
     }
+}
+
+struct UserLocationAnnotation: Identifiable {
+    let id = UUID()
+    var coordinate: CLLocationCoordinate2D
 }
 
 struct PinView: View {
