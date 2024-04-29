@@ -14,7 +14,7 @@ struct MapView: View {
         center: CLLocationCoordinate2D(latitude: 41.292190, longitude: -72.961180),
         span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
     )
-    @StateObject private var locationManager = LocationManager()
+    @StateObject private var locationManager = LocationManager()  // Corrected here
     @ObservedObject var searchCompleter = SearchCompleter()
     @State private var userLocation: CLLocationCoordinate2D?
 
@@ -173,3 +173,4 @@ struct MapView_Previews: PreviewProvider {
         MapView().environmentObject(LocationManager())
     }
 }
+/* Reference for UserLocation: https://developer.apple.com/documentation/corelocation/getting_the_current_location_of_a_device ----- May be Buggy rn */
