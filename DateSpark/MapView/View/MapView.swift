@@ -9,7 +9,6 @@ struct MapView: View {
     @State var location = ""
     @State private var pin: Pin?
     @State private var userTrackingMode: MapUserTrackingMode = .follow
-    @State private var showingLocationAlert = false
     @State private var detailedLocationInfo: String?
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 41.292190, longitude: -72.961180),
@@ -35,9 +34,11 @@ struct MapView: View {
             .onAppear {
                 locationManager.requestPermission()
             }
-            .alert("Location Permission Needed", isPresented: $showingLocationAlert) {
+            .alert("Location Permission Needed", isPresented: $locationManager.showingLocationAlert) {
                 Button("Open Settings") {
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
                 }
             } message: {
                 Text("Please allow location access in Settings to enable all features.")
@@ -73,9 +74,9 @@ struct MapView: View {
             VStack(alignment: .leading) {
                 ForEach(searchCompleter.suggestions, id: \.self) { suggestion in
                     VStack(alignment: .leading) {
-                        Text(suggestion.title) // Location name or primary address
+                        Text(suggestion.title)
                             .fontWeight(.bold)
-                        Text(suggestion.subtitle) // City, state, and ZIP
+                        Text(suggestion.subtitle)
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
@@ -118,8 +119,6 @@ struct MapView: View {
                 return
             }
             let coordinate = mapItem.placemark.coordinate
-            
-            // Update region centered on the found location
             let newRegion = MKCoordinateRegion(
                 center: coordinate,
                 span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -158,5 +157,3 @@ struct MapView_Previews: PreviewProvider {
         MapView().environmentObject(LocationManager())
     }
 }
-
-/* Reference for UserLocation: https://developer.apple.com/documentation/corelocation/getting_the_current_location_of_a_device */

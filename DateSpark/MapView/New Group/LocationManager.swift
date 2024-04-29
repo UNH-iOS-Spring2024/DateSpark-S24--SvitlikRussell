@@ -10,6 +10,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     @Published var lastLocation: CLLocation?
     @Published var authorizationStatus = CLAuthorizationStatus.notDetermined
+    @Published var showingLocationAlert = false
+
 
     override init() {
         super.init()
@@ -28,7 +30,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             } else if currentStatus == .denied {
                 // Handle the case when the user has previously denied permission.
                 DispatchQueue.main.async {
-                    let showingLocationAlert = true
+                    self.showingLocationAlert = true
                 }
             }
     }
