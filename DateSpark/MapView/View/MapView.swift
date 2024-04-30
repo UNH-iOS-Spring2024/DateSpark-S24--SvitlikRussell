@@ -22,7 +22,14 @@ struct MapView: View {
         ZStack(alignment: .top) {
             Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: $userTrackingMode, annotationItems: pin != nil ? [pin!] : []) { pin in
                 MapAnnotation(coordinate: pin.location) {
-                    PinView(pin: pin)
+                    Circle()
+                        .fill(Color.blue.opacity(0.3))
+                        .frame(width: 30, height: 30)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.blue, lineWidth: 3)
+                                .frame(width: 30, height: 30)
+                        )
                 }
             }
             .edgesIgnoringSafeArea(.all)
@@ -96,7 +103,6 @@ struct MapView: View {
             center: coordinate,
             span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         )
-        pin = Pin(location: coordinate, name: "Current Location")
     }
 
     func fetchLocationDetails(for suggestion: MKLocalSearchCompletion) {
@@ -113,7 +119,6 @@ struct MapView: View {
             }
             let coordinate = mapItem.placemark.coordinate
             
-            // Update region centered on the found location
             let newRegion = MKCoordinateRegion(
                 center: coordinate,
                 span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -152,4 +157,3 @@ struct MapView_Previews: PreviewProvider {
         MapView()
     }
 }
-/* Reference for UserLocation: https://developer.apple.com/documentation/corelocation/getting_the_current_location_of_a_device ----- May be Buggy rn */
