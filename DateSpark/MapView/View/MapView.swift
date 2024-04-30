@@ -15,7 +15,7 @@ struct MapView: View {
         center: CLLocationCoordinate2D(latitude: 41.292190, longitude: -72.961180),
         span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
     )
-    @StateObject private var locationManager = LocationManager()  // Corrected here
+    @StateObject private var locationManager = LocationManager()
     @ObservedObject var searchCompleter = SearchCompleter()
 
     var body: some View {
@@ -96,7 +96,6 @@ struct MapView: View {
             center: coordinate,
             span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         )
-
     }
 
     func fetchLocationDetails(for suggestion: MKLocalSearchCompletion) {
@@ -113,7 +112,6 @@ struct MapView: View {
             }
             let coordinate = mapItem.placemark.coordinate
             
-            // Update region centered on the found location
             let newRegion = MKCoordinateRegion(
                 center: coordinate,
                 span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -152,26 +150,3 @@ struct MapView_Previews: PreviewProvider {
         MapView()
     }
 }
-/* Reference for UserLocation: https://developer.apple.com/documentation/corelocation/getting_the_current_location_of_a_device ----- May be Buggy rn */
-            Text(pin.name)
-                .font(.caption)
-                .padding(5)
-                .background(Color.white)
-                .cornerRadius(5)
-                .foregroundColor(.black)
-            Image(systemName: "mappin.circle.fill")
-                .font(.title)
-                .foregroundColor(.red)
-            Circle()
-                .frame(width: 20, height: 10)
-                .foregroundColor(.red)
-        }
-    }
-}
-
-struct MapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapView().environmentObject(LocationManager())
-    }
-}
-/* Reference for UserLocation: https://developer.apple.com/documentation/corelocation/getting_the_current_location_of_a_device ----- May be Buggy rn */
