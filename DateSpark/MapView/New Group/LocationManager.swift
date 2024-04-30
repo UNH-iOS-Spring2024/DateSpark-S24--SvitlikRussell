@@ -33,7 +33,15 @@ class LocationManager: UNNotificationServiceExtension, ObservableObject, CLLocat
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        lastLocation = locations.last
+        guard let newLocation = locations.last else { return }
+        DispatchQueue.main.async {
+            self.lastLocation = newLocation  // Always update with the latest location
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
     }
 }
+
 
