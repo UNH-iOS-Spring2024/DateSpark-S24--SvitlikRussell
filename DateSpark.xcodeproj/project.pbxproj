@@ -14,6 +14,7 @@
 		FB0C3F5A2BD9D9A0009C14CE /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F592BD9D9A0009C14CE /* ArchiveView.swift */; };
 		FB0C3F5C2BD9D9DC009C14CE /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F5B2BD9D9DC009C14CE /* Archive.swift */; };
 		FB0C3F5E2BD9DDAF009C14CE /* ArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F5D2BD9DDAF009C14CE /* ArchiveViewModel.swift */; };
+		FB1488A62BE2A80100C0713F /* DirectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1488A52BE2A80100C0713F /* DirectionsView.swift */; };
 		FB2A01D32BCD8E3600DF084E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05392BAA54C20076F915 /* FirebaseAnalytics */; };
 		FB2A01D42BCD8E3600DF084E /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB053B2BAA54C20076F915 /* FirebaseAnalyticsOnDeviceConversion */; };
 		FB2A01D52BCD8E3600DF084E /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB053D2BAA54C20076F915 /* FirebaseAnalyticsSwift */; };
@@ -91,6 +92,7 @@
 		FB0C3F592BD9D9A0009C14CE /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
 		FB0C3F5B2BD9D9DC009C14CE /* Archive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archive.swift; sourceTree = "<group>"; };
 		FB0C3F5D2BD9DDAF009C14CE /* ArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArchiveViewModel.swift; path = DateSpark/ArchivedDates/Model/ArchiveViewModel.swift; sourceTree = SOURCE_ROOT; };
+		FB1488A52BE2A80100C0713F /* DirectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsView.swift; sourceTree = "<group>"; };
 		FB2A01F02BCD93C400DF084E /* FriendsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsList.swift; sourceTree = "<group>"; };
 		FB2A01F62BCD976700DF084E /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		FB2A01F82BCD97EF00DF084E /* SendFriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFriendRequestView.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				FBDB05182BAA53F30076F915 /* MapView.swift */,
+				FB1488A52BE2A80100C0713F /* DirectionsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 			files = (
 				FB48622C2BD7247F0019FE6D /* LocationPushService.swift in Sources */,
 				FBDB052B2BAA53F50076F915 /* DateItem.swift in Sources */,
+				FB1488A62BE2A80100C0713F /* DirectionsView.swift in Sources */,
 				FBD95F4D2BBC6FE80075B690 /* Pin.swift in Sources */,
 				FB0C3F5E2BD9DDAF009C14CE /* ArchiveViewModel.swift in Sources */,
 				FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */,
@@ -718,8 +722,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DateSpark/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "DateSpark needs access to your location to improve navigation.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DateSpark needs access to your location to improve navigation.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "DateSpark would like to request your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DateSpark would like to request your location";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -751,8 +755,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DateSpark/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "DateSpark needs access to your location to improve navigation.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DateSpark needs access to your location to improve navigation.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "DateSpark would like to request your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DateSpark would like to request your location";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

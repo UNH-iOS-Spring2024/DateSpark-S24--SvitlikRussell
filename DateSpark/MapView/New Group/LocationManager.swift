@@ -18,6 +18,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.allowsBackgroundLocationUpdates = true
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.requestWhenInUseAuthorization() 
+            locationManager.startUpdatingLocation()
+        }
     }
 
     func requestPermission() {
@@ -28,7 +32,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             } else if currentStatus == .authorizedWhenInUse {
                 locationManager.requestAlwaysAuthorization()
             } else if currentStatus == .denied {
-                // Handle the case when the user has previously denied permission.
                 DispatchQueue.main.async {
                     self.showingLocationAlert = true
                 }
@@ -47,7 +50,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let newLocation = locations.last else { return }
         DispatchQueue.main.async {
-            self.lastLocation = newLocation  // Always update with the latest location
+            self.lastLocation = newLocation
         }
     }
 

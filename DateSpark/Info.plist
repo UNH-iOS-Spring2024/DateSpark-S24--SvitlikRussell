@@ -28,5 +28,11 @@
 		<string>MKDirectionsModeTaxi</string>
 		<string>MKDirectionsModeTrain</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>nearby-interaction</string>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

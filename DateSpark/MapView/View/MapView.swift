@@ -21,7 +21,7 @@ struct MapView: View {
     @State private var searchQuery = ""
     @State private var places: [IdentifiablePoint] = []
     @State private var selectedPlace: MKPointAnnotation?
-    @State private var showingDirections = false
+    @State private var showingDirectionsPopover = false
     @State private var directions: [String] = []
     @State private var showSuggestions = true
 
@@ -74,11 +74,13 @@ struct MapView: View {
                     suggestionsList
                 }
 
-                if showingDirections, let selected = selectedPlace {
-                    directionsList
+                if showingDirectionsPopover, let selected = selectedPlace {
+                    DirectionsView(directions: directions, dismissAction: {
+                        showingDirectionsPopover = false
+                    })
                 }
 
-                if let selectedPlace = selectedPlace, !showingDirections {
+                if let selectedPlace = selectedPlace, !showingDirectionsPopover {
                     Button("Get Directions") {
                         calculateDirections()
                     }
@@ -86,6 +88,11 @@ struct MapView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .popover(isPresented: $showingDirectionsPopover) {
+                        DirectionsView(directions: directions) {
+                            showingDirectionsPopover = false
+                        }
+                    }
                 }
             }
         }
@@ -124,7 +131,7 @@ struct MapView: View {
             Text(direction)
         }
         .transition(.slide)
-        .animation(.easeInOut, value: showingDirections)
+        .animation(.easeInOut, value: showingDirectionsPopover)
     }
 
     private func updateRegionToUserLocation(_ location: CLLocation?) {
@@ -175,7 +182,7 @@ struct MapView: View {
             }
 
             self.directions = response.routes.first?.steps.map { $0.instructions }.filter { !$0.isEmpty } ?? []
-            self.showingDirections = true
+            self.showingDirectionsPopover = true
         }
     }
 }
