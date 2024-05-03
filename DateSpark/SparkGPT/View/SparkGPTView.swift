@@ -15,10 +15,10 @@ struct SparkGPTView: View {
     @State var description: String = ""
     @State var question: String = ""
     let organizationName: String = "Personal"
-    private let apiToken: String = "sk-proj-HE6uylswy2zmIMtmpTHhT3BlbkFJXeAnYN3zpP0JJ4Pm0DEf"
+    private let apiToken: String = "sk-proj-rOQDZohcRjcuYtphurXqT3BlbkFJlbtM6uvSPkzdt87I1P6w"
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
 
-    public let openAI = OpenAIKit(apiToken: "sk-proj-HE6uylswy2zmIMtmpTHhT3BlbkFJXeAnYN3zpP0JJ4Pm0DEf", organization: "org-AGjsVJi2tjy6VBltQ9HmvodS")
+    public let openAI = OpenAIKit(apiToken: "sk-proj-rOQDZohcRjcuYtphurXqT3BlbkFJlbtM6uvSPkzdt87I1P6w", organization: "org-AGjsVJi2tjy6VBltQ9HmvodS")
     
     var body: some View {
         VStack {
@@ -71,10 +71,15 @@ struct SparkGPTView: View {
     
     
     func sendQuestion() {
-            isLoading = true
-            messages.append(Message(content: question, role: .user))
+        isLoading = true
+        messages.append(Message(content: question, role: .user))
+        
+        
+        let prompt = question
+        let keywords = ["date", "idea", "romontaic", "fun", "idea", "ideas", "dinner", "birthday", "outing"]
+        
+        if keywords.contains(where: question.lowercased().contains){
             
-            let prompt = question
             openAI.sendChatCompletion(newMessage: AIMessage(role: .user, content: prompt), previousMessages: [], model: .gptV3_5(.gptTurbo), maxTokens: 2048, n: 1) { result in
                 DispatchQueue.main.async {
                     self.isLoading = false
@@ -92,7 +97,11 @@ struct SparkGPTView: View {
                 }
             }
         }
-}
+                else {
+                    self.messages.append(Message(content: "I can only help with date ideas, please let me know what time of date you are looking for!", role: .SparkGPT))
+                }
+            }
+        }
         
         #Preview {
             SparkGPTView()
