@@ -37,7 +37,7 @@ struct HomeView: View {
                             .frame(width: 28, height: 28)
                             .foregroundColor(CustomColors.lightPink)
                     }
-                    .padding(.top, 40)
+                    .padding(.top, 50)
                     .padding(.trailing, 30)
                 }
                 
@@ -78,9 +78,9 @@ struct HomeView: View {
                     }) {
                         Image(systemName: "triangle.fill")
                             .resizable()
-                            .frame(width: 60, height: 60)
+                            .frame(width: 60, height: 70)
                             .foregroundColor(CustomColors.darkRed)
-                            .padding(.top, -35)
+                            .padding(.top, -15)
                              
                     }
                     Spacer()
@@ -140,7 +140,7 @@ struct HomeView: View {
                 }
                 
                 .padding(.bottom, 100)
-                .padding(.trailing, 20)
+                .padding(.trailing, 30)
             }
             
         }

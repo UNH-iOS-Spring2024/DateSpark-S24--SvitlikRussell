@@ -37,15 +37,16 @@ struct ArchiveView: View {
                 } else {
                     ForEach(viewModel.archives, id: \.id) { archive in
                         VStack(alignment: .leading) {
-                            Text("\(archive.title)").font(.headline).padding(.all, 15).foregroundColor(Color.black).padding(.bottom, -20)
-                            Text(archive.description).font(.subheadline).padding(.all, 15).foregroundColor(Color.black)
-                            Text("Outfit: \(archive.outfit)").font(.caption).padding(.horizontal, 15).foregroundColor(Color.black)
-                            Text("Weather: \(archive.weather)").font(.caption).padding(.horizontal, 15).foregroundColor(Color.black)
-                            Text("Time: \(archive.time, formatter: dateFormatter)").font(.caption).padding(.horizontal, 15).padding(.bottom, 15).foregroundColor(Color.black)
+                            Text("⭐️ \(archive.title) ⭐️").font(.headline).padding(.all, 15).foregroundColor(Color.black).padding(.bottom, -20).frame(maxWidth: .infinity).multilineTextAlignment(.center)
+                            Text(archive.description).font(.subheadline).padding(.all, 20).foregroundColor(Color.black)
+                            Text("Outfit: \(archive.outfit)").font(.caption).padding(.horizontal, 20).foregroundColor(Color.black)
+                            Text("Weather: \(archive.weather)").font(.caption).padding(.horizontal, 20).foregroundColor(Color.black)
+                            Text("Time: \(archive.time, formatter: dateFormatter)").font(.caption).padding(.horizontal, 20).padding(.bottom, 20).foregroundColor(Color.black)
                         }
                         .background(RoundedRectangle(cornerRadius: 10).fill(Color(UIColor.white)))
+                        .frame(width: 300, height: 200)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .shadow(color: CustomColors.lightPink, radius: 5, x: 0, y: 0)
+                        .shadow(color: CustomColors.darkRed, radius: 5, x: 0, y: 0)
                         .padding(.top, 15)
                         .padding(.bottom, 15)
 
