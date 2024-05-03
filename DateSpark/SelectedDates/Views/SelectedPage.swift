@@ -10,6 +10,7 @@ struct SelectedPage: View {
     @State var selectedTitle: String
     @State var selectedDescription: String
     @State private var selectedWeather: String = "Weather"
+    @State private var selectedTimeOfDay = "Best Time"
     @State private var selectedOutfit: String = "Outfit"
     @State private var selectedTime: Date = Date()
     @State private var showingTime = false
@@ -32,81 +33,74 @@ struct SelectedPage: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 300, height: 300)
-                .padding(.bottom, -140)
+                .padding(.bottom, -80)
             
-            
-            HStack {
-                Spacer() // Pushes the button to the right
-                Button(action: {
-                    if !isSaved {
-                        saveToFirebase(userId: userId ?? "")
-                    }
-                    isSaved.toggle() // Toggle saved state
-                }) {
-                    Image(systemName: isSaved ? "bookmark.fill" : "bookmark")
-                        .resizable()
-                        .frame(width: 20, height: 25)
-                        .foregroundColor(isSaved ? .pink : .primary)
-                }
-                .padding()
-            }
-                
             VStack{
                 Text(selectedTitle)
                     .font(titleFont)
                     .bold()
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 20)
+                    .padding(.all, 20)
+                   // .padding(.bottom, 20)
                 
                 Text(selectedDescription)
-                    .padding(.horizontal, 20)
-                
+                    .padding(.all, 30)
+                    .padding(.top, -30)
+                    .lineLimit(nil)
+
                 VStack {
                     // Menu for Weather choice
                     Menu(selectedWeather) {
-                        Button("Sunny ☀️") { selectedWeather = "Sunny" }
-                        Button("Rainy 🌧") { selectedWeather = "Rainy" }
-                        Button("Cloudy ☁️") { selectedWeather = "Cloudy" }
-                        Button("Windy 🌬") { selectedWeather = "Windy" }
-                        Button("Snowy ❄️") { selectedWeather = "Snowy" }
-                        Button("Foggy 🌫") { selectedWeather = "Foggy" }
-                        Button("Stormy ⛈") { selectedWeather = "Stormy" }
+                        Button("Sunny ☀️") { selectedWeather = "Sunny ☀️" }
+                        Button("Rainy 🌧") { selectedWeather = "Rainy 🌧" }
+                        Button("Cloudy ☁️") { selectedWeather = "Cloudy ☁️" }
+                        Button("Windy 🌬") { selectedWeather = "Windy 🌬" }
+                        Button("Snowy ❄️") { selectedWeather = "Snowy ❄️" }
+                        Button("Foggy 🌫") { selectedWeather = "Foggy 🌫" }
                     }
                     
                     // Menu for Outfit Choice
                     Menu(selectedOutfit) {
-                        Button("Casual Outfit - Everyday Comfort") { selectedOutfit = "Casual Outfit" }
-                        Button("Formal Outfit - Business and Events") { selectedOutfit = "Formal Outfit" }
-                        Button("Fancy Outfit - Elegant & Luxurious") { selectedOutfit = "Fancy Outfit" }
-                        Button("Vintage Outfit - Timeless Classics") { selectedOutfit = "Vintage Outfit" }
-                        Button("Streetwear Outfit - Urban & Trendy") { selectedOutfit = "Streetwear Outfit" }
-                        Button("Preppy Outfit - Polished & Pre-collegiate") { selectedOutfit = "Preppy Outfit" }
-                        Button("Minimalist Outfit - Simple & Sleek") { selectedOutfit = "Minimalist Outfit" }
-                        Button("Comfy Outfit - Cozy & Relaxed") { selectedOutfit = "Comfy Outfit" }
-                        Button("Artsy Outfit - Creative & Unique") { selectedOutfit = "Artsy Outfit" }
+                        Button("Casual👖") { selectedOutfit = "Casual👖" }
+                        Button("Formal🎩") { selectedOutfit = "Formal🎩" }
+                        Button("Fancy💃🏽") { selectedOutfit = "Fancy💃🏽" }
+                        Button("Vintage👗") { selectedOutfit = "Vintage👗" }
+                        Button("Streetwear👟") { selectedOutfit = "Streetwear👟" }
+                        Button("Preppy💼") { selectedOutfit = "Preppy💼"}
+                        Button("Minimalist🤍") { selectedOutfit = "Minimalist🤍" }
+                        Button("Comfy🧣") { selectedOutfit = "Comfy🧣" }
+                        Button("Artsy🎨") { selectedOutfit = "Artsy🎨" }
+                        Button("Sporty🏃🏼‍♀️") { selectedOutfit = "Sporty🏃🏼‍♀️" }
                     }
                     
                     // Ideal Time
-                    Button("Best Time") { showingTime = true }
-                    // .padding()
-                        .sheet(isPresented: $showingTime) {
-                            DatePicker(
-                                "Select Time", selection: $selectedTime, displayedComponents: .hourAndMinute
-                            )
-                            .datePickerStyle(WheelDatePickerStyle())
-                            .labelsHidden()
-                            
-                            Text("Selected time: \(timeFormatter.string(from: selectedTime))")
-                            
-                            Button("Done") { showingTime = false }
-                        }
-                        .padding(.all)
-                    Text("Selected time: \(timeFormatter.string(from: selectedTime))")
+                    Menu(selectedTimeOfDay) {
+                                Button("Morning🌅") { selectedTimeOfDay = "Morning🌅" }
+                                Button("Noon🌇") { selectedTimeOfDay = "Noon🌇" }
+                                Button("Night🌃") { selectedTimeOfDay = "Night🌃" }
+                            }                                                    }
+                
+                        .padding(.top, -10)
+                        .font(.system(size: 25))
+                        .padding(.bottom, 50)
+                
+                Button(action: {
+                    if !isSaved {
+                        saveToFirebase(userId: userId ?? "")
+                        isSaved.toggle()
+                    }
+                }) {
+                    Text(isSaved ? "Date saved" : "Save Date to Archives")
+                        .padding()
+                        .frame(minWidth: 200, minHeight: 50) // Set a fixed frame size
+                        .font(.headline)
+                        .background(isSaved ? CustomColors.darkRed : CustomColors.lightPink)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
-                .padding(.top, 25)
-                .font(.system(size: 25))
-                .padding(.bottom, 50)
+                .padding(.top, -25)
+
             }
+            .padding(.bottom, 50)
         }
         .onAppear {
             if userId == nil {
@@ -138,6 +132,6 @@ struct SelectedPage: View {
 
 struct SelectedPage_Previews: PreviewProvider {
     static var previews: some View {
-        SelectedPage(selectedIndex: 0, index: 1, selectedTitle: "Test Title", selectedDescription: "This is a description for previews.")
+        SelectedPage(selectedIndex: 0, index: 1, selectedTitle: "Test Title", selectedDescription: "This is a description for previews34t34t34t34t3t4.")
     }
 }

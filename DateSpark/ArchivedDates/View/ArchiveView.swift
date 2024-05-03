@@ -55,6 +55,7 @@ struct ArchiveView: View {
                     .onDelete(perform: deleteFromFirebase) // Move this line here
                 }
         }
+        .padding(.top, -30)
         .background(Color.pink.edgesIgnoringSafeArea(.all))
         .onAppear {
             viewModel.observeAuthChanges()
