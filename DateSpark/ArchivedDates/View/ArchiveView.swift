@@ -19,30 +19,41 @@ struct ArchiveView: View {
 
     var body: some View {
         List {
-            HStack {
+            VStack {
                 Text("Archived Dates")
                     .font(titleFont)
+                    .padding(.top, 15)
+                
+                Text("Need some ideas? Check your saved dates!")
+                    .font(.system(size: 15))
+                    .padding(.top, -2)
+                    .padding(.bottom, 15)
+                
             }
             
-            if viewModel.archives.isEmpty {
-                Text("No archives available")
-                    .frame(maxWidth: .infinity, alignment: .center)
-            } else {
-                ForEach(viewModel.archives, id: \.id) { archive in
-                    VStack(alignment: .leading) {
-                        Text("\(archive.title)").font(.headline).padding(.bottom, 10)
-                        Text(archive.description).font(.subheadline).padding(.bottom, 10)
-                        Text("Outfit: \(archive.outfit)").font(.caption)
-                        Text("Weather: \(archive.weather)").font(.caption)
-                        Text("Time: \(archive.time, formatter: dateFormatter)").font(.caption)
+                if viewModel.archives.isEmpty {
+                    Text("No archives available")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                } else {
+                    ForEach(viewModel.archives, id: \.id) { archive in
+                        VStack(alignment: .leading) {
+                            Text("\(archive.title)").font(.headline).padding(.all, 15).foregroundColor(Color.black).padding(.bottom, -20)
+                            Text(archive.description).font(.subheadline).padding(.all, 15).foregroundColor(Color.black)
+                            Text("Outfit: \(archive.outfit)").font(.caption).padding(.horizontal, 15).foregroundColor(Color.black)
+                            Text("Weather: \(archive.weather)").font(.caption).padding(.horizontal, 15).foregroundColor(Color.black)
+                            Text("Time: \(archive.time, formatter: dateFormatter)").font(.caption).padding(.horizontal, 15).padding(.bottom, 15).foregroundColor(Color.black)
+                        }
+                        .background(RoundedRectangle(cornerRadius: 10).fill(Color(UIColor.white)))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .shadow(color: CustomColors.lightPink, radius: 5, x: 0, y: 0)
+                        .padding(.top, 15)
+                        .padding(.bottom, 15)
+
+
                     }
-                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .shadow(radius: 5)
-                    .padding(.bottom, 5)
+                    
+                    .onDelete(perform: deleteFromFirebase) // Move this line here
                 }
-                .onDelete(perform: deleteFromFirebase) // Move this line here
-            }
         }
         .background(Color.pink.edgesIgnoringSafeArea(.all))
         .onAppear {

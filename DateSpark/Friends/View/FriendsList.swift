@@ -21,13 +21,13 @@ struct FriendsList: View {
                     showingFriendRequests = true
                 }) {
                     Image(systemName: "bell")
-                        .foregroundColor(.lightPink)
+                        .foregroundColor(CustomColors.lightPink)
                 },
                 trailing: Button(action: {
                     showingSendFriendRequest = true
                 }) {
                     Image(systemName: "plus")
-                        .foregroundColor(.lightPink)
+                        .foregroundColor(CustomColors.lightPink)
                 }
             )
             .sheet(isPresented: $showingSendFriendRequest) {

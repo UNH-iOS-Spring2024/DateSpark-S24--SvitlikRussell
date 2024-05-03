@@ -27,13 +27,14 @@ struct SparkGPTView: View {
                 .font(titleFont)
                 .padding(.top, 50)
         }
-                List(messages) { message in
+            List {
+                ForEach($messages, id: \.id) { $message in
                     HStack {
                         if message.role == .user {
                             Spacer()
                             Text(message.content)
                                 .padding()
-                                .background(Color.darkRed)
+                                .background(CustomColors.darkRed)
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                         } else {
@@ -46,6 +47,8 @@ struct SparkGPTView: View {
                         }
                     }
                 }
+            }
+
                 
                 Spacer()
 
@@ -59,7 +62,7 @@ struct SparkGPTView: View {
                                     Image(systemName: "paperplane.fill")
                                         .resizable()
                                         .frame(width: 30, height: 30)
-                                        .foregroundColor(.lightPink)
+                                        .foregroundColor(CustomColors.lightPink)
                                 }
                                 .buttonStyle(BorderlessButtonStyle())
                                 .padding(.horizontal)
@@ -111,7 +114,7 @@ struct SparkGPTView: View {
 struct Message: Identifiable {
     let id = UUID()
     let content: String
-    let role: Role
+    var role: Role
 }
 
 enum Role {

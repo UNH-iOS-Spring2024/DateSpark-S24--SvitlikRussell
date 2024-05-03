@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
+		5077965E2BE550A00082D34B /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5077965D2BE550A00082D34B /* Colors.swift */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
 		50E9A3692BC069DA007A3DDB /* SparkGPTController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */; };
 		FB0C3F5A2BD9D9A0009C14CE /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F592BD9D9A0009C14CE /* ArchiveView.swift */; };
@@ -85,6 +86,7 @@
 
 /* Begin PBXFileReference section */
 		507378462BAA774D009ED169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5077965D2BE550A00082D34B /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
 		50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkGPTController.swift; sourceTree = "<group>"; };
 		FB0C3F592BD9D9A0009C14CE /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 			children = (
 				FBDB050F2BAA53F20076F915 /* BottomBar.swift */,
 				FBDB05102BAA53F20076F915 /* Card.swift */,
+				5077965D2BE550A00082D34B /* Colors.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				FB1488A62BE2A80100C0713F /* DirectionsView.swift in Sources */,
 				FBD95F4D2BBC6FE80075B690 /* Pin.swift in Sources */,
 				FB0C3F5E2BD9DDAF009C14CE /* ArchiveViewModel.swift in Sources */,
+				5077965E2BE550A00082D34B /* Colors.swift in Sources */,
 				FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */,
 				FBF3AFEE2BCDB812001F991D /* FriendRequestListView.swift in Sources */,
 				FBDB05072BAA53D20076F915 /* ProfileView.swift in Sources */,

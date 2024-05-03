@@ -8,15 +8,6 @@ import Charts
 import FirebaseFirestore
 import FirebaseAuth
 
-extension Color {
-    static let lightBeige = Color(red: 203/255, green: 195/255, blue: 187/255)
-    static let brown = Color(red: 66/255, green: 36/255, blue: 0/255)
-    static let lightPink = Color(red: 235/255, green: 135/255, blue: 149/255)
-    static let darkRed = Color(red: 234/255, green: 93/255, blue: 81/255)
-    static let beige = Color(red: 66/255, green: 0/255, blue: 0/255)
-}
-
-
 struct HomeView: View {
     @State private var isShowingPopover = false
     @State var txtchoice: String = ""
@@ -44,7 +35,7 @@ struct HomeView: View {
                         Image(systemName: "archivebox.fill")
                             .resizable()
                             .frame(width: 28, height: 28)
-                            .foregroundColor(.lightPink)
+                            .foregroundColor(CustomColors.lightPink)
                     }
                     .padding(.top, 40)
                     .padding(.trailing, 30)
@@ -58,13 +49,13 @@ struct HomeView: View {
                         .bold()
                         .padding(.bottom, -50)
                         .padding(.top, 50)
-                        .foregroundColor(.beige)
+                        .foregroundColor(CustomColors.beige)
                 }
                 HStack {
                 Text("Random Date ✨")
                     .font(titleFont)
                     .bold()
-                    .foregroundColor(.beige)
+                    .foregroundColor(CustomColors.beige)
              }
         
                 .padding(.bottom, 50)
@@ -88,7 +79,7 @@ struct HomeView: View {
                         Image(systemName: "triangle.fill")
                             .resizable()
                             .frame(width: 60, height: 60)
-                            .foregroundColor(.darkRed)
+                            .foregroundColor(CustomColors.darkRed)
                             .padding(.top, -35)
                              
                     }
@@ -113,7 +104,7 @@ struct HomeView: View {
                         Image(systemName: "plus.circle.fill")
                             .resizable()
                             .frame(width: 40, height: 40)
-                            .foregroundColor(.lightPink)
+                            .foregroundColor(CustomColors.lightPink)
                             .popover(isPresented: $isShowingPopover) {
                                 NavigationView {
                                     VStack {
@@ -162,12 +153,13 @@ struct HomeView: View {
     struct PieChartView: View {
         @Binding var dataPoints: [DateClass]
         
+        //Used to allow every new wheel portion to have a new color
         private let colors: [Color] = [
-            .lightBeige,
-            .brown,
-            .lightPink,
-            .darkRed,
-            .beige
+            CustomColors.lightBeige,
+            CustomColors.brown,
+            CustomColors.lightPink,
+            CustomColors.darkRed,
+            CustomColors.beige
         ]
         
         var body: some View {
