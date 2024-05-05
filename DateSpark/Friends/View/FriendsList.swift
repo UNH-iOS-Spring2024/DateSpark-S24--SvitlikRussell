@@ -7,10 +7,21 @@ struct FriendsList: View {
     @State private var showingSendFriendRequest = false
     @State private var showingFriendRequests = false
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
+    
     var body: some View {
         NavigationView {
             List(viewModel.friends, id: \.self) { friend in
                 Text("⭐️ \(friend)")
+            }
+            .alert("New Friend Request", isPresented: $viewModel.newFriendRequestReceived) {
+                Button("View Requests") {
+                    showingFriendRequests = true
+                }
+                Button("Dismiss") {
+                    viewModel.newFriendRequestReceived = false
+                }
+            } message: {
+                Text("You have a new friend request.")
             }
             .navigationBarTitleDisplayMode(.inline) // Use inline display mode
             .toolbar {

@@ -28,6 +28,7 @@ enum RequestStatus: String {
 class FriendsViewModel: ObservableObject {
     @Published var friends: [String] = []
     @Published var friendRequests: [FriendRequest] = []
+    @Published var newFriendRequestReceived: Bool = false
     private var db = Firestore.firestore()
     private var userSession: User?
     
@@ -78,6 +79,10 @@ class FriendsViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func receiveFriendRequest() {
+        self.newFriendRequestReceived = true
     }
     
     func fetchFriends() {
