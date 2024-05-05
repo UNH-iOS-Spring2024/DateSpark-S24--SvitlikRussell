@@ -126,18 +126,20 @@ class FriendsViewModel: ObservableObject {
                 guard let self = self else { return }
                 if error == nil {
                     self.addFriend(for: request.from, to: request.to)
-                    // Add the accepted request to the acceptedRequests collection
-                    let acceptedRequestRef = self.db.collection("User").document(user.id).collection("acceptedRequests").document(request.id)
-                    acceptedRequestRef.setData([
-                        "from": request.from,
-                        "to": request.to,
-                        "status": "Accepted"
-                    ])
- 
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                        self.removeRequest(request)
+                    }
                 }
             }
         } else {
-            requestRef.delete() // Delete the request document from Firestore
+            requestRef.delete { [weak self] error in
+                guard let self = self else { return }
+                if error == nil {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                        self.removeRequest(request)
+                    }
+                }
+            }
         }
     }
 

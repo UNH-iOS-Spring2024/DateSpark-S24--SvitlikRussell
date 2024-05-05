@@ -14,10 +14,11 @@ struct SelectedPage: View {
     @State private var selectedOutfit: String = "Outfit"
     @State private var selectedTime: Date = Date()
     @State private var showingTime = false
+    @State private var showAlreadySavedAlert = false
     @State private var isSaved: Bool = false
     @State private var userId: String? = Auth.auth().currentUser?.uid
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
-
+    
     private var timeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -40,13 +41,13 @@ struct SelectedPage: View {
                     .font(titleFont)
                     .bold()
                     .padding(.all, 20)
-                   // .padding(.bottom, 20)
+                // .padding(.bottom, 20)
                 
                 Text(selectedDescription)
                     .padding(.all, 30)
                     .padding(.top, -30)
                     .lineLimit(nil)
-
+                
                 VStack {
                     // Menu for Weather choice
                     Menu(selectedWeather) {
@@ -74,19 +75,26 @@ struct SelectedPage: View {
                     
                     // Ideal Time
                     Menu(selectedTimeOfDay) {
-                                Button("Morning🌅") { selectedTimeOfDay = "Morning🌅" }
-                                Button("Noon🌇") { selectedTimeOfDay = "Noon🌇" }
-                                Button("Night🌃") { selectedTimeOfDay = "Night🌃" }
-                            }                                                    }
+                        Button("Morning🌅") { selectedTimeOfDay = "Morning🌅" }
+                        Button("Noon🌇") { selectedTimeOfDay = "Noon🌇" }
+                        Button("Night🌃") { selectedTimeOfDay = "Night🌃" }
+                    }                                                    }
                 
-                        .padding(.top, -10)
-                        .font(.system(size: 25))
-                        .padding(.bottom, 50)
+                .padding(.top, -10)
+                .font(.system(size: 25))
+                .padding(.bottom, 50)
                 
                 Button(action: {
                     if !isSaved {
-                        saveToFirebase(userId: userId ?? "")
-                        isSaved.toggle()
+                        checkIfAlreadySaved(userId: userId ?? "") { alreadySaved in
+                            if alreadySaved {
+                                self.showAlreadySavedAlert = true
+                            } else {
+                                saveToFirebase(userId: userId ?? "")
+                                isSaved.toggle()
+                            }
+                            
+                        }
                     }
                 }) {
                     Text(isSaved ? "Date saved" : "Save Date to Archives")
@@ -98,7 +106,7 @@ struct SelectedPage: View {
                         .cornerRadius(10)
                 }
                 .padding(.top, -25)
-
+                
             }
             .padding(.bottom, 50)
         }
@@ -106,6 +114,9 @@ struct SelectedPage: View {
             if userId == nil {
                 userId = Auth.auth().currentUser?.uid
             }
+        }
+        .alert(isPresented: $showAlreadySavedAlert) {
+            Alert(title: Text("Already Saved"), message: Text("This date is already in your Archive."), dismissButton: .default(Text("OK")))
         }
     }
     
@@ -128,7 +139,25 @@ struct SelectedPage: View {
             }
         }
     }
+    
+    func checkIfAlreadySaved(userId: String, completion: @escaping (Bool) -> Void) {
+        let query = db.collection("User").document(userId).collection("Archive")
+            .whereField("Title", isEqualTo: selectedTitle)
+            .whereField("Description", isEqualTo: selectedDescription)
+        
+        query.getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error checking document: \(error)")
+                completion(false)
+            } else if let snapshot = snapshot, snapshot.documents.isEmpty {
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
 }
+
 
 struct SelectedPage_Previews: PreviewProvider {
     static var previews: some View {
