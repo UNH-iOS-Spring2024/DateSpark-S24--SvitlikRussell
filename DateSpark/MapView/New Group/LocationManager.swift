@@ -19,24 +19,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.allowsBackgroundLocationUpdates = true
         if CLLocationManager.locationServicesEnabled() {
-            requestInitialPermission()
-            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestWhenInUseAuthorization() 
             locationManager.startUpdatingLocation()
         }
     }
 
-    private func requestInitialPermission() {
-        let currentStatus = CLLocationManager.authorizationStatus()
-        switch currentStatus {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization() // Request initial permission for when-in-use
-        case .authorizedWhenInUse:
-            locationManager.requestAlwaysAuthorization() // Upgrade to always authorization if applicable
-        default:
-            break // Handle other cases appropriately without additional requests
-        }
-    }
-    
     func requestPermission() {
         locationManager.requestWhenInUseAuthorization() //Always ask permission
         let currentStatus = CLLocationManager.authorizationStatus()
@@ -54,7 +41,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         DispatchQueue.main.async {
             self.authorizationStatus = status
-            if status == .authorizedAlways || status == .authorizedWhenInUse {
+            if status == .authorizedAlways  {
                 self.locationManager.startUpdatingLocation()
             }
         }

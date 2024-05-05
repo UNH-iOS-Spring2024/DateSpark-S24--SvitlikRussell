@@ -11,7 +11,7 @@ struct FriendsList: View {
     var body: some View {
         NavigationView {
             List(viewModel.friends, id: \.self) { friend in
-                Text(friend)
+                Text("⭐️ \(friend)")
             }
             .navigationTitle("Friends List")
                 //.font(titleFont)

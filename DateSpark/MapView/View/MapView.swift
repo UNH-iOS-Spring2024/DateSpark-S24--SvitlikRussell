@@ -11,8 +11,13 @@ struct IdentifiablePoint: Identifiable {
 }
 
 struct MapView: View {
-    @StateObject private var viewModel = MapViewModel()
+    @StateObject private var locationManager = LocationManager()
+    @StateObject private var searchCompleter = SearchCompleter()
     @State private var userTrackingMode: MapUserTrackingMode = .follow
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 41.292190, longitude: -72.961180),
+        span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
+    )
     @State private var searchQuery = ""
     @State private var places: [IdentifiablePoint] = []
     @State private var selectedPlace: MKPointAnnotation?
@@ -22,14 +27,14 @@ struct MapView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            Map(coordinateRegion: $viewModel.region, showsUserLocation: true, userTrackingMode: $userTrackingMode, annotationItems: places) { place in
+            Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: $userTrackingMode, annotationItems: places) { place in
                 MapAnnotation(coordinate: place.annotation.coordinate) {
                     VStack {
                         Image(systemName: "mappin.circle.fill")
                             .foregroundColor(.red)
                             .onTapGesture {
                                 self.selectedPlace = place.annotation
-                                self.showSuggestions = false
+                                self.showSuggestions = false // Hide suggestions when a place is selected
                             }
                         Text(place.annotation.title ?? "Unknown")
                             .foregroundColor(.black)
@@ -37,30 +42,39 @@ struct MapView: View {
                 }
             }
             .edgesIgnoringSafeArea(.all)
-            .onAppear {
-                viewModel.checkIfLocationServicesIsEnabled()
+            .onChange(of: locationManager.lastLocation) { newLocation in
+                updateRegionToUserLocation(newLocation)
             }
-
+            .onAppear {
+                locationManager.requestPermission()
+            }
+            
             VStack {
                 HStack {
-                    TextField("Search places", text: $searchQuery, onCommit: {
+                    TextField("Search places", text: $searchQuery, onEditingChanged: { _ in }, onCommit: {
                         searchLocations()
                     })
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
+                    .onChange(of: searchQuery) { newValue in
+                        searchCompleter.updateSearch(query: newValue)
+                        showSuggestions = true // Show suggestions while typing
+                    }
 
-                    Button("Search") {
+                    Button(action: {
                         searchLocations()
-                        showSuggestions = false
+                        showSuggestions = false // Hide suggestions when search is manually triggered
+                    }) {
+                        Text("Search")
                     }
                 }
                 .padding()
 
-                if showSuggestions {
+                if showSuggestions && !searchCompleter.suggestions.isEmpty {
                     suggestionsList
                 }
-                Spacer()
-                if let selected = selectedPlace, showingDirectionsPopover {
+
+                if showingDirectionsPopover, let selected = selectedPlace {
                     DirectionsView(directions: directions, dismissAction: {
                         showingDirectionsPopover = false
                     })
@@ -74,6 +88,11 @@ struct MapView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .popover(isPresented: $showingDirectionsPopover) {
+                        DirectionsView(directions: directions) {
+                            showingDirectionsPopover = false
+                        }
+                    }
                 }
             }
         }
@@ -82,17 +101,22 @@ struct MapView: View {
     private var suggestionsList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
-                ForEach(places, id: \.id) { place in
-                    Text(place.annotation.title ?? "Unknown")
-                        .fontWeight(.bold)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.white)
-                        .onTapGesture {
-                            self.searchQuery = place.annotation.title ?? ""
-                            searchLocations()
-                            showSuggestions = false
-                        }
+                ForEach(searchCompleter.suggestions, id: \.self) { suggestion in
+                    VStack(alignment: .leading) {
+                        Text(suggestion.title) // Location name or primary address
+                            .fontWeight(.bold)
+                        Text(suggestion.subtitle) // City, state, and ZIP
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white)
+                    .onTapGesture {
+                        self.searchQuery = suggestion.title
+                        searchLocations()
+                        showSuggestions = false // Hide suggestions after selection
+                    }
                 }
             }
         }
@@ -102,15 +126,31 @@ struct MapView: View {
         .shadow(radius: 5)
     }
 
+    private var directionsList: some View {
+        List(directions, id: \.self) { direction in
+            Text(direction)
+        }
+        .transition(.slide)
+        .animation(.easeInOut, value: showingDirectionsPopover)
+    }
+
+    private func updateRegionToUserLocation(_ location: CLLocation?) {
+        guard let location = location else { return }
+        region = MKCoordinateRegion(
+            center: location.coordinate,
+            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        )
+    }
+
     private func searchLocations() {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = searchQuery
-        request.region = viewModel.region
-
+        request.region = region
+        
         let search = MKLocalSearch(request: request)
         search.start { response, error in
             guard let response = response else {
-                print("Error searching locations: \(error?.localizedDescription ?? "Unknown error")")
+                print("Error: \(error?.localizedDescription ?? "Unknown error").")
                 return
             }
             self.places = response.mapItems.map { item in
@@ -119,23 +159,29 @@ struct MapView: View {
                 annotation.coordinate = item.placemark.coordinate
                 return IdentifiablePoint(annotation: annotation)
             }
+            if let firstLocation = response.mapItems.first?.placemark.coordinate {
+                self.region.center = firstLocation
+            }
         }
     }
 
     private func calculateDirections() {
-        guard let selectedPlace = selectedPlace else { return }
+        guard let selectedPlace = selectedPlace,
+              let userLocation = locationManager.lastLocation else { return }
+
         let request = MKDirections.Request()
-        request.source = MKMapItem(placemark: MKPlacemark(coordinate: viewModel.region.center))
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: userLocation.coordinate))
         request.destination = MKMapItem(placemark: MKPlacemark(coordinate: selectedPlace.coordinate))
         request.transportType = .automobile
-
+        
         let directions = MKDirections(request: request)
         directions.calculate { response, error in
-            guard let response = response, let route = response.routes.first else {
-                print("Error calculating directions: \(error?.localizedDescription ?? "Unknown error")")
+            guard let response = response else {
+                print("Error: \(error?.localizedDescription)")
                 return
             }
-            self.directions = route.steps.map { $0.instructions }.filter { !$0.isEmpty }
+
+            self.directions = response.routes.first?.steps.map { $0.instructions }.filter { !$0.isEmpty } ?? []
             self.showingDirectionsPopover = true
         }
     }
