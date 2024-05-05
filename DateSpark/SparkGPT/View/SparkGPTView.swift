@@ -26,6 +26,7 @@ struct SparkGPTView: View {
             Text("SparkGPT")
                 .font(titleFont)
                 .padding(.top, 50)
+                .bold()
         }
             List {
                 ForEach($messages, id: \.id) { $message in
