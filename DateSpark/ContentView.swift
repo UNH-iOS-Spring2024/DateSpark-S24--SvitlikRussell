@@ -19,6 +19,7 @@ struct ContentView: View {
     @State private var shouldNavigateToHome: Bool = false
     @State private var isLoggedIn: Bool = false
     @State private var showLoginPage: Bool = false
+ 
     @EnvironmentObject var appVariables: AppVariables
     private var friendsViewModel = FriendsViewModel()
 

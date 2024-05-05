@@ -126,19 +126,23 @@ class FriendsViewModel: ObservableObject {
                 guard let self = self else { return }
                 if error == nil {
                     self.addFriend(for: request.from, to: request.to)
-                    self.removeRequest(request)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                        self.removeRequest(request)
+                    }
                 }
             }
         } else {
             requestRef.delete { [weak self] error in
                 guard let self = self else { return }
                 if error == nil {
-                    self.removeRequest(request)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                        self.removeRequest(request)
+                    }
                 }
             }
         }
     }
-    
+
     func removeRequest(_ request: FriendRequest) {
         friendRequests.removeAll { $0.id == request.id } // Remove the request in app once accepted/denied
     }

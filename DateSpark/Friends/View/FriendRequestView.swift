@@ -8,23 +8,24 @@ struct FriendRequestView: View {
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
     @State private var accepted = false
     @State private var rejected = false
-
+ 
     var body: some View {
+        
+        HStack  {
+        Text("Requests")
+            .lineLimit(2)
+            .font(titleFont)
+            .bold()
+            .foregroundColor(CustomColors.beige)
+         
+            Image("Logo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 100, height: 100)
+        }
+        
+        
         VStack  {
-                    
-                    VStack{
-                        Image("Logo")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 300, height: 300)
-                    }
-                    
-                    Text("Requests")
-                        .lineLimit(2)
-                        .font(titleFont)
-                        .bold()
-                        .foregroundColor(CustomColors.beige)
-                    
                     HStack {
                         Text("\(request.from)")
                             .font(.headline)
@@ -32,7 +33,7 @@ struct FriendRequestView: View {
                         Button(action: {
                             viewModel.respondToRequest(request, accept: true)
                             accepted = true
-                        }) {
+                         }) {
                             Text(accepted ? "Accepted" : "Accept")
                         }
                         .buttonStyle(.borderedProminent)
@@ -42,6 +43,7 @@ struct FriendRequestView: View {
                         Button(action: {
                             viewModel.respondToRequest(request, accept: false)
                             rejected = true
+ 
                         }) {
                             Text(rejected ? "Rejected" : "Reject")
                         }
