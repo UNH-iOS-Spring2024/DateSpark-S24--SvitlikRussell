@@ -24,7 +24,8 @@ class ArchiveViewModel: ObservableObject {
                     description: data["Description"] as? String ?? "",
                     outfit: data["Outfit"] as? String ?? "",
                     weather: data["Weather"] as? String ?? "", 
-                    time: (data["Time"] as? Timestamp)?.dateValue() ?? Date()
+                    time: (data["Time"] as? String ?? ""
+                  )
                 )
                 fetchedArchives.append(archive)
             }

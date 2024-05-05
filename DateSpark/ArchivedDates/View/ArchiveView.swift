@@ -23,11 +23,13 @@ struct ArchiveView: View {
                 Text("Archived Dates")
                     .font(titleFont)
                     .padding(.top, 15)
+                    .bold()
                 
-                Text("Need some ideas? Check your saved dates!")
+                Text("Checked your saved dates for ideas. 💕")
                     .font(.system(size: 15))
                     .padding(.top, -2)
                     .padding(.bottom, 15)
+                    .padding(.horizontal, 15)
                 
             }
             
@@ -37,18 +39,19 @@ struct ArchiveView: View {
                 } else {
                     ForEach(viewModel.archives, id: \.id) { archive in
                         VStack(alignment: .leading) {
-                            Text("⭐️ \(archive.title) ⭐️").font(.headline).padding(.all, 15).foregroundColor(Color.black).padding(.bottom, -20).frame(maxWidth: .infinity).multilineTextAlignment(.center)
-                            Text(archive.description).font(.subheadline).padding(.all, 20).foregroundColor(Color.black)
-                            Text("Outfit: \(archive.outfit)").font(.caption).padding(.horizontal, 20).foregroundColor(Color.black)
-                            Text("Weather: \(archive.weather)").font(.caption).padding(.horizontal, 20).foregroundColor(Color.black)
-                            Text("Time: \(archive.time, formatter: dateFormatter)").font(.caption).padding(.horizontal, 20).padding(.bottom, 20).foregroundColor(Color.black)
+                            Text("\(archive.title)").font(.title2).padding(.all, 15).foregroundColor(Color.white).padding(.bottom, -20).frame(maxWidth: .infinity).multilineTextAlignment(.center).bold()
+                            Text(archive.description).font(.subheadline).padding(.all, 20).foregroundColor(Color.white)
+                            Text("Outfit: \(archive.outfit)").font(.subheadline).padding(.horizontal, 20).foregroundColor(Color.white)
+                            Text("Weather: \(archive.weather)").font(.subheadline).padding(.horizontal, 20).foregroundColor(Color.white)
+                            Text("Time: \(archive.time)").font(.subheadline).padding(.horizontal, 20).padding(.bottom, 20).foregroundColor(Color.white)
                         }
-                        .background(RoundedRectangle(cornerRadius: 10).fill(Color(UIColor.white)))
-                        .frame(width: 300, height: 200)
+                        .background(RoundedRectangle(cornerRadius: 10).fill(Color(CustomColors.lightPink)))
+                        .frame(width: 300, height: 250)
+                        
                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .shadow(color: CustomColors.darkRed, radius: 5, x: 0, y: 0)
-                        .padding(.top, 15)
-                        .padding(.bottom, 15)
+                        .shadow(color: CustomColors.brown, radius: 5, x: 0, y: 0)
+                        .padding(.top, -10)
+                        .padding(.bottom, -10)
 
 
                     }

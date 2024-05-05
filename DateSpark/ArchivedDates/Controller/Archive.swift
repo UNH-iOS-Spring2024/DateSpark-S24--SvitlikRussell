@@ -11,9 +11,9 @@ class Archive: Identifiable, ObservableObject {
     @Published var description: String
     @Published var outfit: String
     @Published var weather: String
-    @Published var time: Date
+    @Published var time: String
 
-    init(id: String, title: String, description: String, outfit: String, weather: String, time: Date) {
+    init(id: String, title: String, description: String, outfit: String, weather: String, time: String) {
         self.id = id
         self.title = title
         self.description = description
