@@ -65,6 +65,11 @@ struct Login: View {
             .multilineTextAlignment(.center)
             .padding()
             .navigationBarHidden(true)
+            .onAppear {
+                if appVariables.isLoggedIn {
+                    shouldNavigateToHome = true
+                }
+            }
         }
     }
     

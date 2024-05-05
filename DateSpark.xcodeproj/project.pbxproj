@@ -15,7 +15,6 @@
 		FB0C3F5C2BD9D9DC009C14CE /* Archive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F5B2BD9D9DC009C14CE /* Archive.swift */; };
 		FB0C3F5E2BD9DDAF009C14CE /* ArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F5D2BD9DDAF009C14CE /* ArchiveViewModel.swift */; };
 		FB10238D2BE6D8C000611934 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10238C2BE6D8BF00611934 /* MapViewModel.swift */; };
-		FB10238F2BE6DE2E00611934 /* MapView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10238E2BE6DE2E00611934 /* MapView2.swift */; };
 		FB1488A62BE2A80100C0713F /* DirectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1488A52BE2A80100C0713F /* DirectionsView.swift */; };
 		FB2A01D32BCD8E3600DF084E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB05392BAA54C20076F915 /* FirebaseAnalytics */; };
 		FB2A01D42BCD8E3600DF084E /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = FBDB053B2BAA54C20076F915 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -95,7 +94,6 @@
 		FB0C3F5B2BD9D9DC009C14CE /* Archive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archive.swift; sourceTree = "<group>"; };
 		FB0C3F5D2BD9DDAF009C14CE /* ArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArchiveViewModel.swift; path = DateSpark/ArchivedDates/Model/ArchiveViewModel.swift; sourceTree = SOURCE_ROOT; };
 		FB10238C2BE6D8BF00611934 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
-		FB10238E2BE6DE2E00611934 /* MapView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView2.swift; sourceTree = "<group>"; };
 		FB1488A52BE2A80100C0713F /* DirectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsView.swift; sourceTree = "<group>"; };
 		FB2A01F02BCD93C400DF084E /* FriendsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsList.swift; sourceTree = "<group>"; };
 		FB2A01F62BCD976700DF084E /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
@@ -357,7 +355,6 @@
 			isa = PBXGroup;
 			children = (
 				FBDB05182BAA53F30076F915 /* MapView.swift */,
-				FB10238E2BE6DE2E00611934 /* MapView2.swift */,
 				FB1488A52BE2A80100C0713F /* DirectionsView.swift */,
 			);
 			path = View;
@@ -579,7 +576,6 @@
 				50CC4E742BAA643800782828 /* DateClass.swift in Sources */,
 				FB2A01FB2BCD989300DF084E /* FriendRequestView.swift in Sources */,
 				FBDB05082BAA53D20076F915 /* SignUp.swift in Sources */,
-				FB10238F2BE6DE2E00611934 /* MapView2.swift in Sources */,
 				FB48621B2BD6C3530019FE6D /* LocationManager.swift in Sources */,
 				FB2A01F72BCD976800DF084E /* FriendsViewModel.swift in Sources */,
 			);
