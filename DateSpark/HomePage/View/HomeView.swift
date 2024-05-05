@@ -1,4 +1,3 @@
-
 //  HomeView.swift
 //  DateSpark-S24-Svitlik-Russell
 //  Sarah Svitlik & Shannon Russell
@@ -11,6 +10,7 @@ import FirebaseAuth
 struct HomeView: View {
     @State private var isShowingPopover = false
     @State var txtchoice: String = ""
+    @State var txtDescription : String = ""
     @State private var wheelAngle: Double = 0
     @State var dates: [DateClass] = []
     @State private var isSpinning = false
@@ -111,15 +111,19 @@ struct HomeView: View {
                                         TextField("Enter a date to the wheel", text: $txtchoice)
                                             .padding()
                                         
-                                        
+                                        TextField("Enter a description", text: $txtDescription)
+                                            .padding()
                                         Spacer()
                                         
                                         Button(action: {
-                                            let dataToAdd: [String: Any] = ["title": self.txtchoice, "date": Date()]
+                                            let dataToAdd: [String: Any] = ["title": self.txtchoice,
+                                                                            "description": self.txtDescription,
+                                                                            "date": Date()]
                                             print("Add Button pressed")
                                             addDate(userId: userId ?? "DefaultUserId", data: dataToAdd)
                                             getDatesFromFirebase()
                                             self.txtchoice = ""
+                                            self.txtDescription = ""
                                             self.isShowingPopover = false
                                         }) {
                                             Text ("Add Date")
