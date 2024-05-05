@@ -101,7 +101,7 @@ struct SparkGPTView: View {
             }
         }
                 else {
-                    self.messages.append(Message(content: "I can only help with date ideas, please let me know what time of date you are looking for!", role: .SparkGPT))
+                    self.messages.append(Message(content: "I can only help with date ideas. Try starting your message with \"I need a date idea for...\"", role: .SparkGPT))
                 }
             }
         }
