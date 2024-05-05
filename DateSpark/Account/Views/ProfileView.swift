@@ -20,6 +20,7 @@ struct ProfileView: View {
     @State private var profileImageUrl: URL?
     @State private var isSignedOut = false
     @State private var showingSignOutConfirmation = false
+    @State private var redirectToLogin = false
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
 
     @State private var userProfile = UserProfile(
@@ -38,7 +39,8 @@ struct ProfileView: View {
     private func signOut() {
         do {
             try Auth.auth().signOut()
-            appVariables.isSignedOut = true
+            appVariables.isLoggedIn = false
+            navigateToLogin()
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
@@ -157,6 +159,13 @@ struct ProfileView: View {
             }
         }.resume()
     }
+    
+    func navigateToLogin() {
+            guard let window = UIApplication.shared.windows.first else { return }
+            window.rootViewController = UIHostingController(rootView: Login(isLoggedIn: $appVariables.isLoggedIn).environmentObject(appVariables))
+            window.makeKeyAndVisible()
+        }
+
     
     func loadImage() {
         guard let inputImage = inputImage else { return }

@@ -37,8 +37,8 @@ struct HomeView: View {
                             .frame(width: 28, height: 28)
                             .foregroundColor(CustomColors.lightPink)
                     }
-                    .padding(.top, 50)
-                    .padding(.trailing, 30)
+                    .padding(.top, 60)
+                    .padding(.trailing, 40)
                 }
                 
                 Spacer()
