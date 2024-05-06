@@ -18,6 +18,7 @@ struct SendFriendRequestView: View {
                     }
                 }                
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .autocapitalization(.none)
                 .autocorrectionDisabled()
                 .padding()
             
@@ -26,14 +27,20 @@ struct SendFriendRequestView: View {
                     Text(user)
                     Spacer()
                     if viewModel.isFriend(user: user) {
-                        Image(systemName: "person.2")
+                        Image(systemName: "person.2.fill")
                     } else if viewModel.hasSentRequest(user: user) {
-                        Image(systemName: "ellipsis.circle")
+                        Image(systemName: "hourglass")
                     } else {
                         Button(action: {
-                            self.username = user
+                            viewModel.sendFriendRequest(to: user) { message in
+                                alertMessage = message
+                                showAlert = true
+                                if message.contains("sent") {
+                                    username = user
+                                }
+                            }
                         }) {
-                            Image(systemName: "plus")
+                            Image(systemName: "plus.circle")
                         }
                     }
                 }
@@ -53,7 +60,7 @@ struct SendFriendRequestView: View {
                     }
                 }
             }
-            .disabled(username.isEmpty)
+            .disabled(username.isEmpty || viewModel.hasSentRequest(user: username) || viewModel.isFriend(user: username))
         }
         .padding()
         .alert(isPresented: $showAlert) {
