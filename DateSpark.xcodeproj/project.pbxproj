@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507378462BAA774D009ED169 /* GoogleService-Info.plist */; };
 		5077965E2BE550A00082D34B /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5077965D2BE550A00082D34B /* Colors.swift */; };
+		50BA42A52BE925FF00694844 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50BA42A42BE925FF00694844 /* GoogleService-Info.plist */; };
 		50CC4E742BAA643800782828 /* DateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC4E732BAA643800782828 /* DateClass.swift */; };
 		50E9A3692BC069DA007A3DDB /* SparkGPTController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */; };
 		FB0C3F5A2BD9D9A0009C14CE /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0C3F592BD9D9A0009C14CE /* ArchiveView.swift */; };
@@ -85,8 +85,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		507378462BAA774D009ED169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5077965D2BE550A00082D34B /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		50BA42A42BE925FF00694844 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50CC4E732BAA643800782828 /* DateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateClass.swift; sourceTree = "<group>"; };
 		50E9A3682BC069DA007A3DDB /* SparkGPTController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkGPTController.swift; sourceTree = "<group>"; };
 		FB0C3F592BD9D9A0009C14CE /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
@@ -257,8 +257,8 @@
 		FBDB04ED2BAA4FFB0076F915 /* DateSpark */ = {
 			isa = PBXGroup;
 			children = (
-				507378462BAA774D009ED169 /* GoogleService-Info.plist */,
 				FBDB04EE2BAA4FFB0076F915 /* DateSparkApp.swift */,
+				50BA42A42BE925FF00694844 /* GoogleService-Info.plist */,
 				FBDB04F02BAA4FFB0076F915 /* ContentView.swift */,
 				FBDB04F22BAA4FFE0076F915 /* Assets.xcassets */,
 				FBDB04F72BAA4FFE0076F915 /* DateSpark.entitlements */,
@@ -532,7 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBDB04F32BAA4FFE0076F915 /* Assets.xcassets in Resources */,
-				507378472BAA774D009ED169 /* GoogleService-Info.plist in Resources */,
+				50BA42A52BE925FF00694844 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,6 +716,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "DateSpark would like to request your location";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DateSpark would like to request your location";
+				INFOPLIST_KEY_UILaunchStoryboardName = Login;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -749,6 +750,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "DateSpark would like to request your location";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DateSpark would like to request your location";
+				INFOPLIST_KEY_UILaunchStoryboardName = Login;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
