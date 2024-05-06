@@ -58,7 +58,7 @@ struct Card: View {
             }
             
         }
-        .padding(20)
+//        .padding(.bottom, 20)
         .onTapGesture{
             click()
         }

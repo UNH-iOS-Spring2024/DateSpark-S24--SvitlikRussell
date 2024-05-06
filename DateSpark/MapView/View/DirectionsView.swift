@@ -6,11 +6,31 @@ struct DirectionsView: View {
 
     var body: some View {
         NavigationView {
-            List(directions, id: \.self) { direction in
-                HStack {
-                    Image(systemName: symbolForDirection(direction))
-                        .foregroundColor(.pink)
-                    Text(direction)
+            ScrollView {
+                VStack {
+                    ForEach(directions, id: \.self) { direction in
+                        Card(
+                            width: 400, // Adjust width to fit within screen bounds
+                            height: 60, // Height of each card
+                            color: Color.white,
+                            elevation: 5,
+                            views: {
+                                AnyView(
+                                    HStack {
+                                        Image(systemName: symbolForDirection(direction))
+                                            .foregroundColor(.pink)
+                                        Text(direction)
+                                        Spacer()
+                                    }
+                                        .padding(.all , 10) // Padding inside the card for content
+                                )
+                            },
+                            click: {
+                                // Optional: Define actions when a card is tapped, if necessary
+                            }
+                        )
+                        .padding(.bottom, 5)
+                    }
                 }
             }
             .navigationBarTitle("Directions", displayMode: .inline)

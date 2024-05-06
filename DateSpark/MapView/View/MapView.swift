@@ -135,6 +135,7 @@ struct MapView: View {
             }
         }
         .frame(maxHeight: 200)
+        .padding(.all, 20)
     }
 
 
