@@ -40,11 +40,12 @@ struct SignUp: View {
                 SecureField("Password", text: $txtPassword)
 
                 Button("Sign Up!"){
-                    userToFirebase()
+                    checkUsername()
                 }
-                .disabled(txtEmail.isEmpty || txtPassword.isEmpty)
+                .disabled(txtEmail.isEmpty || txtPassword.isEmpty || txtusername.isEmpty)
                 
-                if shouldNavigateToHome {                    NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
+                if shouldNavigateToHome {
+                    NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
                 }
                 
                 NavigationLink(destination: Login(isLoggedIn: .constant(false))) {
@@ -74,6 +75,20 @@ struct SignUp: View {
         txtusername = ""
         txtEmail = ""
         txtPassword = ""
+    }
+    
+    func checkUsername() {
+        db.collection("User").whereField("username", isEqualTo: txtusername).getDocuments { (snapshot, error) in
+            if let error = error {
+                self.alertMessage = "Error checking username: \(error.localizedDescription)"
+                self.showAlert = true
+            } else if snapshot?.isEmpty ?? true {
+                userToFirebase()
+            } else {
+                self.alertMessage = "Username already taken, please use a different username."
+                self.showAlert = true
+            }
+        }
     }
     
     func userToFirebase(){
