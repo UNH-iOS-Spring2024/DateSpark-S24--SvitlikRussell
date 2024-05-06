@@ -28,17 +28,21 @@ struct DirectionsView: View {
     }
     
     func symbolForDirection(_ direction: String) -> String {
-        if direction.lowercased().contains("turn left") {
+        if direction.lowercased().contains("turn left") { //Turning
             return "arrow.turn.up.left"
-        } else if direction.lowercased().contains("straight") || direction.lowercased().contains("continue") {
-            return "arrow.up"
-        } else if direction.lowercased().contains("turn right") {
+        } else if direction.lowercased().contains("turn right") { //Turning
             return "arrow.turn.up.right"
-        } else if direction.lowercased().contains("arrive") || direction.lowercased().contains("destination") {
+        }else if direction.lowercased().contains("keep right") { //Staying to side
+            return "road.lanes.curved.right"
+        } else if direction.lowercased().contains("keep left") { //Staying to side
+            return "road.lanes.curved.left"
+        }else if direction.lowercased().contains("straight") ||  direction.lowercased().contains("continue") { // Straight path
+            return "road.lanes"
+        }  else if direction.lowercased().contains("arrive") || direction.lowercased().contains("destination") { //Destination
             return "mappin.and.ellipse"
-        } else if direction.lowercased().contains("highway") || direction.lowercased().contains("merge")  {
-               return "road.lanes"
-        }  else if direction.lowercased().contains("take exit") || direction.lowercased().contains("exit")  {
+        } else if direction.lowercased().contains("highway") || direction.lowercased().contains("merge")  { //Highways
+               return "arrow.triangle.merge"
+        }  else if direction.lowercased().contains("take exit") || direction.lowercased().contains("exit")  { //Exiting Highways
             return "road.lanes.curved.right"
         }else {
             return ""  // Default case for unknown
