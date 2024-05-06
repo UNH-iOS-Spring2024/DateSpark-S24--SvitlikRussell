@@ -34,7 +34,7 @@ struct MapView: View {
                             .foregroundColor(.red)
                             .onTapGesture {
                                 self.selectedPlace = place.annotation
-                                self.showSuggestions = false // Hide suggestions when a place is selected
+                                self.showSuggestions = false
                             }
                         Text(place.annotation.title ?? "Unknown")
                             .foregroundColor(.black)
@@ -55,7 +55,7 @@ struct MapView: View {
                         searchLocations()
                     })
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width:250, height:10)
+                    .frame(width:250, height:40)
                     .onChange(of: searchQuery) { newValue in
                         searchCompleter.updateSearch(query: newValue)
                         showSuggestions = true // Show suggestions while typing
@@ -90,7 +90,6 @@ struct MapView: View {
                 if let selectedPlace = selectedPlace, !showingDirectionsPopover {
                     Button("Get Directions") {
                         calculateDirections()
-                        
                     }
                     .bold()
                     .foregroundColor(.white)
@@ -104,7 +103,6 @@ struct MapView: View {
                         }
                     }
                     .padding(.top, 43)
-
                 }
             }
         }
@@ -114,37 +112,31 @@ struct MapView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
                 ForEach(searchCompleter.suggestions, id: \.self) { suggestion in
-                    VStack(alignment: .leading) {
-                        Text(suggestion.title) // Location name or primary address
-                            .fontWeight(.bold)
-                        Text(suggestion.subtitle) // City, state, and ZIP
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color.white)
-                    .onTapGesture {
-                        self.searchQuery = suggestion.title
-                        searchLocations()
-                        showSuggestions = false // Hide suggestions after selection
-                    }
+                    Card(height: 70, color: Color.white, elevation: 5,
+                        views: {
+                            AnyView(
+                                VStack(alignment: .leading) {
+                                    Text(suggestion.title) // Location name or primary address
+                                        .fontWeight(.bold)
+                                    Text(suggestion.subtitle) // City, state, and ZIP
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+                                .padding(.all, 5) // Padding inside card for content
+                            )
+                        },
+                        click: {
+                            self.searchQuery = suggestion.title
+                            searchLocations()
+                            showSuggestions = false
+                        }
+                    )
                 }
             }
         }
         .frame(maxHeight: 200)
-        .background(Color.white)
-        .cornerRadius(5)
-        .shadow(radius: 5)
     }
 
-    private var directionsList: some View {
-        List(directions, id: \.self) { direction in
-            Text(direction)
-        }
-        .transition(.slide)
-        .animation(.easeInOut, value: showingDirectionsPopover)
-    }
 
     private func updateRegionToUserLocation(_ location: CLLocation?) {
         guard let location = location else { return }
