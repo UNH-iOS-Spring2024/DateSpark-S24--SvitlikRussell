@@ -12,7 +12,6 @@ struct SelectedPage: View {
     @State private var selectedWeather: String = "Weather"
     @State private var selectedTimeOfDay = "Best Time"
     @State private var selectedOutfit: String = "Outfit"
-    @State private var selectedTime: Date = Date()
     @State private var showingTime = false
     @State private var showAlreadySavedAlert = false
     @State private var isSaved: Bool = false
@@ -71,6 +70,8 @@ struct SelectedPage: View {
                         Button("Comfy🧣") { selectedOutfit = "Comfy🧣" }
                         Button("Artsy🎨") { selectedOutfit = "Artsy🎨" }
                         Button("Sporty🏃🏼‍♀️") { selectedOutfit = "Sporty🏃🏼‍♀️" }
+                        Button("Swimwear🏊🏼‍♀️") { selectedOutfit = "Swimwear🏊🏼‍♀️" }
+
                     }
                     
                     // Ideal Time
@@ -126,7 +127,7 @@ struct SelectedPage: View {
             "Outfit": selectedOutfit,
             "Weather": selectedWeather,
             "Description": selectedDescription,
-            "Time": selectedTime
+            "Time": selectedTimeOfDay
         ] as [String: Any]
         
         db.collection("User").document(userId).collection("Archive").addDocument(data: data) { err in
