@@ -21,20 +21,30 @@ struct SendFriendRequestView: View {
                 .autocorrectionDisabled()
                 .padding()
             
-            List(searchResults, id:\.self){user in
-                Button(user){
-                    username = user
-                    searchResults = []
+            List(searchResults, id: \.self) { user in
+                HStack {
+                    Text(user)
+                    Spacer()
+                    if viewModel.isFriend(user: user) {
+                        Image(systemName: "person.2")
+                    } else if viewModel.hasSentRequest(user: user) {
+                        Image(systemName: "ellipsis.circle")
+                    } else {
+                        Button(action: {
+                            viewModel.sendFriendRequest(to: user) { message in
+                                alertMessage = message
+                                showAlert = true
+                            }
+                        }) {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
+                .onTapGesture {
+                    self.username = user
+                    self.searchResults = []
                 }
             }
-            
-            Button("Send Friend Request") {
-                viewModel.sendFriendRequest(to: username) { message in
-                    alertMessage = message
-                    showAlert = true
-                }
-            }
-            .disabled(username.isEmpty)
         }
         .padding()
         .alert(isPresented: $showAlert) {

@@ -166,4 +166,12 @@ class FriendsViewModel: ObservableObject {
             }
         }
     }
+    
+    func isFriend(user: String) -> Bool {
+        return friends.contains(user)
+    }
+
+    func hasSentRequest(user: String) -> Bool {
+        return friendRequests.contains { $0.to == user && $0.status == .pending }
+    }
 }
