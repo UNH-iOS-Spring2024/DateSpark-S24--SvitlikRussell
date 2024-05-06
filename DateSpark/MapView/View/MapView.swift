@@ -55,9 +55,7 @@ struct MapView: View {
                         searchLocations()
                     })
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
                     .frame(width:250, height:10)
-                    .padding(.top, 100)
                     .onChange(of: searchQuery) { newValue in
                         searchCompleter.updateSearch(query: newValue)
                         showSuggestions = true // Show suggestions while typing
@@ -76,13 +74,8 @@ struct MapView: View {
                             .cornerRadius(10)
 
                     }
-                    .padding(.top, 100)
                 }
-                .padding(.bottom, 40)
-                .padding()
-                .background(Color.white)
                 .cornerRadius(10)
-                .frame(width:400, height: 10)
 
                 if showSuggestions && !searchCompleter.suggestions.isEmpty {
                     suggestionsList
@@ -99,7 +92,6 @@ struct MapView: View {
                         calculateDirections()
                         
                     }
-             //       .padding(.top, 100)
                     .bold()
                     .foregroundColor(.white)
                     .font(.headline)
