@@ -31,28 +31,46 @@ struct SendFriendRequestView: View {
                 .autocorrectionDisabled()
                 .padding()
             
-            List(searchResults, id: \.self) { user in
-                HStack {
-                    Text(user)
-                    Spacer()
-                    if viewModel.isFriend(user: user) {
-                        Image(systemName: "person.2.fill")
-                    } else if viewModel.hasSentRequest(user: user) {
-                        Image(systemName: "hourglass")
-                    } else {
-                        Button(action: {
-                            viewModel.sendFriendRequest(to: user) { message in
-                                alertMessage = message
-                                showAlert = true
-                                if message.contains("sent") {
-                                    username = user
-                                }
+            ScrollView {
+                VStack {
+                    ForEach(searchResults, id: \.self) { user in
+                        Card(
+                            width: 500,
+                            height: 60,
+                            color: Color.white,
+                            elevation: 5,
+                            views: {
+                                AnyView(
+                                    HStack {
+                                        Text(user)
+                                        Spacer()
+                                        if viewModel.isFriend(user: user) {
+                                            Image(systemName: "person.2.fill")
+                                        } else if viewModel.hasSentRequest(user: user) {
+                                            Image(systemName: "hourglass")
+                                        } else {
+                                            Button(action: {
+                                                viewModel.sendFriendRequest(to: user) { message in
+                                                    alertMessage = message
+                                                    showAlert = true
+                                                    if message.contains("sent") {
+                                                        username = user
+                                                    }
+                                                }
+                                            }) {
+                                                Text("Request")
+                                                    .bold()
+                                                    .foregroundColor(CustomColors.lightPink)
+                                            }
+                                        }
+                                    }
+                                    .padding() // Padding inside the card for content
+                                )
+                            },
+                            click: {
+                                // Optional: Define actions when a card is tapped, if necessary
                             }
-                        }) {
-                            Text("Request")
-                                .bold()
-                                .foregroundColor(CustomColors.lightPink)
-                        }
+                        )
                     }
                 }
             }
