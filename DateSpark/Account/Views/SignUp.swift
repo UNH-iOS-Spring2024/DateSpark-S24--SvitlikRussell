@@ -19,25 +19,52 @@ struct SignUp: View {
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
+    let headingFont = Font.title.lowercaseSmallCaps()
 
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Welcome!")
-                    .font(titleFont)
-                    .bold()
-                
-                Text("Create An Account")
-                    .font(titleFont)
-                    .bold()
+                HStack {
+//                    Spacer()
+                    VStack (spacing: 5) {
+                        Text("✨Welcome!✨")
+                            .font(titleFont)
+                            .bold()
+                        
+                        Text("Create An Account")
+                            .font(headingFont)
+                            .bold()
+                    }
+                    Spacer()
+                    Image("Logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 75, height: 100)
+                }
+                .padding()
                 
                 TextField("First Name", text: $txtFirstName)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(20)
                 TextField("Last Name", text: $txtLastName)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(20)
                 TextField("Username", text: $txtusername)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(20)
                     .autocapitalization(.none)
                 TextField("Email", text: $txtEmail)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(20)
                     .autocapitalization(.none)
                 SecureField("Password", text: $txtPassword)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(20)
 
                 Button("Sign Up!"){
                     checkUsername()
@@ -47,7 +74,7 @@ struct SignUp: View {
                 if shouldNavigateToHome {
                     NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
                 }
-                
+                Spacer()
                 NavigationLink(destination: Login(isLoggedIn: .constant(false))) {
                     Text("Already have an account? Login")
                         .font(.system(size: 20))
@@ -58,6 +85,7 @@ struct SignUp: View {
             .multilineTextAlignment(.center)
             .autocorrectionDisabled(true)
             .padding()
+            .background(CustomColors.lightPink.opacity(0.2))
             .navigationBarHidden(true)
             .alert(isPresented: $showAlert) {
                 Alert(
