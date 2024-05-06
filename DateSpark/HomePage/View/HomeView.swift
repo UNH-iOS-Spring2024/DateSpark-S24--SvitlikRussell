@@ -106,13 +106,14 @@ struct HomeView: View {
                     Button(action: {
                         self.isShowingPopover = true
                         print("Add date button pressed.")
+                        
+                        
                     }) {
                         Image(systemName: "plus.circle.fill")
                             .resizable()
                             .frame(width: 40, height: 40)
-                            .padding(.top, -50)
                             .padding(.trailing, 15)
-                            .padding(.bottom, 125)
+                            .padding(.bottom, 140)
                             .foregroundColor(CustomColors.lightPink)
                             .popover(isPresented: $isShowingPopover) {
                                 NavigationView {
@@ -172,16 +173,16 @@ struct HomeView: View {
                                                 .bold()
                                                 .foregroundStyle(CustomColors.brown)
                                                 .padding(.top,100)
-                                            
+
                                         }
                                         
                                     }
-                                    .padding(.trailing, 30)
                                 }
                             }
+                        
                     }
+                    
                 }
-                
                 .onAppear {
                     getDatesFromFirebase()
                 }
