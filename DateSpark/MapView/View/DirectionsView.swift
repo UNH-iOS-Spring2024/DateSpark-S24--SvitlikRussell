@@ -9,7 +9,7 @@ struct DirectionsView: View {
             List(directions, id: \.self) { direction in
                 HStack {
                     Image(systemName: symbolForDirection(direction))
-                        .foregroundColor(.blue)  // You can customize the color
+                        .foregroundColor(.pink)
                     Text(direction)
                 }
             }
@@ -28,14 +28,20 @@ struct DirectionsView: View {
     }
     
     func symbolForDirection(_ direction: String) -> String {
-        if direction.lowercased().contains("left") {
+        if direction.lowercased().contains("turn left") {
             return "arrow.turn.up.left"
-        } else if direction.lowercased().contains("straight") {
+        } else if direction.lowercased().contains("straight") || direction.lowercased().contains("continue") {
             return "arrow.up"
-        } else if direction.lowercased().contains("right") {
+        } else if direction.lowercased().contains("turn right") {
             return "arrow.turn.up.right"
-        } else {
-            return "mappin.and.ellipset"  // Default case for Arrival
+        } else if direction.lowercased().contains("arrive") || direction.lowercased().contains("destination") {
+            return "mappin.and.ellipse"
+        } else if direction.lowercased().contains("highway") || direction.lowercased().contains("merge")  {
+               return "road.lanes"
+        }  else if direction.lowercased().contains("take exit") || direction.lowercased().contains("exit")  {
+            return "road.lanes.curved.right"
+        }else {
+            return ""  // Default case for unknown
         }
     }
     
