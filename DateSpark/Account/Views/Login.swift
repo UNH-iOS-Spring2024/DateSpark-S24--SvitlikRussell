@@ -70,26 +70,24 @@ struct Login: View {
         let usersRef = Firestore.firestore().collection("User")
         usersRef.whereField("username", isEqualTo: txtusername).getDocuments { (querySnapshot, err) in
             if let err = err {
-                print("Error getting documents: \(err)")
+                // print("Error getting documents: \(err)")
                 showAlert(message: "Error occurred while fetching user data. Please try again later.")
             } else if let document = querySnapshot?.documents.first, let email = document.data()["email"] as? String {
                 Auth.auth().signIn(withEmail: email, password: txtPassword) { authResult, error in
                     if let error = error {
-                        print("Error signing in: \(error.localizedDescription)")
-                        showAlert(message: "Incorrect username/ password. Please try again.")
+                         showAlert(message: "Incorrect username/ password. Please try again.")
                     } else {
-                        print("User logged in successfully")
-                        appVariables.isLoggedIn = true
+                         appVariables.isLoggedIn = true
                         shouldNavigateToHome = true
                     }
                 }
             } else {
-                print("No such user found")
-                showAlert(message: "No user found. Please check and try again.")
+                 showAlert(message: "No user found. Please check and try again.")
             }
         }
     }
-    
+
+
     private func showAlert(message: String) {
         alertMessage = message
         showAlert = true
