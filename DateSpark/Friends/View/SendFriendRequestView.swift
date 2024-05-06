@@ -31,20 +31,29 @@ struct SendFriendRequestView: View {
                         Image(systemName: "ellipsis.circle")
                     } else {
                         Button(action: {
-                            viewModel.sendFriendRequest(to: user) { message in
-                                alertMessage = message
-                                showAlert = true
-                            }
+                            self.username = user
                         }) {
                             Image(systemName: "plus")
                         }
                     }
                 }
-                .onTapGesture {
-                    self.username = user
-                    self.searchResults = []
+            }
+            
+            Button("Send Friend Request") {
+                if viewModel.hasSentRequest(user: username) {
+                    alertMessage = "A friend request to \(username) is already pending."
+                    showAlert = true
+                } else if viewModel.isFriend(user: username) {
+                    alertMessage = "You are already friends with \(username)."
+                    showAlert = true
+                } else {
+                    viewModel.sendFriendRequest(to: username) { message in
+                        alertMessage = message
+                        showAlert = true
+                    }
                 }
             }
+            .disabled(username.isEmpty)
         }
         .padding()
         .alert(isPresented: $showAlert) {
@@ -52,7 +61,6 @@ struct SendFriendRequestView: View {
         }
     }
 }
-
 
 struct SendFriendRequestView_Previews: PreviewProvider {
     static var previews: some View {
