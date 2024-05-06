@@ -1,5 +1,4 @@
 //  SendFriendRequestView.swift
-
 import SwiftUI
 
 struct SendFriendRequestView: View {
@@ -8,16 +7,26 @@ struct SendFriendRequestView: View {
     @State private var alertMessage = ""
     @State private var showAlert = false
     @State private var searchResults: [String] = []
-    
+    let titleFont = Font.largeTitle.lowercaseSmallCaps()
+
     var body: some View {
         VStack(spacing: 20) {
+            
+            Text("Find friends")
+                .font(titleFont)
+                .bold()
+                .padding(.top, 100)
+                .foregroundColor(CustomColors.beige)
+            
+            
             TextField("Enter friend's username", text: $username)
                 .onChange(of: username){ newValue in
                     viewModel.searchUsers(query: newValue){ users in
                         self.searchResults = users
                     }
-                }                
+                }
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .border(CustomColors.lightBeige)
                 .autocapitalization(.none)
                 .autocorrectionDisabled()
                 .padding()
@@ -40,27 +49,13 @@ struct SendFriendRequestView: View {
                                 }
                             }
                         }) {
-                            Image(systemName: "plus.circle")
+                            Text("Request")
+                                .bold()
+                                .foregroundColor(CustomColors.lightPink)
                         }
                     }
                 }
             }
-            
-            Button("Send Friend Request") {
-                if viewModel.hasSentRequest(user: username) {
-                    alertMessage = "A friend request to \(username) is already pending."
-                    showAlert = true
-                } else if viewModel.isFriend(user: username) {
-                    alertMessage = "You are already friends with \(username)."
-                    showAlert = true
-                } else {
-                    viewModel.sendFriendRequest(to: username) { message in
-                        alertMessage = message
-                        showAlert = true
-                    }
-                }
-            }
-            .disabled(username.isEmpty || viewModel.hasSentRequest(user: username) || viewModel.isFriend(user: username))
         }
         .padding()
         .alert(isPresented: $showAlert) {
