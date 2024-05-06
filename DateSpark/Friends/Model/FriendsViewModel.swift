@@ -89,7 +89,13 @@ class FriendsViewModel: ObservableObject {
         guard let user = userSession else { return }
         db.collection("User").document(user.id).collection("friends").getDocuments { snapshot, error in
             if let snapshot = snapshot {
-                self.friends = snapshot.documents.map { $0["username"] as? String ?? "" }
+                var uniqueFriends = Set<String>() // Use a set to store unique usernames
+                snapshot.documents.forEach {
+                    if let username = $0["username"] as? String {
+                        uniqueFriends.insert(username) // Add username to the array
+                    }
+                }
+                self.friends = Array(uniqueFriends) // Convert set back to array
             }
         }
     }
