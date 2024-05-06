@@ -16,10 +16,10 @@ struct SignUp: View {
     @State var txtEmail: String = ""
     @State var txtPassword: String = ""
     @State private var shouldNavigateToHome = false
-    @State private var errorMessage : String? = nil
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
 
- 
     var body: some View {
         NavigationStack {
             VStack {
@@ -39,17 +39,15 @@ struct SignUp: View {
                     .autocapitalization(.none)
                 SecureField("Password", text: $txtPassword)
 
-                if let errorMessage = errorMessage{
-                    Text (errorMessage)
-                        .foregroundColor(.red)
-                }
                 Button("Sign Up!"){
-                        userToFirebase()
+                    checkUsername()
                 }
-                .disabled(txtEmail.isEmpty || txtPassword.isEmpty)
+                .disabled(txtEmail.isEmpty || txtPassword.isEmpty || txtusername.isEmpty)
                 
-                if shouldNavigateToHome {                    NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
+                if shouldNavigateToHome {
+                    NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
                 }
+                
                 NavigationLink(destination: Login(isLoggedIn: .constant(false))) {
                     Text("Already have an account? Login")
                         .font(.system(size: 20))
@@ -61,9 +59,14 @@ struct SignUp: View {
             .autocorrectionDisabled(true)
             .padding()
             .navigationBarHidden(true)
-            
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Sign Up Error"),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
- 
     }
     
     func resetTextFields(){
@@ -74,10 +77,25 @@ struct SignUp: View {
         txtPassword = ""
     }
     
+    func checkUsername() {
+        db.collection("User").whereField("username", isEqualTo: txtusername).getDocuments { (snapshot, error) in
+            if let error = error {
+                self.alertMessage = "Error checking username: \(error.localizedDescription)"
+                self.showAlert = true
+            } else if snapshot?.isEmpty ?? true {
+                userToFirebase()
+            } else {
+                self.alertMessage = "Username already taken, please use a different username."
+                self.showAlert = true
+            }
+        }
+    }
+    
     func userToFirebase(){
         Auth.auth().createUser(withEmail: txtEmail, password: txtPassword ) { authResult, error in
-            if let error = error{
-                self.errorMessage = "Error creating user: \(error.localizedDescription)"
+            if let error = error {
+                self.alertMessage = "Failed to create user: \(error.localizedDescription)"
+                self.showAlert = true
                 return
             }
             let userData = [
@@ -89,12 +107,14 @@ struct SignUp: View {
             if let userId = authResult?.user.uid{
                 self.db.collection("User").document(userId).setData(userData){err in
                     if let err = err{
-                    self.errorMessage = "Error adding user details: \(err.localizedDescription)"
-                } else {
-                    print("User details added with ID: \(userId)")
-                    DispatchQueue.main.async{
-                        self.resetTextFields()
-                        self.appVariables.isLoggedIn = true
+                        self.alertMessage = "Error adding user details: \(err.localizedDescription)"
+                        self.showAlert = true
+                    } else {
+                        print("User details added with ID: \(userId)")
+                        DispatchQueue.main.async {
+                            self.resetTextFields()
+                            self.appVariables.isLoggedIn = true
+                            self.shouldNavigateToHome = true
                         }
                     }
                 }
