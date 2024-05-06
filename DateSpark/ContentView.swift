@@ -4,12 +4,12 @@
 import SwiftUI
 import OpenAIKit
 
+ 
 class AppVariables: ObservableObject {
     @Published var selectedTab: Int = 0
     @Published var isLoggedIn: Bool = false
     @Published var isSignedOut: Bool = false
 }
-
 
 struct ContentView: View {
     init () {
@@ -34,7 +34,6 @@ struct ContentView: View {
                     AnyView(FriendsList(viewModel: friendsViewModel)),
                     AnyView(ProfileView())
                 )
-                .environmentObject(AppVariables())
                 .transition(.opacity)
 
             } else if showLoginPage {
@@ -65,7 +64,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .environmentObject(AppVariables())
+        ContentView().environmentObject(AppVariables())
     }
 }

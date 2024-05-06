@@ -30,18 +30,25 @@ struct HomeView: View {
         NavigationView {
             VStack {
                 HStack {
-                    Spacer()
-                    NavigationLink(destination: ArchiveView(viewModel: ArchiveViewModel())) {
-                        Image(systemName: "archivebox.fill")
-                            .resizable()
-                            .frame(width: 28, height: 28)
-                            .foregroundColor(CustomColors.lightPink)
-                    }
-                    .padding(.top, 60)
-                    .padding(.trailing, 40)
-                }
-                
-                Spacer()
+                                Image("Logo")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100, height: 100)
+                                    .padding(.top, 100) // Decrease top padding for the logo
+                                    .padding(.leading, 20)
+                                
+                                Spacer()
+                                
+                                NavigationLink(destination: ArchiveView(viewModel: ArchiveViewModel())) {
+                                    Image(systemName: "archivebox.fill")
+                                        .resizable()
+                                        .frame(width: 28, height: 28)
+                                        .foregroundColor(CustomColors.lightPink)
+                                }
+                                .padding(.top, 100) // Decrease top padding for the archive box
+                                .padding(.trailing, 20)
+                            }
+                            Spacer()
                 
                 HStack {
                     Text("Spin for a")
@@ -58,7 +65,7 @@ struct HomeView: View {
                         .foregroundColor(CustomColors.beige)
                 }
                 
-                .padding(.bottom, 50)
+                .padding(.bottom, 20)
                 .padding(.top, 50)
                 
                 Spacer()
@@ -68,7 +75,7 @@ struct HomeView: View {
                     PieChartView(dataPoints: $dates)
                         .rotationEffect(.degrees(wheelAngle))
                 }
-                
+                .padding(.bottom, 40)
                 VStack {
                     Button(action: {
                         print("Button to start the wheel has been pressed")
@@ -78,9 +85,9 @@ struct HomeView: View {
                     }) {
                         Image(systemName: "triangle.fill")
                             .resizable()
-                            .frame(width: 60, height: 70)
+                            .frame(width: 60, height: 60)
                             .foregroundColor(CustomColors.darkRed)
-                            .padding(.top, -15)
+                            .padding(.top, -100)
                         
                     }
                     Spacer()
@@ -91,6 +98,7 @@ struct HomeView: View {
                         EmptyView()
                     }
                 }
+                .padding(.top, 10)
                 
                 
                 HStack {
@@ -104,16 +112,19 @@ struct HomeView: View {
                         Image(systemName: "plus.circle.fill")
                             .resizable()
                             .frame(width: 40, height: 40)
+                            .padding(.trailing, 15)
+                            .padding(.bottom, 125)
+                            .padding(.top, -40)
                             .foregroundColor(CustomColors.lightPink)
                             .popover(isPresented: $isShowingPopover) {
                                 NavigationView {
                                     VStack {
-
+                                        
                                         Text("Add a date title:")
                                             .foregroundColor(.black)
                                             .padding(.bottom, -20)
                                             .padding(.top, 60)
-
+                                        
                                         TextEditor(text: $txtchoice)
                                             .frame( width: 325, height: 50)
                                             .border(CustomColors.lightBeige, width: 4)
@@ -124,16 +135,16 @@ struct HomeView: View {
                                             .foregroundColor(.black)
                                             .padding(.bottom, -20)
                                             .padding(.top, 20)
-
+                                        
                                         TextEditor(text: $txtDescription)
                                             .frame( width: 325, height: 300)
                                             .background(CustomColors.beige)
                                             .border(CustomColors.lightBeige, width: 4)
                                             .padding()
                                         
-
+                                        
                                         Spacer()
-
+                                        
                                         Button(action: {
                                             let dataToAdd: [String: Any] = ["title": self.txtchoice,
                                                                             "description": self.txtDescription,
@@ -154,7 +165,7 @@ struct HomeView: View {
                                                 .padding(.bottom, 150)
                                                 .bold()
                                         }
-
+                                        
                                     }
                                     .toolbar {
                                         ToolbarItem(placement: .principal) {
@@ -165,18 +176,14 @@ struct HomeView: View {
                                                 .padding(.top,100)
 
                                         }
-
+                                        
                                     }
-
                                 }
                             }
                         
-                            .padding(.bottom, 100)
-                            .padding(.trailing, 30)
                     }
                     
                 }
-                
                 .onAppear {
                     getDatesFromFirebase()
                 }
@@ -211,7 +218,7 @@ struct HomeView: View {
                 }
                 .frame(width: 300, height: 300)
             }
-            .padding(.bottom, 50)
+            .padding(.bottom, 60)
         }
     }
     
