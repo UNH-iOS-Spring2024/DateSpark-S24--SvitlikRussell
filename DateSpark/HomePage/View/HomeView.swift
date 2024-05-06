@@ -52,12 +52,12 @@ struct HomeView: View {
                         .foregroundColor(CustomColors.beige)
                 }
                 HStack {
-                Text("Random Date ✨")
-                    .font(titleFont)
-                    .bold()
-                    .foregroundColor(CustomColors.beige)
-             }
-        
+                    Text("Random Date ✨")
+                        .font(titleFont)
+                        .bold()
+                        .foregroundColor(CustomColors.beige)
+                }
+                
                 .padding(.bottom, 50)
                 .padding(.top, 50)
                 
@@ -81,7 +81,7 @@ struct HomeView: View {
                             .frame(width: 60, height: 70)
                             .foregroundColor(CustomColors.darkRed)
                             .padding(.top, -15)
-                             
+                        
                     }
                     Spacer()
                     NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
@@ -91,7 +91,7 @@ struct HomeView: View {
                         EmptyView()
                     }
                 }
-
+                
                 
                 HStack {
                     Spacer()
@@ -108,13 +108,32 @@ struct HomeView: View {
                             .popover(isPresented: $isShowingPopover) {
                                 NavigationView {
                                     VStack {
-                                        TextField("Enter a date to the wheel", text: $txtchoice)
+
+                                        Text("Add a date title:")
+                                            .foregroundColor(.black)
+                                            .padding(.bottom, -20)
+                                            .padding(.top, 60)
+
+                                        TextEditor(text: $txtchoice)
+                                            .frame( width: 325, height: 50)
+                                            .border(CustomColors.lightBeige, width: 4)
+                                            .background(CustomColors.beige)
                                             .padding()
                                         
-                                        TextField("Enter a description", text: $txtDescription)
+                                        Text("Add a date description:")
+                                            .foregroundColor(.black)
+                                            .padding(.bottom, -20)
+                                            .padding(.top, 20)
+
+                                        TextEditor(text: $txtDescription)
+                                            .frame( width: 325, height: 300)
+                                            .background(CustomColors.beige)
+                                            .border(CustomColors.lightBeige, width: 4)
                                             .padding()
+                                        
+
                                         Spacer()
-                                        
+
                                         Button(action: {
                                             let dataToAdd: [String: Any] = ["title": self.txtchoice,
                                                                             "description": self.txtDescription,
@@ -126,31 +145,42 @@ struct HomeView: View {
                                             self.txtDescription = ""
                                             self.isShowingPopover = false
                                         }) {
-                                            Text ("Add Date")
-                                                .frame(maxWidth: 100)
+                                            Text ("Add Date to wheel")
+                                                .frame(maxWidth: 200)
                                                 .padding()
-                                                .background(Color.blue)
+                                                .background(CustomColors.lightPink)
                                                 .foregroundColor(.white)
                                                 .cornerRadius(10)
+                                                .padding(.bottom, 150)
+                                                .bold()
                                         }
+
                                     }
-                                    .navigationBarTitle("Add Date", displayMode: .inline)
-                                    .navigationBarItems(trailing: Button("Done") {
-                                        self.isShowingPopover = false
-                                    })
+                                    .toolbar {
+                                        ToolbarItem(placement: .principal) {
+                                            Text("New Date")
+                                                .font(titleFont) // Apply your custom font here
+                                                .bold()
+                                                .foregroundStyle(CustomColors.brown)
+                                                .padding(.top,100)
+
+                                        }
+
+                                    }
+
                                 }
                             }
+                        
+                            .padding(.bottom, 100)
+                            .padding(.trailing, 30)
                     }
+                    
                 }
                 
-                .padding(.bottom, 100)
-                .padding(.trailing, 30)
+                .onAppear {
+                    getDatesFromFirebase()
+                }
             }
-            
-        }
-        
-        .onAppear {
-            getDatesFromFirebase()
         }
     }
     
