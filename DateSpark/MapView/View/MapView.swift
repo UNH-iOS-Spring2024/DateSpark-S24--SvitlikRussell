@@ -56,6 +56,8 @@ struct MapView: View {
                     })
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
+                    .frame(width:250, height:10)
+                    .padding(.top, 100)
                     .onChange(of: searchQuery) { newValue in
                         searchCompleter.updateSearch(query: newValue)
                         showSuggestions = true // Show suggestions while typing
@@ -66,9 +68,21 @@ struct MapView: View {
                         showSuggestions = false // Hide suggestions when search is manually triggered
                     }) {
                         Text("Search")
+                            .bold()
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .frame(minWidth: 100, minHeight: 32)
+                            .background(CustomColors.lightPink)
+                            .cornerRadius(10)
+
                     }
+                    .padding(.top, 100)
                 }
+                .padding(.bottom, 40)
                 .padding()
+                .background(Color.white)
+                .cornerRadius(10)
+                .frame(width:400, height: 10)
 
                 if showSuggestions && !searchCompleter.suggestions.isEmpty {
                     suggestionsList
@@ -83,16 +97,22 @@ struct MapView: View {
                 if let selectedPlace = selectedPlace, !showingDirectionsPopover {
                     Button("Get Directions") {
                         calculateDirections()
+                        
                     }
-                    .padding()
-                    .background(Color.blue)
+             //       .padding(.top, 100)
+                    .bold()
                     .foregroundColor(.white)
+                    .font(.headline)
+                    .frame(minWidth: 150, minHeight: 32)
+                    .background(CustomColors.lightPink)
                     .cornerRadius(10)
                     .popover(isPresented: $showingDirectionsPopover) {
                         DirectionsView(directions: directions) {
                             showingDirectionsPopover = false
                         }
                     }
+                    .padding(.top, 43)
+
                 }
             }
         }
