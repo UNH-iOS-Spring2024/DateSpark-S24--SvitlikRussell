@@ -13,8 +13,7 @@ struct DateSpark_S24_Svitlik_RussellApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(archiveViewModel) 
+                    ContentView().environmentObject(AppVariables())
         }
     }
 }
