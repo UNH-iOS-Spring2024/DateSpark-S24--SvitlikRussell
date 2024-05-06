@@ -113,7 +113,8 @@ struct HomeView: View {
                             .resizable()
                             .frame(width: 40, height: 40)
                             .padding(.trailing, 15)
-                            .padding(.bottom, 140)
+                            .padding(.bottom, 125)
+                            .padding(.top, -40)
                             .foregroundColor(CustomColors.lightPink)
                             .popover(isPresented: $isShowingPopover) {
                                 NavigationView {
