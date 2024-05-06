@@ -68,6 +68,7 @@ struct BottomBar: View {
                 }
                 .tag(5)
         }
+        .accentColor(CustomColors.darkRed)
     }
 }
 
