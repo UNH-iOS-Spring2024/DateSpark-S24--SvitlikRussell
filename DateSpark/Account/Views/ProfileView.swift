@@ -21,7 +21,6 @@ struct ProfileView: View {
     @State private var isSignedOut = false
     @State private var showingSignOutConfirmation = false
     @State private var redirectToLogin = false
-
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
 
     @State private var userProfile = UserProfile(
@@ -106,7 +105,7 @@ struct ProfileView: View {
             
                 Button("Sign Out") {
                     showingSignOutConfirmation = true
-//                    signOut()
+                //    signOut()
                 }
                 .padding()
                 .background(Color.blue)
@@ -119,13 +118,8 @@ struct ProfileView: View {
             }
             .padding(.horizontal)
             .navigationTitle("Profile")
-//            .onAppear{ fetchUserProfile() }
+            .onAppear{ fetchUserProfile() }
         }
-    }
-    func navigateToLogin() {
-        guard let window = UIApplication.shared.windows.first else { return }
-        window.rootViewController = UIHostingController(rootView: Login(isLoggedIn: $appVariables.isLoggedIn).environmentObject(appVariables))
-        window.makeKeyAndVisible()
     }
     
     func fetchUserProfile() {
@@ -165,6 +159,13 @@ struct ProfileView: View {
             }
         }.resume()
     }
+    
+    func navigateToLogin() {
+        guard let window = UIApplication.shared.windows.first else { return }
+        window.rootViewController = UIHostingController(rootView: Login(isLoggedIn: $appVariables.isLoggedIn).environmentObject(appVariables))
+        window.makeKeyAndVisible()
+    }
+
     
     func loadImage() {
         guard let inputImage = inputImage else { return }
