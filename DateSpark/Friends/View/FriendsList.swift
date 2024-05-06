@@ -8,9 +8,13 @@ struct FriendsList: View {
     @State private var showingFriendRequests = false
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
     
+    var sortedFriends: [String] {
+        return viewModel.friends.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+    }
+    
     var body: some View {
         NavigationView {
-            List(viewModel.friends, id: \.self) { friend in
+            List(sortedFriends, id: \.self) { friend in
                 Text("⭐️ \(friend)")
             }
             .alert("New Friend Request", isPresented: $viewModel.newFriendRequestReceived) {
