@@ -14,10 +14,10 @@ struct SparkGPTView: View {
     @State var description: String = ""
     @State var question: String = ""
     let organizationName: String = "Personal"
-    private let apiToken: String = "sk-proj-0jW0IyzIrDhI3VQRboFXT3BlbkFJT90T5JAn2T5g7M2HLfpw"
+    private let apiToken: String = "sk-proj-0j0IyzIrDhI3VQRboFXT3BlbkFJT90T5JAn2T5g7M2HLfpw"
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
 
-    public let openAI = OpenAIKit(apiToken: "sk-proj-0jW0IyzIrDhI3VQRboFXT3BlbkFJT90T5JAn2T5g7M2HLfpw", organization: "org-AGjsVJi2tjy6VBltQ9HmvodS")
+    public let openAI = OpenAIKit(apiToken: "sk-proj-0W0IyzIrDhI3VQRboFXT3BlbkFJT90T5JAn2T5g7M2HLfpw", organization: "org-AGjsVJi2tjy6VBltQ9HmvodS")
     
     var body: some View {
         VStack {
