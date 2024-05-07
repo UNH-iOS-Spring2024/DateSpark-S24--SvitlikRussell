@@ -20,18 +20,24 @@ struct Login: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
-                        Text("✨Welcome Back!✨")
-                            .font(titleFont)
-                            .bold()
-                    Spacer()
-                    Image("Logo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 75, height: 100)
-                }
-                .padding()
+                     HStack {
+                         Text("✨Sign in!✨")
+                             .font(titleFont)
+                             .bold()
+                             .padding(.horizontal, 20)
+                     
+                         Spacer()
+                     
+                         Image("Logo")
+                             .resizable()
+                             .aspectRatio(contentMode: .fit)
+                             .frame(width: 75, height: 100)
+                             .padding(.horizontal, 20)
 
+                     }
+                     .padding(.top, 170)
+                 
+             
                 TextField("Username", text: $txtusername)
                     .padding()
                     .background(Color.white)
@@ -41,14 +47,17 @@ struct Login: View {
                     .padding()
                     .background(Color.white)
                     .cornerRadius(20)
+                    .padding(.bottom,20)
+
 
                 Button("Sign In!"){
                     loginUser()
                 }
+                
                 .font(.headline.bold())
                 .foregroundColor(.white)
                 .padding()
-                .background(Color.pink) 
+                .background(CustomColors.lightPink)
                 .cornerRadius(15)
                 .disabled(txtusername.isEmpty || txtPassword.isEmpty)
                 
@@ -59,9 +68,10 @@ struct Login: View {
                 NavigationLink(destination: SignUp()) {
                     Text("Don't have an account? Sign Up")
                         .font(.system(size: 20))
+                        .foregroundColor(CustomColors.darkRed)
+
                 }
-                .padding(30)
-            }
+             }
             .font(.largeTitle)
             .multilineTextAlignment(.center)
             .autocorrectionDisabled(true)
