@@ -1,6 +1,9 @@
 //  HomeView.swift
 //  DateSpark-S24-Svitlik-Russell
 //  Sarah Svitlik & Shannon Russell
+//  HomeView.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 
 import SwiftUI
 import Charts
@@ -30,25 +33,18 @@ struct HomeView: View {
         NavigationView {
             VStack {
                 HStack {
-                                Image("Logo")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 100, height: 100)
-                                    .padding(.top, 100) // Decrease top padding for the logo
-                                    .padding(.leading, 20)
-                                
-                                Spacer()
-                                
-                                NavigationLink(destination: ArchiveView(viewModel: ArchiveViewModel())) {
-                                    Image(systemName: "archivebox.fill")
-                                        .resizable()
-                                        .frame(width: 28, height: 28)
-                                        .foregroundColor(CustomColors.lightPink)
-                                }
-                                .padding(.top, 100) // Decrease top padding for the archive box
-                                .padding(.trailing, 20)
-                            }
-                            Spacer()
+                    Spacer()
+                    NavigationLink(destination: ArchiveView(viewModel: ArchiveViewModel())) {
+                        Image(systemName: "archivebox.fill")
+                            .resizable()
+                            .frame(width: 28, height: 28)
+                            .foregroundColor(CustomColors.lightPink)
+                    }
+                    .padding(.trailing, 40)
+                }
+                .padding(.top, 100)
+
+                Spacer()
                 
                 HStack {
                     Text("Spin for a")
@@ -59,13 +55,13 @@ struct HomeView: View {
                         .foregroundColor(CustomColors.beige)
                 }
                 HStack {
-                    Text("Random Date ✨")
-                        .font(titleFont)
-                        .bold()
-                        .foregroundColor(CustomColors.beige)
-                }
-                
-                .padding(.bottom, 20)
+                Text("Random Date ✨")
+                    .font(titleFont)
+                    .bold()
+                    .foregroundColor(CustomColors.beige)
+             }
+        
+                .padding(.bottom, 50)
                 .padding(.top, 50)
                 
                 Spacer()
@@ -75,7 +71,7 @@ struct HomeView: View {
                     PieChartView(dataPoints: $dates)
                         .rotationEffect(.degrees(wheelAngle))
                 }
-                .padding(.bottom, 40)
+                
                 VStack {
                     Button(action: {
                         print("Button to start the wheel has been pressed")
@@ -85,10 +81,10 @@ struct HomeView: View {
                     }) {
                         Image(systemName: "triangle.fill")
                             .resizable()
-                            .frame(width: 60, height: 60)
+                            .frame(width: 60, height: 70)
                             .foregroundColor(CustomColors.darkRed)
-                            .padding(.top, -100)
-                        
+                            .padding(.top, -15)
+                             
                     }
                     Spacer()
                     NavigationLink(destination: SelectedPage(selectedIndex: selectedIndex,
@@ -98,8 +94,7 @@ struct HomeView: View {
                         EmptyView()
                     }
                 }
-                .padding(.top, 10)
-                
+
                 
                 HStack {
                     Spacer()
@@ -112,9 +107,6 @@ struct HomeView: View {
                         Image(systemName: "plus.circle.fill")
                             .resizable()
                             .frame(width: 40, height: 40)
-                            .padding(.trailing, 15)
-                            .padding(.bottom, 125)
-                            .padding(.top, -40)
                             .foregroundColor(CustomColors.lightPink)
                             .popover(isPresented: $isShowingPopover) {
                                 NavigationView {
@@ -174,20 +166,25 @@ struct HomeView: View {
                                                 .bold()
                                                 .foregroundStyle(CustomColors.brown)
                                                 .padding(.top,100)
-
+                                            
                                         }
                                         
                                     }
+                                    
                                 }
                             }
                         
                     }
-                    
                 }
-                .onAppear {
-                    getDatesFromFirebase()
-                }
+                
+                .padding(.bottom, 120)
+                .padding(.trailing, 30)
             }
+            
+        }
+        
+        .onAppear {
+            getDatesFromFirebase()
         }
     }
     
@@ -218,7 +215,7 @@ struct HomeView: View {
                 }
                 .frame(width: 300, height: 300)
             }
-            .padding(.bottom, 60)
+            .padding(.bottom, 50)
         }
     }
     

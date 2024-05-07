@@ -25,8 +25,11 @@ struct SparkGPTView: View {
             ZStack {
             Text("SparkGPT")
                 .font(titleFont)
-                .padding(.top, 50)
+              //  .padding(.top, 50)
                 .bold()
+             //   .padding(.bottom, -50)
+                .padding(.top, 80)
+                .foregroundColor(CustomColors.beige)
         }
             List {
                 ForEach($messages, id: \.id) { $message in

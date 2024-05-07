@@ -24,6 +24,7 @@ struct ArchiveView: View {
                     .font(titleFont)
                     .padding(.top, 15)
                     .bold()
+                    .foregroundColor(CustomColors.beige)
                 
                 Text("Checked your saved dates for ideas. 💕")
                     .font(.system(size: 15))

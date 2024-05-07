@@ -30,10 +30,12 @@ struct SignUp: View {
                         Text("✨Welcome!✨")
                             .font(titleFont)
                             .bold()
+                            .foregroundColor(CustomColors.beige)
                         
                         Text("Create An Account")
                             .font(headingFont)
                             .bold()
+                            .foregroundColor(CustomColors.beige)
                     }
                     Spacer()
                     Image("Logo")

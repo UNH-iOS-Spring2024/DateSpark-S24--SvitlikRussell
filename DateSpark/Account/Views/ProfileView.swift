@@ -58,6 +58,8 @@ struct ProfileView: View {
             
             Text(userProfile.username)
                 .font(titleFont)
+                .bold()
+                .foregroundColor(CustomColors.beige)
                 .padding(.top, 20)
             ZStack(alignment: .bottomTrailing){
                 Image(uiImage: inputImage ?? UIImage(named: "PlaceholderImage")!)
@@ -70,12 +72,13 @@ struct ProfileView: View {
                 Button(action: {
                     self.showImagePicker = true
                 }) {
-                    Image(systemName: "pencil.tip")
+                    Image(systemName: "photo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 24, height: 24)
                         .padding()
                         .background(Color.white)
+                        .foregroundColor(CustomColors.lightPink)
                         .clipShape(Circle())
                         .shadow(radius: 10)
                 }
@@ -89,6 +92,8 @@ struct ProfileView: View {
             VStack(alignment: .center, spacing: 4) {
                 Text("\(userProfile.firstName) \(userProfile.lastName)")
                     .font(.system(size: 24))
+                    .foregroundColor(CustomColors.beige)
+                    .bold()
                     .padding(20)
                 Text(userProfile.email)
                     .foregroundColor(.gray)
@@ -108,7 +113,7 @@ struct ProfileView: View {
                 //    signOut()
                 }
                 .padding()
-                .background(Color.blue)
+                .background(CustomColors.darkRed)
                 .foregroundColor(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .confirmationDialog("Are you sure you want to sign out?", isPresented: $showingSignOutConfirmation) {

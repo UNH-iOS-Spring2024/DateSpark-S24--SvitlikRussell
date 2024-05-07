@@ -29,6 +29,7 @@ struct DirectionsView: View {
                                 // Optional: Define actions when a card is tapped, if necessary
                             }
                         )
+                        .padding(.horizontal, 60)
                         .padding(.bottom, 5)
                     }
                 }
@@ -40,7 +41,11 @@ struct DirectionsView: View {
                     Button("End Route") {
                         dismissAction()
                     }
-                    .buttonStyle(EndRouteButtonStyle())
+                    .frame(width: 120, height: 50)
+                    .background(CustomColors.darkRed)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .padding(.bottom, 30)
                     Spacer()
                 }
             }
