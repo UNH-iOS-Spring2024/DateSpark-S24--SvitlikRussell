@@ -1,4 +1,6 @@
-//  ArchiveViewModel.swift
+// ArchiveViewModel.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 
 import Foundation
 import FirebaseFirestore

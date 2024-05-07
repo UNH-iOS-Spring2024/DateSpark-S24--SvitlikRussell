@@ -57,7 +57,7 @@ struct ArchiveView: View {
 
                     }
                     
-                    .onDelete(perform: deleteFromFirebase) // Move this line here
+                    .onDelete(perform: deleteFromFirebase) 
                 }
         }
         .padding(.top, -30)

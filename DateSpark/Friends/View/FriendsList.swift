@@ -1,4 +1,6 @@
-//  FriendsList.swift
+// FriendsList.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 
 import SwiftUI
 
@@ -27,9 +29,9 @@ struct FriendsList: View {
             } message: {
                 Text("You have a new friend request.")
             }
-            .navigationBarTitleDisplayMode(.inline) // Use inline display mode
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .principal) { // Use a custom view for the title
+                ToolbarItem(placement: .principal) {  
                     Text("Friends List")
                         .font(titleFont)
                         .bold()

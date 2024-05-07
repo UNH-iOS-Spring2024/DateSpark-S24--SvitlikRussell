@@ -1,4 +1,7 @@
-//  SendFriendRequestView.swift
+// SendFriendRequestView.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
+
 import SwiftUI
 
 struct SendFriendRequestView: View {
@@ -64,12 +67,9 @@ struct SendFriendRequestView: View {
                                             }
                                         }
                                     }
-                                    .padding() // Padding inside the card for content
                                 )
                             },
-                            click: {
-                                // Optional: Define actions when a card is tapped, if necessary
-                            }
+                            click: {}
                         )
                     }
                 }

@@ -1,7 +1,4 @@
-//  HomeView.swift
-//  DateSpark-S24-Svitlik-Russell
-//  Sarah Svitlik & Shannon Russell
-//  HomeView.swift
+// HomeView.swift
 //  DateSpark-S24-Svitlik-Russell
 //  Sarah Svitlik & Shannon Russell
 
@@ -76,7 +73,7 @@ struct HomeView: View {
                     Button(action: {
                         print("Button to start the wheel has been pressed")
                         spinWheel() {
-                            self.actionCompleted = true // Set this to true after the wheel spins
+                            self.actionCompleted = true
                         }
                     }) {
                         Image(systemName: "triangle.fill")

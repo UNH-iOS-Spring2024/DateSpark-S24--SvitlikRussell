@@ -1,5 +1,6 @@
-//  LocationPushService.swift
-
+// LocationPushService.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 
 import CoreLocation
 import UserNotifications

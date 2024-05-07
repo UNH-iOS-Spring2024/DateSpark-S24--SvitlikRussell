@@ -1,9 +1,6 @@
-//
-//  DateClass.swift
-//  DateSpark
-//
-//  Created by Sarah Svitlik on 3/19/24.
-//
+// DateClass.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 
 import Foundation
 import FirebaseFirestore

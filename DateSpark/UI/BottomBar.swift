@@ -1,9 +1,7 @@
-//
-//  BottomBar.swift
+// BottomBar.swift
 //  DateSpark-S24-Svitlik-Russell
-//
-//  Created by Sarah Svitlik & Shannon Russel on 03/01/24
-//
+//  Sarah Svitlik & Shannon Russell
+
 import SwiftUI
 import OpenAIKit
 

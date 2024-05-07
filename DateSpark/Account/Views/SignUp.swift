@@ -1,4 +1,7 @@
-//Sarah Svitlik & Shannon Russell
+// SignUp.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
+
 import SwiftUI
 import Firebase
 import FirebaseAuth

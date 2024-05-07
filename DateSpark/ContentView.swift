@@ -1,6 +1,7 @@
 // ContentView.swift
 //  DateSpark-S24-Svitlik-Russell
 //  Sarah Svitlik & Shannon Russell
+
 import SwiftUI
 import OpenAIKit
 

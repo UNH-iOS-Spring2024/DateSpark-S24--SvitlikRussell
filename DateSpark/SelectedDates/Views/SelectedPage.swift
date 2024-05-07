@@ -1,4 +1,6 @@
-//  SelectedPage.swift
+// SelectedPage.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 
 import SwiftUI
 import FirebaseFirestore
@@ -100,7 +102,7 @@ struct SelectedPage: View {
                 }) {
                     Text(isSaved ? "Date saved" : "Save Date to Archives")
                         .padding()
-                        .frame(minWidth: 200, minHeight: 50) // Set a fixed frame size
+                        .frame(minWidth: 200, minHeight: 50)  
                         .font(.headline)
                         .background(isSaved ? CustomColors.darkRed : CustomColors.lightPink)
                         .foregroundColor(.white)

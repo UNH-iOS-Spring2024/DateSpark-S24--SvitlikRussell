@@ -1,9 +1,6 @@
-//
-//  SparkGPTController.swift
-//  DateSpark
-//
-//  Created by Sarah Svitlik on 4/5/24.
-//
+// SparkGPTController.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 
 import Foundation
 import UIKit

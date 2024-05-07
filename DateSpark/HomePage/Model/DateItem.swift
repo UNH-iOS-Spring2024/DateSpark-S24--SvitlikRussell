@@ -1,4 +1,6 @@
-//DateSpark-S24-Svitlik-Russell
+// DateItem.swift
+//  DateSpark-S24-Svitlik-Russell
+//  Sarah Svitlik & Shannon Russell
 
 import Foundation
 import FirebaseFirestore

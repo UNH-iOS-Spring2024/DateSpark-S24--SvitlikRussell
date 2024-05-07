@@ -63,7 +63,6 @@
 		FBDB05082BAA53D20076F915 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05032BAA53D20076F915 /* SignUp.swift */; };
 		FBDB052B2BAA53F50076F915 /* DateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB050A2BAA53F20076F915 /* DateItem.swift */; };
 		FBDB052D2BAA53F50076F915 /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB050F2BAA53F20076F915 /* BottomBar.swift */; };
-		FBDB052E2BAA53F50076F915 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05102BAA53F20076F915 /* Card.swift */; };
 		FBDB052F2BAA53F50076F915 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05122BAA53F20076F915 /* HomeView.swift */; };
 		FBDB05312BAA53F50076F915 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05182BAA53F30076F915 /* MapView.swift */; };
 		FBDB05362BAA53F50076F915 /* SelectedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDB05242BAA53F50076F915 /* SelectedPage.swift */; };
@@ -114,7 +113,6 @@
 		FBDB05032BAA53D20076F915 /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		FBDB050A2BAA53F20076F915 /* DateItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateItem.swift; sourceTree = "<group>"; };
 		FBDB050F2BAA53F20076F915 /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
-		FBDB05102BAA53F20076F915 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		FBDB05122BAA53F20076F915 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FBDB05182BAA53F30076F915 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FBDB05242BAA53F50076F915 /* SelectedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPage.swift; sourceTree = "<group>"; };
@@ -325,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				FBDB050F2BAA53F20076F915 /* BottomBar.swift */,
-				FBDB05102BAA53F20076F915 /* Card.swift */,
 				5077965D2BE550A00082D34B /* Colors.swift */,
 			);
 			path = UI;
@@ -387,20 +384,6 @@
 			path = Friends;
 			sourceTree = "<group>";
 		};
-		FBDB05222BAA53F50076F915 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		FBDB05232BAA53F50076F915 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		FBDB05252BAA53F50076F915 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,8 +395,6 @@
 		FBDB05262BAA53F50076F915 /* SelectedDates */ = {
 			isa = PBXGroup;
 			children = (
-				FBDB05222BAA53F50076F915 /* Controller */,
-				FBDB05232BAA53F50076F915 /* Model */,
 				FBDB05252BAA53F50076F915 /* Views */,
 			);
 			path = SelectedDates;
@@ -564,7 +545,6 @@
 				FB4861F62BD0A1D30019FE6D /* PHPickerViewController.swift in Sources */,
 				FBDB04F12BAA4FFB0076F915 /* ContentView.swift in Sources */,
 				FB2A01F92BCD97EF00DF084E /* SendFriendRequestView.swift in Sources */,
-				FBDB052E2BAA53F50076F915 /* Card.swift in Sources */,
 				FBD95F4F2BBC780C0075B690 /* SearchCompleter.swift in Sources */,
 				FBDB04EF2BAA4FFB0076F915 /* DateSparkApp.swift in Sources */,
 				FB0C3F5A2BD9D9A0009C14CE /* ArchiveView.swift in Sources */,

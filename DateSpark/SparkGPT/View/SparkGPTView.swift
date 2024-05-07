@@ -1,7 +1,6 @@
-//  SparkGPTView.swift
+// SparkGPTView.swift
 //  DateSpark-S24-Svitlik-Russell
-//
-//  Created by Sarah Svitlik on 3/13/24.
+//  Sarah Svitlik & Shannon Russell
 
 import SwiftUI
 import OpenAISwift
