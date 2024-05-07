@@ -15,46 +15,58 @@ struct Login: View {
     @State private var alertMessage: String = ""
     @Binding var isLoggedIn: Bool
     let titleFont = Font.largeTitle.lowercaseSmallCaps()
-    
+    let headingFont = Font.title.lowercaseSmallCaps()
+
     var body: some View {
         NavigationStack {
             VStack {
-                VStack{
+                HStack {
+                        Text("✨Welcome Back!✨")
+                            .font(titleFont)
+                            .bold()
+                    Spacer()
                     Image("Logo")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 300)
+                        .frame(width: 75, height: 100)
                 }
-                
-                Text("Sign in!")
-                    .font(titleFont)
-                    .bold()
-                    .padding(.bottom, 30)
-                
-                TextField("Username", text: $txtusername)
-                    .font(.system(size:30))
-                    .autocapitalization(.none)
-                    .keyboardType(.emailAddress)
-                
-                SecureField("Password", text: $txtPassword)
-                    .font(.system(size:30))
-                    .padding(.bottom, 20)
-                
-                Button(action: loginUser) {
-                    Text("Login")
-                        .font(.system(size: 20))
-                        .padding(.bottom, 10)
-                }
-                
-                NavigationLink(destination: SignUp(), label: {
-                    Text("Don't have an account? Sign Up")
-                })
-                .padding(.bottom, 30)
+                .padding()
 
-                NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
+                TextField("Username", text: $txtusername)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(20)
+                    .autocapitalization(.none)
+                SecureField("Password", text: $txtPassword)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(20)
+
+                Button("Sign In!"){
+                    loginUser()
+                }
+                .font(.headline.bold())
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.pink) 
+                .cornerRadius(15)
+                .disabled(txtusername.isEmpty || txtPassword.isEmpty)
+                
+                if shouldNavigateToHome {
+                    NavigationLink(destination: HomeView(), isActive: $shouldNavigateToHome) { EmptyView() }
+                }
+                Spacer()
+                NavigationLink(destination: SignUp()) {
+                    Text("Don't have an account? Sign Up")
+                        .font(.system(size: 20))
+                }
+                .padding(30)
             }
+            .font(.largeTitle)
             .multilineTextAlignment(.center)
+            .autocorrectionDisabled(true)
             .padding()
+            .background(CustomColors.lightPink.opacity(0.2))
             .navigationBarHidden(true)
             .alert(isPresented: $showAlert) {
                 Alert(
@@ -70,7 +82,6 @@ struct Login: View {
         let usersRef = Firestore.firestore().collection("User")
         usersRef.whereField("username", isEqualTo: txtusername).getDocuments { (querySnapshot, err) in
             if let err = err {
-                // print("Error getting documents: \(err)")
                 showAlert(message: "Error occurred while fetching user data. Please try again later.")
             } else if let document = querySnapshot?.documents.first, let email = document.data()["email"] as? String {
                 Auth.auth().signIn(withEmail: email, password: txtPassword) { authResult, error in
