@@ -80,6 +80,8 @@ struct SignUp: View {
                 NavigationLink(destination: Login(isLoggedIn: .constant(false))) {
                     Text("Already have an account? Login")
                         .font(.system(size: 20))
+                        .foregroundColor(CustomColors.darkRed)
+
                 }
                 .padding(30)
             }
